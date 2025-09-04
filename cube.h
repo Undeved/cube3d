@@ -13,8 +13,12 @@
 #ifndef CUBE_H
 # define CUBE_H
 
-# include "minilibx/mlx.h"
+# include "MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
+# include "unistd.h"
+
+# include "errno.h"
+#include <stdio.h>
 
 // input args
 int ft_strlen(char *str);
