@@ -18,6 +18,7 @@ int main(int argc, char **argv)
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
+    print_argv(cube.pd.map_file);
 
     return (EXIT_SUCCESS);
 }

@@ -1,19 +1,52 @@
 #include "../cube.h"
 
-char	*ft_strdup(char *s1)
+t_mind_alloc	**get_head(void)
 {
-	size_t	i;
-	char	*ptr;
+	static t_mind_alloc	*gc = NULL;
 
-	ptr = (char *) malloc(sizeof(char) * (ft_strlen(s1) + 1));
-	if (ptr == NULL)
-		return (NULL);
-	i = 0;
-	while (s1[i])
+	return (&gc);
+}
+
+int	add_to_gc(void *new_address)
+{
+	t_mind_alloc	**head;
+	t_mind_alloc	*new_alloc;
+
+	new_alloc = malloc(sizeof(t_mind_alloc));
+	if (!new_alloc)
 	{
-		ptr[i] = s1[i];
-		i++;
+		free(new_address);
+		mind_free_all(EXIT_FAILURE);
 	}
-	ptr[i] = '\0';
+	head = get_head();
+	new_alloc->ptr = new_address;
+	new_alloc->free_at_end = false;
+	new_alloc->next = *head;
+	*head = new_alloc;
+	return (EXIT_SUCCESS);
+}
+
+void	mind_free_all(int status)
+{
+	t_mind_alloc	**head;
+	t_mind_alloc	*tmp;
+
+	head = get_head();
+	while (*head)
+	{
+		tmp = (*head)->next;
+		free((*head)->ptr);
+		free(*head);
+		*head = tmp;
+	}
+	*get_head() = NULL;
+	exit(status);
+}
+
+void	*allocate_gc(void *ptr)
+{
+	if (!ptr)
+		mind_free_all(EXIT_FAILURE);
+	add_to_gc(ptr);
 	return (ptr);
 }
