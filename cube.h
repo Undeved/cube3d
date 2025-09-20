@@ -13,7 +13,7 @@
 #ifndef CUBE_H
 # define CUBE_H
 
-//# include "MLX42/include/MLX42/MLX42.h"
+# include "MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
 # include "unistd.h"
 # include <stdio.h>
@@ -23,6 +23,11 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+
+// our Macros
+# define HEIGHT 720
+# define WIDTH 1280
+# define TITLE "CUBE 3D"
 
 
 // Garbage collector struct.
@@ -79,4 +84,4 @@ int	ft_strcmp(char *s1, char *s2);
 // helpers test
 void    print_argv(char **argv);
 
-#endif // CUBE_H
+#endif

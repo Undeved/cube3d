@@ -22,11 +22,10 @@ void north_texture(char **map_file) // pass struct
 {
     int i;
     int count;
-    int index;
 
     i = 0;
-    index = -1;
     count = 0;
+    (void)count;
     while(map_file[i])
     {
         // code to validate NO texture and extract it.

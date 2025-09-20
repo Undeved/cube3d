@@ -1,9 +1,9 @@
 CC= cc
-SANITIZE= -fsanitize=address -g3
+SANITIZE= #-fsanitize=address -g3
 FLAGS= -Wall -Werror -Wextra
 
 INCLUDES= -Iinclude
-LIBS= #MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBS= MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 HEADER= cube.h
 

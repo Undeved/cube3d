@@ -12,13 +12,34 @@
 
 #include "cube.h"
 
+void escape_handler(mlx_key_data_t keydata, void* param)
+{
+    mlx_t   *mlx;
+
+    mlx = param;
+    (void)mlx;
+    if (keydata.key == MLX_KEY_ESCAPE)
+        mind_free_all(EXIT_SUCCESS);
+}
+
 int main(int argc, char **argv)
 {
     t_cube  cube;
+    mlx_t   *mlx;
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
-    print_argv(cube.pd.map_file);
+    // print_argv(cube.pd.map_file);
+
+    // testing window creation
+    mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
+    if (!mlx)
+        mind_free_all(EXIT_FAILURE);
+    // loop
+    mlx_key_hook(mlx, escape_handler, mlx);
+    mlx_loop(mlx);
+    mlx_terminate(mlx);
+    //--- done testing
 
     return (EXIT_SUCCESS);
 }
