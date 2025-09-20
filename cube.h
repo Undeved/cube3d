@@ -25,8 +25,8 @@
 # endif
 
 // our Macros
-# define HEIGHT 720
-# define WIDTH 1280
+# define HEIGHT 600
+# define WIDTH 800
 # define TITLE "CUBE 3D"
 
 
@@ -83,5 +83,6 @@ int	ft_strcmp(char *s1, char *s2);
 
 // helpers test
 void    print_argv(char **argv);
+void simple_raycast(void* param);
 
 #endif

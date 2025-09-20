@@ -35,8 +35,8 @@ int main(int argc, char **argv)
     mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
     if (!mlx)
         mind_free_all(EXIT_FAILURE);
-    // loop
     mlx_key_hook(mlx, escape_handler, mlx);
+    mlx_loop_hook(mlx, simple_raycast,mlx);
     mlx_loop(mlx);
     mlx_terminate(mlx);
     //--- done testing

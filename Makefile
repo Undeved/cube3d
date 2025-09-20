@@ -10,7 +10,7 @@ HEADER= cube.h
 SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.c \
 	parse_map/parse_map.c parse_map/parse_utils.c mind_allocater/mind_allocater.c \
 	parse_map/gnl/gnl.c parse_map/gnl/gnl_utils.c parse_map/validate_map.c \
-	parse_map/validate_map_utils.c
+	parse_map/validate_map_utils.c simple_raycaster.c
 
 OBJ=$(SRC:.c=.o)
 
