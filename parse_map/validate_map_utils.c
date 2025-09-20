@@ -18,7 +18,7 @@ char	*ft_strchr(char	*s, int c)
 	return (0);
 }
 
-void north_texture(char **map_file)
+void north_texture(char **map_file) // pass struct
 {
     int i;
     int count;
@@ -29,31 +29,11 @@ void north_texture(char **map_file)
     count = 0;
     while(map_file[i])
     {
-        // make sshift solution i cut NO perfectly i need to cut until space.
-        if (ft_strcmp(allocate_gc(gnl_ft_substr(ft_strchr(map_file[i],
-                'N'), 0, 2)), "NO") == 0)
-        {
-            count++;
-            index = map_file[i] - ft_strchr(map_file[i], 'N');
-        }
+        // code to validate NO texture and extract it.
+        // validate if more than 2 chars
+        // if first letter is N and second is O return true
+        // if valid split , argc of this split should be exactly 2
+        // second arg in split is path. extract it.
         i++;
-    }
-    if (index == 0)
-    {
-        if (count == 0)
-        {
-            print_error("Error\nNo North Texture.\n");
-            mind_free_all(EXIT_FAILURE);
-        }
-        else if (count > 1)
-        {
-            print_error("Error\nDuplicate North Texture.\n");
-            mind_free_all(EXIT_FAILURE);
-        }
-    }
-    else
-    {
-        print_error("Error\nNorth Texture Usage <NO ...>.\n");
-        mind_free_all(EXIT_FAILURE);
     }
 }
