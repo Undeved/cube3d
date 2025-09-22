@@ -22,6 +22,23 @@ static void print_parsed_data(t_parsed_data *pd)
 
     printf("floor --> already extracted %d\nR:%d, G:%d, B:%d\n", pd->floor.already_extracted, pd->floor.r, pd->floor.g, pd->floor.b);
     printf("ceiling --> already extracted %d\nR:%d, G:%d, B:%d\n", pd->roof.already_extracted, pd->roof.r, pd->roof.g, pd->roof.b);
+    puts("Map Grid");
+    int i = 0;
+    int j = 0;
+    while (pd->map_grid[i])
+    {
+        j = 0;
+        write(1, "[", 1);
+        while (pd->map_grid[i][j])
+        {
+            write(1, &pd->map_grid[i][j], 1);
+            if (pd->map_grid[i][j] && pd->map_grid[i][j + 1])
+                write(1, ", ", 2);
+            j++;
+        }
+        write(1, "]\n", 2);
+        i++;
+    }
 }
 
 int main(int argc, char **argv)
@@ -34,7 +51,7 @@ int main(int argc, char **argv)
     print_parsed_data(&cube.pd);
 
     // testing window creation
-    basic_game_loop();
+    // basic_game_loop();
 
     return (mind_free_all(EXIT_SUCCESS), EXIT_SUCCESS);
 }

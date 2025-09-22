@@ -72,6 +72,7 @@ static void init_parsed_data(t_cube *cube)
 {
     cube->pd.fd = -1;
     cube->pd.map_file = NULL;
+    cube->pd.map_grid = NULL;
     init_textures(cube);
 }
 

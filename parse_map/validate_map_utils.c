@@ -75,10 +75,23 @@ void validate_textures(char **map_file, t_cube *cube)
     i = 0;
     while(map_file[i])
     {
-        if (valid_texture_string(map_file[i]))
-            extract_texture(map_file[i], map_file[i][0], map_file[i][1], cube);
         if (validate_floor_roof(map_file[i]))
             extarct_floor_roof(map_file[i], cube);
+        if (valid_texture_string(map_file[i]))
+            extract_texture(map_file[i], map_file[i][0], map_file[i][1], cube);
+        if (valid_grid_chars(map_file[i]) && !validate_floor_roof(map_file[i]) && !valid_texture_string(map_file[i]))
+        {
+            extract_map(map_file, &i, cube);
+            break;
+        }
+        if ((map_file[i] && map_file[i][0] != '\0') 
+            && !valid_grid_chars(map_file[i]) 
+            && !validate_floor_roof(map_file[i]) 
+            && !valid_texture_string(map_file[i]))
+        {
+            print_error("Error\nInvalid Parameters In File.\n");
+            mind_free_all(EXIT_FAILURE);
+        }
         i++;
     }
     // check if all four textures have been extracted.

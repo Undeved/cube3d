@@ -73,6 +73,7 @@ typedef struct s_pd
     t_texture       txtr_ea;
     t_floor_roof    floor;
     t_floor_roof    roof;
+    char            **map_grid;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -118,6 +119,8 @@ bool    is_num(char *str);
 int     ft_atoi(const char *str);
 void     extarct_floor_roof(char *str, t_cube *cube);
 char    **trim_newlines(char **old_argv);
+bool    valid_grid_chars(char *str);
+void    extract_map(char **map_file, int *i, t_cube *cube);
 
 // helpers test
 void    print_argv(char **argv);
