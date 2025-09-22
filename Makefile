@@ -13,7 +13,7 @@ SRC= simple_raycaster.c game_loop/basic_gl.c helpers.c main.c input_arguments/pr
 	parse_map/validate_map_utils.c parse_map/tab_split.c parse_map/split_tools.c \
 	parse_map/floor_roof.c parse_map/floor_roof_utils.c parse_map/validate_grid.c parse_map/closed_bounds.c \
 	parse_map/level_data.c parse_map/flood_fill.c game_loop/game_loop.c game_loop/game_render.c \
-	game_loop/draw_minimap.c
+	game_loop/draw_minimap.c game_loop/player_input.c
 
 OBJ=$(SRC:.c=.o)
 

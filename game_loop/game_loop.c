@@ -55,6 +55,7 @@ void game_loop(t_parsed_data *pd)
     if (mlx_image_to_window(pd->mlx, pd->screen, 0, 0) == -1)
         mind_free_all(EXIT_FAILURE);
     mlx_key_hook(pd->mlx, escape_key, pd);
+    mlx_key_hook(pd->mlx, handle_player_input, pd);
     mlx_loop_hook(pd->mlx, game_render, pd);
     mlx_loop(pd->mlx);
     mlx_terminate(pd->mlx);

@@ -38,6 +38,8 @@
 # define MM_FLOOR_COLOR 0xA085C2FF
 # define MM_PLAYER_COLOR 0xBE0000FF
 
+# define SPEED (double)0.5;
+
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.
 typedef struct s_mind_alloc
@@ -181,6 +183,7 @@ char    **grid_dup(char **grid);
 void    game_loop(t_parsed_data *pd);
 void    game_render(void *param);
 void    draw_minimap(t_parsed_data *pd);
+void    handle_player_input(mlx_key_data_t keydata, void *param);
 
 // helpers test
 void    print_argv(char **argv);
