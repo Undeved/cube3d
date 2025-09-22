@@ -51,7 +51,7 @@ void    evaluate_input(int argc, char **argv)
     }
     if (ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0)
     {
-        print_comm("Invalid Map Name.\n");
+        print_error("Error\nInvalid Map Name.\n");
         exit(EXIT_SUCCESS);
     }
 }

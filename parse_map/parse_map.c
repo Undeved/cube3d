@@ -7,6 +7,7 @@ static void closer(int *fd)
     *fd = -1;
 }
 
+// refactor this and handle if gnl fails better.
 static void read_map_file(char *map_path, t_cube *cube)
 {
     char    *line;
@@ -15,7 +16,7 @@ static void read_map_file(char *map_path, t_cube *cube)
 
     cube->pd.fd = open(map_path, O_RDONLY);
     if (cube->pd.fd == -1)
-        mind_free_all(EXIT_FAILURE); // print error no such file
+        mind_free_all(EXIT_FAILURE);
     count = 0;
     line = get_next_line(cube->pd.fd);
     while (line != NULL)
@@ -49,10 +50,37 @@ static void read_map_file(char *map_path, t_cube *cube)
     closer(&cube->pd.fd);
 }
 
+static void init_textures(t_cube *cube)
+{
+    cube->pd.txtr_no.path = NULL;
+    cube->pd.txtr_so.path = NULL;
+    cube->pd.txtr_we.path = NULL;
+    cube->pd.txtr_ea.path = NULL;
+    cube->pd.txtr_no.already_extracted = false;
+    cube->pd.txtr_so.already_extracted = false;
+    cube->pd.txtr_we.already_extracted = false;
+    cube->pd.txtr_ea.already_extracted = false;
+    cube->pd.txtr_no.dir = NORTH_TXT;
+    cube->pd.txtr_so.dir = SOUTH_TXT;
+    cube->pd.txtr_we.dir = WEST_TXT;
+    cube->pd.txtr_ea.dir = EAST_TXT;
+    cube->pd.floor.already_extracted = false;
+    cube->pd.roof.already_extracted = false;
+}
+
+static void init_parsed_data(t_cube *cube)
+{
+    cube->pd.fd = -1;
+    cube->pd.map_file = NULL;
+    init_textures(cube);
+}
+
 void    parse_map(char *map_path, t_cube *cube)
 {
+    init_parsed_data(cube);
     cube->map_path = allocate_gc(ft_strdup(map_path));
     read_map_file(cube->map_path, cube);
-    validate_map(cube->pd.map_file);
+    cube->pd.map_file = trim_newlines(cube->pd.map_file);
+    validate_map(cube->pd.map_file, cube);
 }
 

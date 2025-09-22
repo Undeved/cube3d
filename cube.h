@@ -25,8 +25,8 @@
 # endif
 
 // our Macros
-# define HEIGHT 600
-# define WIDTH 800
+# define HEIGHT 1080
+# define WIDTH 1920
 # define TITLE "CUBE 3D"
 
 
@@ -39,11 +39,40 @@ typedef struct s_mind_alloc
 	struct s_mind_alloc	*next;
 }	t_mind_alloc;
 
+typedef enum e_direction
+{
+    NORTH_TXT,
+    SOUTH_TXT,
+    WEST_TXT,
+    EAST_TXT
+}   t_direction;
+
+typedef struct s_texture
+{
+    t_direction dir;
+    char        *path;
+    bool        already_extracted;
+}   t_texture;
+
+typedef struct s_floor_roof
+{
+    unsigned char   r;
+    unsigned char   g;
+    unsigned char   b;
+    bool        already_extracted;
+}   t_floor_roof;
+
 typedef struct s_pd
 {
     // parsed data
-    char    **map_file;
-    int     fd;
+    char            **map_file;
+    int             fd;
+    t_texture       txtr_no;
+    t_texture       txtr_so;
+    t_texture       txtr_we;
+    t_texture       txtr_ea;
+    t_floor_roof    floor;
+    t_floor_roof    roof;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -54,7 +83,7 @@ typedef struct s_cube
 
 
 // Validate input args.
-int     ft_strlen(char *str);
+size_t  ft_strlen(char *str);
 void    print_error(char *str);
 void    print_comm(char *str);
 void    evaluate_input(int argc, char **argv);
@@ -76,13 +105,23 @@ char	*gnl_ft_strchr(const char *s, int c);
 char	*gnl_ft_substr(char *s, unsigned int start, size_t len);
 
 // Validate map.
-void    validate_map(char **map_file);
-void north_texture(char **map_file);
+void    validate_map(char **map_file, t_cube *cube);
+void    validate_textures(char **map_file, t_cube *cube);
+char	**tab_split(char *s, char *sep);
 char	*ft_strchr(char	*s, int c);
-int	ft_strcmp(char *s1, char *s2);
+int     ft_strcmp(char *s1, char *s2);
+size_t	arg_count(char **argv);
+char    *ft_substr(char *s, size_t start, size_t len);
+bool    validate_floor_roof(char *str);
+bool    validate_floor_roof(char *str);
+bool    is_num(char *str);
+int     ft_atoi(const char *str);
+void     extarct_floor_roof(char *str, t_cube *cube);
+char    **trim_newlines(char **old_argv);
 
 // helpers test
 void    print_argv(char **argv);
-void simple_raycast(void* param);
+void    simple_raycast(void* param);
+void    basic_game_loop(void);
 
 #endif

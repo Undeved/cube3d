@@ -12,34 +12,29 @@
 
 #include "cube.h"
 
-void escape_handler(mlx_key_data_t keydata, void* param)
+static void print_parsed_data(t_parsed_data *pd)
 {
-    mlx_t   *mlx;
+    printf("file descriptor --> %d\n", pd->fd);
+    printf("north texture path --> %s\nalready extracted = %d\n", pd->txtr_no.path, pd->txtr_no.already_extracted);
+    printf("south texture path --> %s\nalready extracted = %d\n", pd->txtr_so.path, pd->txtr_so.already_extracted);
+    printf("west texture path --> %s\nalready extracted = %d\n", pd->txtr_we.path, pd->txtr_we.already_extracted);
+    printf("east texture path --> %s\nalready extracted = %d\n", pd->txtr_ea.path, pd->txtr_ea.already_extracted);
 
-    mlx = param;
-    (void)mlx;
-    if (keydata.key == MLX_KEY_ESCAPE)
-        mind_free_all(EXIT_SUCCESS);
+    printf("floor --> already extracted %d\nR:%d, G:%d, B:%d\n", pd->floor.already_extracted, pd->floor.r, pd->floor.g, pd->floor.b);
+    printf("ceiling --> already extracted %d\nR:%d, G:%d, B:%d\n", pd->roof.already_extracted, pd->roof.r, pd->roof.g, pd->roof.b);
 }
 
 int main(int argc, char **argv)
 {
     t_cube  cube;
-    mlx_t   *mlx;
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
     // print_argv(cube.pd.map_file);
+    print_parsed_data(&cube.pd);
 
     // testing window creation
-    mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
-    if (!mlx)
-        mind_free_all(EXIT_FAILURE);
-    mlx_key_hook(mlx, escape_handler, mlx);
-    mlx_loop_hook(mlx, simple_raycast,mlx);
-    mlx_loop(mlx);
-    mlx_terminate(mlx);
-    //--- done testing
+    basic_game_loop();
 
-    return (EXIT_SUCCESS);
+    return (mind_free_all(EXIT_SUCCESS), EXIT_SUCCESS);
 }

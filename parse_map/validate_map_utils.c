@@ -18,21 +18,68 @@ char	*ft_strchr(char	*s, int c)
 	return (0);
 }
 
-void north_texture(char **map_file) // pass struct
+size_t	arg_count(char **argv)
+{
+	size_t	argc;
+
+	argc = 0;
+    if (!argv)
+    {
+        return (0);
+    }
+	while (argv[argc])
+		argc++;
+	return (argc);
+}
+
+
+static bool valid_texture_string(char *str)
+{
+    char    **args;
+
+    if (ft_strlen(str) < 1)
+        return (false);
+    args = tab_split(str, " \t");
+    if(arg_count(args) != 2)
+        return (false);
+    return (true);
+}
+
+static void extracting_each(t_texture *texture, char *str)
+{
+    if (texture->already_extracted)
+    {
+        print_error("Error\nNo Double Textures.\n");
+        mind_free_all(EXIT_FAILURE);
+    }
+    texture->path = tab_split(str, " \t")[1];
+    texture->already_extracted = true;
+}
+
+static void extract_texture(char *str, char first, char second,t_cube *cube) 
+{
+    if (first == 'N' && second == 'O')
+        extracting_each(&cube->pd.txtr_no, str);
+    else if (first == 'S' && second == 'O')
+        extracting_each(&cube->pd.txtr_so, str);
+    else if (first == 'W' && second == 'E')
+        extracting_each(&cube->pd.txtr_we, str);
+    else if (first == 'E' && second == 'A')
+        extracting_each(&cube->pd.txtr_ea, str);
+}
+
+void validate_textures(char **map_file, t_cube *cube)
 {
     int i;
-    int count;
 
     i = 0;
-    count = 0;
-    (void)count;
     while(map_file[i])
     {
-        // code to validate NO texture and extract it.
-        // validate if more than 2 chars
-        // if first letter is N and second is O return true
-        // if valid split , argc of this split should be exactly 2
-        // second arg in split is path. extract it.
+        if (valid_texture_string(map_file[i]))
+            extract_texture(map_file[i], map_file[i][0], map_file[i][1], cube);
+        if (validate_floor_roof(map_file[i]))
+            extarct_floor_roof(map_file[i], cube);
         i++;
     }
+    // check if all four textures have been extracted.
 }
