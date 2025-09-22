@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <math.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -29,6 +30,13 @@
 # define WIDTH 1920
 # define TITLE "CUBE 3D"
 
+# define MAX_MAP 250
+# define MINI_MAP_X 20
+# define MINI_MAP_Y 25
+# define PIXEL_BLOCK 42
+# define MM_WALL_COLOR 0x7851A9FF
+# define MM_FLOOR_COLOR 0xA085C2FF
+# define MM_PLAYER_COLOR 0xBE0000FF
 
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.
@@ -62,6 +70,43 @@ typedef struct s_floor_roof
     bool        already_extracted;
 }   t_floor_roof;
 
+typedef struct s_level
+{
+    int max_x;
+    int max_y;
+}   t_level;
+
+typedef struct s_pos
+{
+    int x;
+    int y;
+}   t_pos;
+
+typedef struct s_bpos
+{
+    double x;
+    double y;
+}   t_bpos;
+
+typedef struct s_bdir
+{
+    double x;
+    double y;
+}   t_bdir;
+
+typedef struct s_player
+{
+    t_pos   pos;
+    t_bpos  bpos;
+    t_bdir  bdir;
+    char    dir;
+}   t_player;
+
+typedef struct s_minimap
+{
+    t_pos   pos;
+}   t_minimap;
+
 typedef struct s_pd
 {
     // parsed data
@@ -74,6 +119,11 @@ typedef struct s_pd
     t_floor_roof    floor;
     t_floor_roof    roof;
     char            **map_grid;
+    t_level         level;
+    t_player        player;
+    mlx_t           *mlx;
+    mlx_image_t     *screen;
+    t_minimap       minimap;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -107,7 +157,7 @@ char	*gnl_ft_substr(char *s, unsigned int start, size_t len);
 
 // Validate map.
 void    validate_map(char **map_file, t_cube *cube);
-void    validate_textures(char **map_file, t_cube *cube);
+void    validate_params(char **map_file, t_cube *cube);
 char	**tab_split(char *s, char *sep);
 char	*ft_strchr(char	*s, int c);
 int     ft_strcmp(char *s1, char *s2);
@@ -121,6 +171,16 @@ void     extarct_floor_roof(char *str, t_cube *cube);
 char    **trim_newlines(char **old_argv);
 bool    valid_grid_chars(char *str);
 void    extract_map(char **map_file, int *i, t_cube *cube);
+void    closed_bounds(t_cube *cube);
+void    get_level_data(t_cube *cube);
+void    get_player_pos(char **map_grid, int *x, int *y, char *dir);
+void    flood_fill(char **grid, t_pos pos, t_pos max);
+char    **grid_dup(char **grid);
+
+// Game loop.
+void    game_loop(t_parsed_data *pd);
+void    game_render(void *param);
+void    draw_minimap(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);

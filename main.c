@@ -39,6 +39,12 @@ static void print_parsed_data(t_parsed_data *pd)
         write(1, "]\n", 2);
         i++;
     }
+    printf("level max_x  %d\n", pd->level.max_x);
+    printf("level max_y  %d\n", pd->level.max_y);
+    printf("Player Data\n");
+    printf("player x pos %d\n", pd->player.pos.x);
+    printf("player y pos %d\n", pd->player.pos.y);
+    printf("player direction %c\n", pd->player.dir);
 }
 
 int main(int argc, char **argv)
@@ -47,6 +53,7 @@ int main(int argc, char **argv)
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
+    game_loop(&cube.pd);
     // print_argv(cube.pd.map_file);
     print_parsed_data(&cube.pd);
 

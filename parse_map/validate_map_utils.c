@@ -68,7 +68,7 @@ static void extract_texture(char *str, char first, char second,t_cube *cube)
         extracting_each(&cube->pd.txtr_ea, str);
 }
 
-void validate_textures(char **map_file, t_cube *cube)
+void validate_params(char **map_file, t_cube *cube)
 {
     int i;
 
@@ -94,5 +94,4 @@ void validate_textures(char **map_file, t_cube *cube)
         }
         i++;
     }
-    // check if all four textures have been extracted.
 }

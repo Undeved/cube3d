@@ -25,6 +25,11 @@ static void read_map_file(char *map_path, t_cube *cube)
         free(line);
         line = get_next_line(cube->pd.fd);
     }
+    if (count >= MAX_MAP)
+    {
+        print_error("Error\nBig Map.\n");
+        mind_free_all(EXIT_FAILURE);
+    }
     closer(&cube->pd.fd);
     if (count == 0)
         mind_free_all(EXIT_FAILURE);
@@ -73,6 +78,11 @@ static void init_parsed_data(t_cube *cube)
     cube->pd.fd = -1;
     cube->pd.map_file = NULL;
     cube->pd.map_grid = NULL;
+    cube->pd.level.max_x = 0;
+    cube->pd.level.max_y = 0;
+    cube->pd.player.pos.x = 0;
+    cube->pd.player.pos.y = 0;
+    cube->pd.player.dir = 'E';
     init_textures(cube);
 }
 

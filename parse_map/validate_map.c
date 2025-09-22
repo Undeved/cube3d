@@ -21,7 +21,6 @@ char    **trim_newlines(char **old_argv)
     int     i;
 
     argc = arg_count(old_argv);
-    printf("================> argc %d\n", argc);
     new_argv = allocate_gc(malloc(sizeof(char *) * (argc + 1)));
     i = 0;
     while (old_argv[i])
@@ -38,5 +37,6 @@ char    **trim_newlines(char **old_argv)
 
 void    validate_map(char **map_file, t_cube *cube)
 {
-    validate_textures(map_file, cube);
+    validate_params(map_file, cube);
+    closed_bounds(cube);
 }
