@@ -31,7 +31,7 @@ void    put_circle_block(mlx_image_t *screen, double start_x, double start_y, ui
     center_x = PIXEL_BLOCK / 2;
     center_y = PIXEL_BLOCK / 2;
     y = 0;
-    radious = PIXEL_BLOCK / 2;
+    radious = PIXEL_BLOCK / 4;
     while (y < PIXEL_BLOCK)
     {
         x = 0;
@@ -56,10 +56,10 @@ static bool is_player(char p)
     return (false);
 }
 
-static void draw_mini_player(t_parsed_data *pd, int x, int y)
+static void draw_mini_player(t_parsed_data *pd)
 {
     // int step;
-    put_circle_block(pd->screen, pd->player.bpos.x + x * PIXEL_BLOCK, pd->player.bpos.y + y * PIXEL_BLOCK, MM_PLAYER_COLOR);
+    put_circle_block(pd->screen, pd->minimap.pos.x + pd->player.bpos.x * PIXEL_BLOCK, pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, MM_PLAYER_COLOR);
     // step = 0;
     // while (step <= 2)
     // {
@@ -87,7 +87,7 @@ void draw_minimap(t_parsed_data *pd)
             else if (pd->map_grid[y][x] == '0' || is_player(pd->map_grid[y][x]))
                 put_pixel_block(pd->screen, pd->minimap.pos.x + x * PIXEL_BLOCK, pd->minimap.pos.y + y * PIXEL_BLOCK, MM_FLOOR_COLOR);
             if (is_player(pd->map_grid[y][x]))
-                draw_mini_player(pd, x, y);
+                draw_mini_player(pd);
             x++;
         }
         y++;
