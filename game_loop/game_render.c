@@ -6,5 +6,6 @@ void    game_render(void *param)
 
     pd = param;
     update_player_data(pd);
+    raycast_render(pd);
     draw_minimap(pd);
 }
