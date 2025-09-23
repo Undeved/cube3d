@@ -33,14 +33,21 @@
 # define MAX_MAP 250
 # define MINI_MAP_X 20
 # define MINI_MAP_Y 25
-# define PIXEL_BLOCK 32
+# define PIXEL_BLOCK 26
+# define PIXEL_RAY 4
 # define MM_WALL_COLOR 0x7851A9FF
 # define MM_FLOOR_COLOR 0xA085C2FF
 # define MM_PLAYER_COLOR 0xBE0000FF
 
 # define PI 3.141592
-# define SPEED 0.08;
+# define SPEED 0.07;
+# define STRAFE_SPEED 0.04;
 # define ROT_SPEED 0.1
+# define NUDGE_FROM_WALL 0.5
+
+# define COLLISION 0.2
+
+# define KEYS_NUMBER 350
 
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.
@@ -105,6 +112,8 @@ typedef struct s_player
     t_bdir  bdir;
     double  rotdir;
     char    dir;
+    t_bpos   offset;
+    t_bpos   new_pos;
 }   t_player;
 
 typedef struct s_minimap
@@ -114,7 +123,7 @@ typedef struct s_minimap
 
 typedef struct s_keys
 {
-    bool    pressed[350];
+    bool    pressed[KEYS_NUMBER];
 }   t_keys;
 
 typedef struct s_pd
@@ -129,6 +138,7 @@ typedef struct s_pd
     t_floor_roof    floor;
     t_floor_roof    roof;
     char            **map_grid;
+    int             player_count;
     t_level         level;
     t_player        player;
     mlx_t           *mlx;
@@ -180,7 +190,7 @@ bool    is_num(char *str);
 int     ft_atoi(const char *str);
 void     extarct_floor_roof(char *str, t_cube *cube);
 char    **trim_newlines(char **old_argv);
-bool    valid_grid_chars(char *str);
+bool valid_grid_chars(char *str, int *player_count, bool map_grid);
 void    extract_map(char **map_file, int *i, t_cube *cube);
 void    closed_bounds(t_cube *cube);
 void    get_level_data(t_cube *cube);
@@ -193,10 +203,12 @@ void    game_loop(t_parsed_data *pd);
 void    game_render(void *param);
 void    draw_minimap(t_parsed_data *pd);
 void    handle_player_input(mlx_key_data_t keydata, void *param);
+void    update_player_data(t_parsed_data *pd);
+
+// Raycast
+void    raycast_render(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
-void    simple_raycast(void* param);
-void    basic_game_loop(void);
 
 #endif

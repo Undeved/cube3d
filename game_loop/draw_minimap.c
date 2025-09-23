@@ -1,5 +1,23 @@
 #include "../cube.h"
 
+void    put_pixel_ray(mlx_image_t *screen, int start_x, int start_y, uint32_t color)
+{
+    int x;
+    int y;
+
+    y = 0;
+    while (y < PIXEL_RAY)
+    {
+        x = 0;
+        while (x < PIXEL_RAY)
+        {
+            mlx_put_pixel(screen, start_x + x, start_y + y, color);
+            x++;
+        }
+        y++;
+    }
+}
+
 void    put_pixel_block(mlx_image_t *screen, int start_x, int start_y, uint32_t color)
 {
     int x;
@@ -34,7 +52,7 @@ void    put_circle_block(mlx_image_t *screen, double start_x, double start_y, ui
     center_x = PIXEL_BLOCK / 2;
     center_y = PIXEL_BLOCK / 2;
     y = 0;
-    radious = PIXEL_BLOCK / 4;
+    radious = PIXEL_BLOCK / 4.5;
     while (y < PIXEL_BLOCK)
     {
         x = 0;
@@ -43,7 +61,7 @@ void    put_circle_block(mlx_image_t *screen, double start_x, double start_y, ui
             dx = x - center_x;
             dy = y - center_y;
             if ((dx * dx + dy * dy) <= radious * radious)
-                mlx_put_pixel(screen, start_x + x, start_y + y, color);
+                mlx_put_pixel(screen, start_x - (PIXEL_BLOCK / 2) + x, start_y - (PIXEL_BLOCK / 2) + y, color);
             x++;
         }
         y++;
@@ -62,15 +80,15 @@ static bool is_player(char p)
 // helper to see player direction
 static void draw_direction_ray(t_parsed_data *pd, double px, double py, uint32_t color)
 {
-    double step;
+    int step;
 
-    step = 0.0;
-    while(step <= 8)
+    step = 0;
+    while(step <= 15)
     {
         px = px + pd->player.bdir.x;
         py = py + pd->player.bdir.y;
-        mlx_put_pixel(pd->screen, px + PIXEL_BLOCK / 2, py + PIXEL_BLOCK / 2, color);
-        step += 0.1;
+        put_pixel_ray(pd->screen, px, py, color);
+        step++;
     }   
 }
 
@@ -79,7 +97,7 @@ static void draw_mini_player(t_parsed_data *pd)
     put_circle_block(pd->screen, pd->minimap.pos.x + pd->player.bpos.x * PIXEL_BLOCK,
         pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, MM_PLAYER_COLOR);
     draw_direction_ray(pd, pd->minimap.pos.x + pd->player.bpos.x *
-        PIXEL_BLOCK,pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, 0xFFFFFFFF);
+        PIXEL_BLOCK,pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, MM_PLAYER_COLOR);
 }
 
 void draw_minimap(t_parsed_data *pd)

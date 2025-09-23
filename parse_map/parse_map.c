@@ -83,6 +83,7 @@ static void init_parsed_data(t_cube *cube)
     cube->pd.player.pos.x = 0;
     cube->pd.player.pos.y = 0;
     cube->pd.player.dir = 'E';
+    cube->pd.player_count = 0;
     init_textures(cube);
 }
 

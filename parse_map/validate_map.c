@@ -38,5 +38,10 @@ char    **trim_newlines(char **old_argv)
 void    validate_map(char **map_file, t_cube *cube)
 {
     validate_params(map_file, cube);
+    if(cube->pd.player_count != 1)
+    {
+        print_error("Error\nInvalid Player Parameter.\n");
+        mind_free_all(EXIT_FAILURE);
+    }
     closed_bounds(cube);
 }

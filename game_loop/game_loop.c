@@ -28,11 +28,21 @@ static void precise_direction(t_parsed_data *pd)
     }
 }
 
+static void init_key_flags(t_parsed_data *pd)
+{
+    int i;
+
+    i = 0;
+    while (i < KEYS_NUMBER)
+        pd->keys.pressed[i++] = false;
+}
+
 static void init_precise_data(t_parsed_data *pd)
 {
-    pd->player.bpos.x = pd->player.pos.x;
-    pd->player.bpos.y = pd->player.pos.y;
+    pd->player.bpos.x = pd->player.pos.x + NUDGE_FROM_WALL;
+    pd->player.bpos.y = pd->player.pos.y + NUDGE_FROM_WALL;
     precise_direction(pd);
+    init_key_flags(pd);
 }
 
 void game_loop(t_parsed_data *pd)

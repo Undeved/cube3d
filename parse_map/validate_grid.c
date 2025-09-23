@@ -1,6 +1,6 @@
 #include "../cube.h"
 
-bool valid_grid_chars(char *str)
+bool valid_grid_chars(char *str, int *player_count, bool map_grid)
 {
     int i;
 
@@ -9,6 +9,10 @@ bool valid_grid_chars(char *str)
         return (false);
     while (str[i])
     {
+        if ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E'  || str[i] == 'W') && map_grid)
+        {
+            (*player_count)++;
+        }
         if (str[i] != '1' && str[i] != '0' && str[i] != 'N'
             && str[i] != 'S' && str[i] != 'E' 
             && str[i] != 'W' && str[i] != ' ')
@@ -45,7 +49,7 @@ void    extract_map(char **map_file, int *i, t_cube *cube)
     j = 0;
     while (map_file[*i])
     {
-        if (valid_grid_chars(map_file[*i]))
+        if (valid_grid_chars(map_file[*i], &cube->pd.player_count, true))
             cube->pd.map_grid[j] = map_file[*i];
         else
         {

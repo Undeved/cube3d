@@ -79,13 +79,14 @@ void validate_params(char **map_file, t_cube *cube)
             extarct_floor_roof(map_file[i], cube);
         if (valid_texture_string(map_file[i]))
             extract_texture(map_file[i], map_file[i][0], map_file[i][1], cube);
-        if (valid_grid_chars(map_file[i]) && !validate_floor_roof(map_file[i]) && !valid_texture_string(map_file[i]))
+        if (valid_grid_chars(map_file[i], &cube->pd.player_count, false)
+            && !validate_floor_roof(map_file[i]) && !valid_texture_string(map_file[i]))
         {
             extract_map(map_file, &i, cube);
             break;
         }
         if ((map_file[i] && map_file[i][0] != '\0') 
-            && !valid_grid_chars(map_file[i]) 
+            && !valid_grid_chars(map_file[i], &cube->pd.player_count, false) 
             && !validate_floor_roof(map_file[i]) 
             && !valid_texture_string(map_file[i]))
         {
