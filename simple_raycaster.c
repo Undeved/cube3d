@@ -17,7 +17,7 @@ static char *map[] = {
 #define FOV (M_PI / 3)       // 60 degrees
 #define NUM_RAYS WIDTH       // one ray per screen column
 #define MOVE_SPEED 0.1
-#define ROT_SPEED  0.08
+#define ROT_SPEEDC  0.08
 #define WALL_COLOR 0xFF0000FF  // red walls (RGBA)
 
 /* Player state (now static so it persists between frames) */
@@ -68,9 +68,9 @@ void simple_raycast(void *param)
         if (!is_wall(px, ny)) py = ny;
     }
     if (mlx_is_key_down(mlx, MLX_KEY_A))
-        pa -= ROT_SPEED;
+        pa -= ROT_SPEEDC;
     if (mlx_is_key_down(mlx, MLX_KEY_D))
-        pa += ROT_SPEED;
+        pa += ROT_SPEEDC;
 
     /* clear image */
     for (int i = 0; i < WIDTH * HEIGHT; i++)

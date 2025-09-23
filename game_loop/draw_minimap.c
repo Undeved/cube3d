@@ -59,17 +59,27 @@ static bool is_player(char p)
     return (false);
 }
 
+// helper to see player direction
+static void draw_direction_ray(t_parsed_data *pd, double px, double py, uint32_t color)
+{
+    double step;
+
+    step = 0.0;
+    while(step <= 8)
+    {
+        px = px + pd->player.bdir.x;
+        py = py + pd->player.bdir.y;
+        mlx_put_pixel(pd->screen, px + PIXEL_BLOCK / 2, py + PIXEL_BLOCK / 2, color);
+        step += 0.1;
+    }   
+}
+
 static void draw_mini_player(t_parsed_data *pd)
 {
-    // int step;
-    put_circle_block(pd->screen, pd->minimap.pos.x + pd->player.bpos.x * PIXEL_BLOCK, pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, MM_PLAYER_COLOR);
-    // step = 0;
-    // while (step <= 2)
-    // {
-    //     pd->player.bpos.x = pd->player.bpos.x + pd->player.bdir.x;
-    //     pd->player.bpos.y = pd->player.bpos.y + pd->player.bdir.y;
-    //     step++;
-    // }
+    put_circle_block(pd->screen, pd->minimap.pos.x + pd->player.bpos.x * PIXEL_BLOCK,
+        pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, MM_PLAYER_COLOR);
+    draw_direction_ray(pd, pd->minimap.pos.x + pd->player.bpos.x *
+        PIXEL_BLOCK,pd->minimap.pos.y + pd->player.bpos.y * PIXEL_BLOCK, 0xFFFFFFFF);
 }
 
 void draw_minimap(t_parsed_data *pd)

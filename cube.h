@@ -33,12 +33,14 @@
 # define MAX_MAP 250
 # define MINI_MAP_X 20
 # define MINI_MAP_Y 25
-# define PIXEL_BLOCK 42
+# define PIXEL_BLOCK 32
 # define MM_WALL_COLOR 0x7851A9FF
 # define MM_FLOOR_COLOR 0xA085C2FF
 # define MM_PLAYER_COLOR 0xBE0000FF
 
-# define SPEED (double)0.5;
+# define PI 3.141592
+# define SPEED 0.08;
+# define ROT_SPEED 0.1
 
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.
@@ -101,6 +103,7 @@ typedef struct s_player
     t_pos   pos;
     t_bpos  bpos;
     t_bdir  bdir;
+    double  rotdir;
     char    dir;
 }   t_player;
 
@@ -108,6 +111,11 @@ typedef struct s_minimap
 {
     t_pos   pos;
 }   t_minimap;
+
+typedef struct s_keys
+{
+    bool    pressed[350];
+}   t_keys;
 
 typedef struct s_pd
 {
@@ -126,6 +134,7 @@ typedef struct s_pd
     mlx_t           *mlx;
     mlx_image_t     *screen;
     t_minimap       minimap;
+    t_keys          keys;
 }   t_parsed_data;
 
 typedef struct s_cube

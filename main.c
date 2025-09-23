@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static void print_parsed_data(t_parsed_data *pd)
+void print_parsed_data(t_parsed_data *pd)
 {
     printf("file descriptor --> %d\n", pd->fd);
     printf("north texture path --> %s\nalready extracted = %d\n", pd->txtr_no.path, pd->txtr_no.already_extracted);
@@ -53,12 +53,13 @@ int main(int argc, char **argv)
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
+    // print_parsed_data(&cube.pd);
     game_loop(&cube.pd);
     // print_argv(cube.pd.map_file);
-    print_parsed_data(&cube.pd);
 
     // testing window creation
     // basic_game_loop();
 
     return (mind_free_all(EXIT_SUCCESS), EXIT_SUCCESS);
 }
+ 
