@@ -110,9 +110,13 @@ void    handle_player_input(mlx_key_data_t keydata, void *param)
     pd = param;
     if (keydata.key == MLX_KEY_ESCAPE)
     {
-        mlx_terminate(pd->mlx);
-        mind_free_all(EXIT_SUCCESS);
+        mlx_close_window(pd->mlx);
+        return ;
+        // mind_free_all(EXIT_SUCCESS);
     }
+    handle_ui_input(keydata, pd);
+    if (!pd->level.game_started)
+        return ;
     if (keydata.key >= 0 && keydata.key < KEYS_NUMBER)
     {
         if (keydata.action == MLX_PRESS)

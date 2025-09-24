@@ -117,6 +117,8 @@ void draw_minimap(t_parsed_data *pd)
                 put_pixel_block(pd->screen, pd->minimap.pos.x + x * PIXEL_BLOCK, pd->minimap.pos.y + y * PIXEL_BLOCK, MM_WALL_COLOR);
             else if (pd->map_grid[y][x] == '0' || is_player(pd->map_grid[y][x]))
                 put_pixel_block(pd->screen, pd->minimap.pos.x + x * PIXEL_BLOCK, pd->minimap.pos.y + y * PIXEL_BLOCK, MM_FLOOR_COLOR);
+            else if (pd->map_grid[y][x] == ' ')
+                    put_pixel_block(pd->screen, pd->minimap.pos.x + x * PIXEL_BLOCK, pd->minimap.pos.y + y * PIXEL_BLOCK, 0x3F4250FF);
             draw_mini_player(pd);
             x++;
         }

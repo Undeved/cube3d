@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
-    print_parsed_data(&cube.pd);
+    // print_parsed_data(&cube.pd);
     game_loop(&cube.pd);
     // print_argv(cube.pd.map_file);
 

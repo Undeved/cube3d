@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42
+CMAKE_SOURCE_DIR = /home/oimzilen/Desktop/cube3d/MLX42
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build
+CMAKE_BINARY_DIR = /home/oimzilen/Desktop/cube3d/MLX42/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/mlx42.dir/depend.make
@@ -69,324 +69,324 @@ include CMakeFiles/mlx42.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/mlx42.dir/flags.make
 
-mlx_vert_shader.c: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/shaders/default.vert
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building vertex shader"
-	/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/tools/compile_shader.sh /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/shaders/default.vert 0 > /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_vert_shader.c
+mlx_vert_shader.c: /home/oimzilen/Desktop/cube3d/MLX42/shaders/default.vert
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building vertex shader"
+	/home/oimzilen/Desktop/cube3d/MLX42/tools/compile_shader.sh /home/oimzilen/Desktop/cube3d/MLX42/shaders/default.vert 0 > /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_vert_shader.c
 
-mlx_frag_shader.c: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/shaders/default.frag
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building fragment shader"
-	/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/tools/compile_shader.sh /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/shaders/default.frag 0 > /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_frag_shader.c
+mlx_frag_shader.c: /home/oimzilen/Desktop/cube3d/MLX42/shaders/default.frag
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building fragment shader"
+	/home/oimzilen/Desktop/cube3d/MLX42/tools/compile_shader.sh /home/oimzilen/Desktop/cube3d/MLX42/shaders/default.frag 0 > /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_frag_shader.c
 
 CMakeFiles/mlx42.dir/codegen:
 .PHONY : CMakeFiles/mlx42.dir/codegen
 
 CMakeFiles/mlx42.dir/src/mlx_cursor.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_cursor.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_cursor.c
+CMakeFiles/mlx42.dir/src/mlx_cursor.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_cursor.c
 CMakeFiles/mlx42.dir/src/mlx_cursor.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/mlx42.dir/src/mlx_cursor.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_cursor.c.o -MF CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_cursor.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_cursor.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/mlx42.dir/src/mlx_cursor.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_cursor.c.o -MF CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_cursor.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_cursor.c
 
 CMakeFiles/mlx42.dir/src/mlx_cursor.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_cursor.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_cursor.c > CMakeFiles/mlx42.dir/src/mlx_cursor.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_cursor.c > CMakeFiles/mlx42.dir/src/mlx_cursor.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_cursor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_cursor.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_cursor.c -o CMakeFiles/mlx42.dir/src/mlx_cursor.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_cursor.c -o CMakeFiles/mlx42.dir/src/mlx_cursor.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_exit.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_exit.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_exit.c
+CMakeFiles/mlx42.dir/src/mlx_exit.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_exit.c
 CMakeFiles/mlx42.dir/src/mlx_exit.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/mlx42.dir/src/mlx_exit.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_exit.c.o -MF CMakeFiles/mlx42.dir/src/mlx_exit.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_exit.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_exit.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/mlx42.dir/src/mlx_exit.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_exit.c.o -MF CMakeFiles/mlx42.dir/src/mlx_exit.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_exit.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_exit.c
 
 CMakeFiles/mlx42.dir/src/mlx_exit.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_exit.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_exit.c > CMakeFiles/mlx42.dir/src/mlx_exit.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_exit.c > CMakeFiles/mlx42.dir/src/mlx_exit.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_exit.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_exit.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_exit.c -o CMakeFiles/mlx42.dir/src/mlx_exit.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_exit.c -o CMakeFiles/mlx42.dir/src/mlx_exit.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_images.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_images.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_images.c
+CMakeFiles/mlx42.dir/src/mlx_images.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_images.c
 CMakeFiles/mlx42.dir/src/mlx_images.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/mlx42.dir/src/mlx_images.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_images.c.o -MF CMakeFiles/mlx42.dir/src/mlx_images.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_images.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_images.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/mlx42.dir/src/mlx_images.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_images.c.o -MF CMakeFiles/mlx42.dir/src/mlx_images.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_images.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_images.c
 
 CMakeFiles/mlx42.dir/src/mlx_images.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_images.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_images.c > CMakeFiles/mlx42.dir/src/mlx_images.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_images.c > CMakeFiles/mlx42.dir/src/mlx_images.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_images.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_images.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_images.c -o CMakeFiles/mlx42.dir/src/mlx_images.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_images.c -o CMakeFiles/mlx42.dir/src/mlx_images.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_init.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_init.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_init.c
+CMakeFiles/mlx42.dir/src/mlx_init.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_init.c
 CMakeFiles/mlx42.dir/src/mlx_init.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/mlx42.dir/src/mlx_init.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_init.c.o -MF CMakeFiles/mlx42.dir/src/mlx_init.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_init.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_init.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/mlx42.dir/src/mlx_init.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_init.c.o -MF CMakeFiles/mlx42.dir/src/mlx_init.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_init.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_init.c
 
 CMakeFiles/mlx42.dir/src/mlx_init.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_init.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_init.c > CMakeFiles/mlx42.dir/src/mlx_init.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_init.c > CMakeFiles/mlx42.dir/src/mlx_init.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_init.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_init.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_init.c -o CMakeFiles/mlx42.dir/src/mlx_init.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_init.c -o CMakeFiles/mlx42.dir/src/mlx_init.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_keys.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_keys.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_keys.c
+CMakeFiles/mlx42.dir/src/mlx_keys.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_keys.c
 CMakeFiles/mlx42.dir/src/mlx_keys.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/mlx42.dir/src/mlx_keys.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_keys.c.o -MF CMakeFiles/mlx42.dir/src/mlx_keys.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_keys.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_keys.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/mlx42.dir/src/mlx_keys.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_keys.c.o -MF CMakeFiles/mlx42.dir/src/mlx_keys.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_keys.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_keys.c
 
 CMakeFiles/mlx42.dir/src/mlx_keys.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_keys.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_keys.c > CMakeFiles/mlx42.dir/src/mlx_keys.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_keys.c > CMakeFiles/mlx42.dir/src/mlx_keys.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_keys.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_keys.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_keys.c -o CMakeFiles/mlx42.dir/src/mlx_keys.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_keys.c -o CMakeFiles/mlx42.dir/src/mlx_keys.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_loop.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_loop.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_loop.c
+CMakeFiles/mlx42.dir/src/mlx_loop.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_loop.c
 CMakeFiles/mlx42.dir/src/mlx_loop.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/mlx42.dir/src/mlx_loop.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_loop.c.o -MF CMakeFiles/mlx42.dir/src/mlx_loop.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_loop.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_loop.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/mlx42.dir/src/mlx_loop.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_loop.c.o -MF CMakeFiles/mlx42.dir/src/mlx_loop.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_loop.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_loop.c
 
 CMakeFiles/mlx42.dir/src/mlx_loop.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_loop.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_loop.c > CMakeFiles/mlx42.dir/src/mlx_loop.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_loop.c > CMakeFiles/mlx42.dir/src/mlx_loop.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_loop.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_loop.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_loop.c -o CMakeFiles/mlx42.dir/src/mlx_loop.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_loop.c -o CMakeFiles/mlx42.dir/src/mlx_loop.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_monitor.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_monitor.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_monitor.c
+CMakeFiles/mlx42.dir/src/mlx_monitor.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_monitor.c
 CMakeFiles/mlx42.dir/src/mlx_monitor.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/mlx42.dir/src/mlx_monitor.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_monitor.c.o -MF CMakeFiles/mlx42.dir/src/mlx_monitor.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_monitor.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_monitor.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/mlx42.dir/src/mlx_monitor.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_monitor.c.o -MF CMakeFiles/mlx42.dir/src/mlx_monitor.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_monitor.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_monitor.c
 
 CMakeFiles/mlx42.dir/src/mlx_monitor.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_monitor.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_monitor.c > CMakeFiles/mlx42.dir/src/mlx_monitor.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_monitor.c > CMakeFiles/mlx42.dir/src/mlx_monitor.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_monitor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_monitor.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_monitor.c -o CMakeFiles/mlx42.dir/src/mlx_monitor.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_monitor.c -o CMakeFiles/mlx42.dir/src/mlx_monitor.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_mouse.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_mouse.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_mouse.c
+CMakeFiles/mlx42.dir/src/mlx_mouse.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_mouse.c
 CMakeFiles/mlx42.dir/src/mlx_mouse.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/mlx42.dir/src/mlx_mouse.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_mouse.c.o -MF CMakeFiles/mlx42.dir/src/mlx_mouse.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_mouse.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_mouse.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/mlx42.dir/src/mlx_mouse.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_mouse.c.o -MF CMakeFiles/mlx42.dir/src/mlx_mouse.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_mouse.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_mouse.c
 
 CMakeFiles/mlx42.dir/src/mlx_mouse.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_mouse.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_mouse.c > CMakeFiles/mlx42.dir/src/mlx_mouse.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_mouse.c > CMakeFiles/mlx42.dir/src/mlx_mouse.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_mouse.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_mouse.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_mouse.c -o CMakeFiles/mlx42.dir/src/mlx_mouse.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_mouse.c -o CMakeFiles/mlx42.dir/src/mlx_mouse.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_put_pixel.c
+CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_put_pixel.c
 CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o -MF CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_put_pixel.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o -MF CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_put_pixel.c
 
 CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_put_pixel.c > CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_put_pixel.c > CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_put_pixel.c -o CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_put_pixel.c -o CMakeFiles/mlx42.dir/src/mlx_put_pixel.c.s
 
 CMakeFiles/mlx42.dir/src/mlx_window.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/mlx_window.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_window.c
+CMakeFiles/mlx42.dir/src/mlx_window.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_window.c
 CMakeFiles/mlx42.dir/src/mlx_window.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/mlx42.dir/src/mlx_window.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_window.c.o -MF CMakeFiles/mlx42.dir/src/mlx_window.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_window.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_window.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/mlx42.dir/src/mlx_window.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/mlx_window.c.o -MF CMakeFiles/mlx42.dir/src/mlx_window.c.o.d -o CMakeFiles/mlx42.dir/src/mlx_window.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_window.c
 
 CMakeFiles/mlx42.dir/src/mlx_window.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/mlx_window.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_window.c > CMakeFiles/mlx42.dir/src/mlx_window.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_window.c > CMakeFiles/mlx42.dir/src/mlx_window.c.i
 
 CMakeFiles/mlx42.dir/src/mlx_window.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/mlx_window.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/mlx_window.c -o CMakeFiles/mlx42.dir/src/mlx_window.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/mlx_window.c -o CMakeFiles/mlx42.dir/src/mlx_window.c.s
 
 CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_error.c
+CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_error.c
 CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_error.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_error.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_error.c
 
 CMakeFiles/mlx42.dir/src/utils/mlx_error.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/utils/mlx_error.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_error.c > CMakeFiles/mlx42.dir/src/utils/mlx_error.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_error.c > CMakeFiles/mlx42.dir/src/utils/mlx_error.c.i
 
 CMakeFiles/mlx42.dir/src/utils/mlx_error.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/utils/mlx_error.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_error.c -o CMakeFiles/mlx42.dir/src/utils/mlx_error.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_error.c -o CMakeFiles/mlx42.dir/src/utils/mlx_error.c.s
 
 CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_list.c
+CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_list.c
 CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_list.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_list.c
 
 CMakeFiles/mlx42.dir/src/utils/mlx_list.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/utils/mlx_list.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_list.c > CMakeFiles/mlx42.dir/src/utils/mlx_list.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_list.c > CMakeFiles/mlx42.dir/src/utils/mlx_list.c.i
 
 CMakeFiles/mlx42.dir/src/utils/mlx_list.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/utils/mlx_list.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_list.c -o CMakeFiles/mlx42.dir/src/utils/mlx_list.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_list.c -o CMakeFiles/mlx42.dir/src/utils/mlx_list.c.s
 
 CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_utils.c
+CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_utils.c
 CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_utils.c
 
 CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_utils.c > CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_utils.c > CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.i
 
 CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_utils.c -o CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_utils.c -o CMakeFiles/mlx42.dir/src/utils/mlx_utils.c.s
 
 CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_compare.c
+CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_compare.c
 CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_compare.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o -MF CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o.d -o CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_compare.c
 
 CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_compare.c > CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_compare.c > CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.i
 
 CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/utils/mlx_compare.c -o CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/utils/mlx_compare.c -o CMakeFiles/mlx42.dir/src/utils/mlx_compare.c.s
 
 CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/font/mlx_font.c
+CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/font/mlx_font.c
 CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/mlx42.dir/src/font/mlx_font.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/font/mlx_font.c.o -MF CMakeFiles/mlx42.dir/src/font/mlx_font.c.o.d -o CMakeFiles/mlx42.dir/src/font/mlx_font.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/font/mlx_font.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/mlx42.dir/src/font/mlx_font.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/font/mlx_font.c.o -MF CMakeFiles/mlx42.dir/src/font/mlx_font.c.o.d -o CMakeFiles/mlx42.dir/src/font/mlx_font.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/font/mlx_font.c
 
 CMakeFiles/mlx42.dir/src/font/mlx_font.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/font/mlx_font.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/font/mlx_font.c > CMakeFiles/mlx42.dir/src/font/mlx_font.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/font/mlx_font.c > CMakeFiles/mlx42.dir/src/font/mlx_font.c.i
 
 CMakeFiles/mlx42.dir/src/font/mlx_font.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/font/mlx_font.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/font/mlx_font.c -o CMakeFiles/mlx42.dir/src/font/mlx_font.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/font/mlx_font.c -o CMakeFiles/mlx42.dir/src/font/mlx_font.c.s
 
 CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_png.c
+CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_png.c
 CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o -MF CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o.d -o CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_png.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o -MF CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o.d -o CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_png.c
 
 CMakeFiles/mlx42.dir/src/textures/mlx_png.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/textures/mlx_png.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_png.c > CMakeFiles/mlx42.dir/src/textures/mlx_png.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_png.c > CMakeFiles/mlx42.dir/src/textures/mlx_png.c.i
 
 CMakeFiles/mlx42.dir/src/textures/mlx_png.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/textures/mlx_png.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_png.c -o CMakeFiles/mlx42.dir/src/textures/mlx_png.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_png.c -o CMakeFiles/mlx42.dir/src/textures/mlx_png.c.s
 
 CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_texture.c
+CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_texture.c
 CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o -MF CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o.d -o CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_texture.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o -MF CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o.d -o CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_texture.c
 
 CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_texture.c > CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_texture.c > CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.i
 
 CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_texture.c -o CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_texture.c -o CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.s
 
 CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_xpm42.c
+CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o: /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_xpm42.c
 CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o -MF CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o.d -o CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_xpm42.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o -MF CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o.d -o CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_xpm42.c
 
 CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_xpm42.c > CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_xpm42.c > CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.i
 
 CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/src/textures/mlx_xpm42.c -o CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/src/textures/mlx_xpm42.c -o CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.s
 
 CMakeFiles/mlx42.dir/lib/png/lodepng.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/lib/png/lodepng.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/png/lodepng.c
+CMakeFiles/mlx42.dir/lib/png/lodepng.c.o: /home/oimzilen/Desktop/cube3d/MLX42/lib/png/lodepng.c
 CMakeFiles/mlx42.dir/lib/png/lodepng.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/mlx42.dir/lib/png/lodepng.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/lib/png/lodepng.c.o -MF CMakeFiles/mlx42.dir/lib/png/lodepng.c.o.d -o CMakeFiles/mlx42.dir/lib/png/lodepng.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/png/lodepng.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/mlx42.dir/lib/png/lodepng.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/lib/png/lodepng.c.o -MF CMakeFiles/mlx42.dir/lib/png/lodepng.c.o.d -o CMakeFiles/mlx42.dir/lib/png/lodepng.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/lib/png/lodepng.c
 
 CMakeFiles/mlx42.dir/lib/png/lodepng.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/lib/png/lodepng.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/png/lodepng.c > CMakeFiles/mlx42.dir/lib/png/lodepng.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/lib/png/lodepng.c > CMakeFiles/mlx42.dir/lib/png/lodepng.c.i
 
 CMakeFiles/mlx42.dir/lib/png/lodepng.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/lib/png/lodepng.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/png/lodepng.c -o CMakeFiles/mlx42.dir/lib/png/lodepng.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/lib/png/lodepng.c -o CMakeFiles/mlx42.dir/lib/png/lodepng.c.s
 
 CMakeFiles/mlx42.dir/lib/glad/glad.c.o: CMakeFiles/mlx42.dir/flags.make
-CMakeFiles/mlx42.dir/lib/glad/glad.c.o: /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/glad/glad.c
+CMakeFiles/mlx42.dir/lib/glad/glad.c.o: /home/oimzilen/Desktop/cube3d/MLX42/lib/glad/glad.c
 CMakeFiles/mlx42.dir/lib/glad/glad.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/mlx42.dir/lib/glad/glad.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/lib/glad/glad.c.o -MF CMakeFiles/mlx42.dir/lib/glad/glad.c.o.d -o CMakeFiles/mlx42.dir/lib/glad/glad.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/glad/glad.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/mlx42.dir/lib/glad/glad.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/lib/glad/glad.c.o -MF CMakeFiles/mlx42.dir/lib/glad/glad.c.o.d -o CMakeFiles/mlx42.dir/lib/glad/glad.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/lib/glad/glad.c
 
 CMakeFiles/mlx42.dir/lib/glad/glad.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/lib/glad/glad.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/glad/glad.c > CMakeFiles/mlx42.dir/lib/glad/glad.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/lib/glad/glad.c > CMakeFiles/mlx42.dir/lib/glad/glad.c.i
 
 CMakeFiles/mlx42.dir/lib/glad/glad.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/lib/glad/glad.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/lib/glad/glad.c -o CMakeFiles/mlx42.dir/lib/glad/glad.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/lib/glad/glad.c -o CMakeFiles/mlx42.dir/lib/glad/glad.c.s
 
 CMakeFiles/mlx42.dir/mlx_vert_shader.c.o: CMakeFiles/mlx42.dir/flags.make
 CMakeFiles/mlx42.dir/mlx_vert_shader.c.o: mlx_vert_shader.c
 CMakeFiles/mlx42.dir/mlx_vert_shader.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/mlx42.dir/mlx_vert_shader.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/mlx_vert_shader.c.o -MF CMakeFiles/mlx42.dir/mlx_vert_shader.c.o.d -o CMakeFiles/mlx42.dir/mlx_vert_shader.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_vert_shader.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/mlx42.dir/mlx_vert_shader.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/mlx_vert_shader.c.o -MF CMakeFiles/mlx42.dir/mlx_vert_shader.c.o.d -o CMakeFiles/mlx42.dir/mlx_vert_shader.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_vert_shader.c
 
 CMakeFiles/mlx42.dir/mlx_vert_shader.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/mlx_vert_shader.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_vert_shader.c > CMakeFiles/mlx42.dir/mlx_vert_shader.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_vert_shader.c > CMakeFiles/mlx42.dir/mlx_vert_shader.c.i
 
 CMakeFiles/mlx42.dir/mlx_vert_shader.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/mlx_vert_shader.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_vert_shader.c -o CMakeFiles/mlx42.dir/mlx_vert_shader.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_vert_shader.c -o CMakeFiles/mlx42.dir/mlx_vert_shader.c.s
 
 CMakeFiles/mlx42.dir/mlx_frag_shader.c.o: CMakeFiles/mlx42.dir/flags.make
 CMakeFiles/mlx42.dir/mlx_frag_shader.c.o: mlx_frag_shader.c
 CMakeFiles/mlx42.dir/mlx_frag_shader.c.o: CMakeFiles/mlx42.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/mlx42.dir/mlx_frag_shader.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/mlx_frag_shader.c.o -MF CMakeFiles/mlx42.dir/mlx_frag_shader.c.o.d -o CMakeFiles/mlx42.dir/mlx_frag_shader.c.o -c /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_frag_shader.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/mlx42.dir/mlx_frag_shader.c.o"
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mlx42.dir/mlx_frag_shader.c.o -MF CMakeFiles/mlx42.dir/mlx_frag_shader.c.o.d -o CMakeFiles/mlx42.dir/mlx_frag_shader.c.o -c /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_frag_shader.c
 
 CMakeFiles/mlx42.dir/mlx_frag_shader.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/mlx42.dir/mlx_frag_shader.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_frag_shader.c > CMakeFiles/mlx42.dir/mlx_frag_shader.c.i
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_frag_shader.c > CMakeFiles/mlx42.dir/mlx_frag_shader.c.i
 
 CMakeFiles/mlx42.dir/mlx_frag_shader.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/mlx42.dir/mlx_frag_shader.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/mlx_frag_shader.c -o CMakeFiles/mlx42.dir/mlx_frag_shader.c.s
+	/usr/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oimzilen/Desktop/cube3d/MLX42/build/mlx_frag_shader.c -o CMakeFiles/mlx42.dir/mlx_frag_shader.c.s
 
 # Object files for target mlx42
 mlx42_OBJECTS = \
@@ -440,7 +440,7 @@ libmlx42.a: CMakeFiles/mlx42.dir/mlx_vert_shader.c.o
 libmlx42.a: CMakeFiles/mlx42.dir/mlx_frag_shader.c.o
 libmlx42.a: CMakeFiles/mlx42.dir/build.make
 libmlx42.a: CMakeFiles/mlx42.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking C static library libmlx42.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking C static library libmlx42.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/mlx42.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mlx42.dir/link.txt --verbose=$(VERBOSE)
 
@@ -454,6 +454,6 @@ CMakeFiles/mlx42.dir/clean:
 
 CMakeFiles/mlx42.dir/depend: mlx_frag_shader.c
 CMakeFiles/mlx42.dir/depend: mlx_vert_shader.c
-	cd /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42 /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42 /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build /home/oussmac/Desktop/CC_PROJECTS/cube3d/MLX42/build/CMakeFiles/mlx42.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/oimzilen/Desktop/cube3d/MLX42/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/oimzilen/Desktop/cube3d/MLX42 /home/oimzilen/Desktop/cube3d/MLX42 /home/oimzilen/Desktop/cube3d/MLX42/build /home/oimzilen/Desktop/cube3d/MLX42/build /home/oimzilen/Desktop/cube3d/MLX42/build/CMakeFiles/mlx42.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/mlx42.dir/depend
 

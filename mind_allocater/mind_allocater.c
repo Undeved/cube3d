@@ -39,6 +39,10 @@ void	mind_free_all(int status)
 		free(*head);
 		*head = tmp;
 	}
+	// zid getting mlx ptr and terminate here 
+	// if (mlx)
+		//mlx_terminate
+	// close fd if forgot to close it somewhere very unlikely but safe check.
 	*get_head() = NULL;
 	exit(status);
 }

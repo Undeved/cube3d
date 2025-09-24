@@ -25,21 +25,25 @@
 #  define BUFFER_SIZE 42
 # endif
 
-// our Macros
+// Our Macros
 # define HEIGHT 1080
 # define WIDTH 1920
 # define TITLE "CUBE 3D"
 
+// Mini map
 # define MAX_MAP 250
-# define MINI_MAP_X 20
-# define MINI_MAP_Y 25
+# define MINI_MAP_X 0
+# define MINI_MAP_Y 0
 # define PIXEL_BLOCK 26
 # define PIXEL_RAY 4
+
+// Minimap colors
 # define MM_WALL_COLOR 0x7851A9FF
 # define MM_FLOOR_COLOR 0xA085C2FF
 # define MM_PLAYER_COLOR 0xBE0000FF
+# define MINI_MAP_SIZE 320
 
-# define PI 3.141592
+// Player movement.
 # define SPEED 0.07;
 # define STRAFE_SPEED 0.04;
 # define ROT_SPEED 0.1
@@ -48,6 +52,45 @@
 # define COLLISION 0.2
 
 # define KEYS_NUMBER 350
+
+// Main menu
+
+// UI positions based on figma
+# define TITLE_X ((WIDTH / 2) - (605 / 2))
+# define TITLE_Y 165
+# define START_BUTTON_X ((WIDTH / 2) - (549 / 2))
+# define START_BUTTON_Y 484
+# define CHARS_BUTTON_X ((WIDTH / 2) - (549 / 2))
+# define CHARS_BUTTON_Y 639
+# define EXIT_BUTTON_X ((WIDTH / 2) - (549 / 2))
+# define EXIT_BUTTON_Y 806
+# define BTN_POP 5
+
+# define JESSE_X (96 - 30) // to offset transparent shadow edge
+# define JESSE_Y 271
+# define CHORUS_X (691 - 30)
+# define CHORUS_Y 271
+# define OUSSMAC_X (1286 - 30)
+# define OUSSMAC_Y 271
+
+// UI Textures.
+# define MENU_CANVAS_PATH "textures/ui/menu/menu_bg.png"
+# define MENU_TITLE_PATH "textures/ui/menu/menu_title.png"
+# define START_BUTTON_PATH "textures/ui/menu/start_button.png"
+# define CHARS_BUTTON_PATH "textures/ui/menu/characters_button.png"
+# define EXIT_BUTTON_PATH "textures/ui/menu/exit_button.png"
+# define START_BUTTON_PATH_HV "textures/ui/menu/start_button_hovered.png"
+# define CHARS_BUTTON_PATH_HV "textures/ui/menu/characters_button_hovered.png"
+# define EXIT_BUTTON_PATH_HV "textures/ui/menu/exit_button_hovered.png"
+
+# define CHARS_BG "textures/ui/characters/characters_bg.png"
+# define JESSE_BUTTON "textures/ui/characters/jesse.png"
+# define CHORUS_BUTTON "textures/ui/characters/chorus.png"
+# define OUSSMAC_BUTTON "textures/ui/characters/oussmac.png"
+# define JESSE_BUTTON_HV "textures/ui/characters/jesse_hovered.png"
+# define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
+# define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
+
 
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.
@@ -66,6 +109,14 @@ typedef enum e_direction
     EAST_TXT
 }   t_direction;
 
+// Character IDs
+typedef enum e_character
+{
+    JESSE,
+    CHORUS,
+    OUSSMAC
+}   t_character;
+
 typedef struct s_texture
 {
     t_direction dir;
@@ -83,8 +134,9 @@ typedef struct s_floor_roof
 
 typedef struct s_level
 {
-    int max_x;
-    int max_y;
+    int     max_x;
+    int     max_y;
+    bool    game_started;
 }   t_level;
 
 typedef struct s_pos
@@ -110,7 +162,6 @@ typedef struct s_player
     t_pos   pos;
     t_bpos  bpos;
     t_bdir  bdir;
-    double  rotdir;
     char    dir;
     t_bpos   offset;
     t_bpos   new_pos;
@@ -118,13 +169,52 @@ typedef struct s_player
 
 typedef struct s_minimap
 {
-    t_pos   pos;
+    t_pos       pos;
+    mlx_image_t *img;
 }   t_minimap;
 
 typedef struct s_keys
 {
     bool    pressed[KEYS_NUMBER];
 }   t_keys;
+
+typedef struct s_raw_img
+{
+    mlx_texture_t       *txtr;
+    mlx_image_t     *img;
+}   t_raw_img;
+
+typedef struct s_button
+{
+    mlx_texture_t       *txtr;
+    mlx_image_t     *img;
+    bool            hoverd;
+}   t_button;
+
+typedef struct s_main_menu
+{
+    t_raw_img           bg;
+    t_raw_img           title;
+    t_button            b_start;
+    t_button            b_chars;
+    t_button            b_exit;
+    t_button            b_start_hv;
+    t_button            b_chars_hv;
+    t_button            b_exit_hv;
+    int                 button_index;
+}   t_main_menu;
+
+typedef struct s_characters_ui
+{
+    t_raw_img           bg;
+    t_button            b_jesse;
+    t_button            b_chorus;
+    t_button            b_oussmac;
+    t_button            b_jesse_hv;
+    t_button            b_chorus_hv;
+    t_button            b_oussmac_hv;
+    int                 button_index;
+}   t_characters_ui;
 
 typedef struct s_pd
 {
@@ -145,6 +235,9 @@ typedef struct s_pd
     mlx_image_t     *screen;
     t_minimap       minimap;
     t_keys          keys;
+    t_main_menu     menu;
+    t_characters_ui chars_menu;
+    int             ui_index;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -207,6 +300,14 @@ void    update_player_data(t_parsed_data *pd);
 
 // Raycast
 void    raycast_render(t_parsed_data *pd);
+
+// UI
+void    init_main_menu(t_parsed_data *pd);
+void    main_menu(t_parsed_data *pd);
+void    handle_ui_input(mlx_key_data_t keydata, t_parsed_data *pd);
+void    ui_error(void);
+void    init_characters_menu(t_parsed_data *pd);
+void    characters_menu(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
