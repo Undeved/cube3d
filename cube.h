@@ -45,12 +45,12 @@
 
 // Player movement.
 # define SPEED 0.07;
-# define STRAFE_SPEED 0.04;
+# define STRAFE_SPEED 0.04
 # define ROT_SPEED 0.1
 # define NUDGE_FROM_WALL 0.5
 
 // Camera
-# define SCALER 1;
+# define SCALER 1
 # define FOV 60
 
 # define COLLISION 0.2
@@ -70,6 +70,8 @@
 # define EXIT_BUTTON_Y 806
 # define BTN_POP 5
 
+# define TRN_OFST 30
+
 # define JESSE_X (96 - 30) // to offset transparent shadow edge
 # define JESSE_Y 271
 # define CHORUS_X (691 - 30)
@@ -80,6 +82,7 @@
 # define SELECT_CHORUS_X 833
 # define SELECT_OUSSMAC_X 1428
 # define SELECT_Y 208
+
 
 // UI Textures.
 # define MENU_CANVAS_PATH "textures/ui/menu/menu_bg.png"
@@ -256,6 +259,7 @@ typedef struct s_pd
     t_main_menu     menu;
     t_characters_ui chars_menu;
     int             ui_index;
+    bool            mouse_clicked;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -330,8 +334,78 @@ void    init_characters_menu(t_parsed_data *pd);
 void    characters_menu(t_parsed_data *pd);
 void    setup_mouse(t_parsed_data *pd);
 void    handle_mouse_input(double xpos, double ypos, void *param);
+void    handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+void    menu_trigger_click(t_parsed_data *pd);
+void    characters_trigger_click(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
+
+//--------------------------------------------------------------------------------------
+
+
+typedef struct s_ray_dir_data
+{
+    t_player    *pl;
+    t_plane        *cam;
+    int        x;
+    int        w;
+    t_bdir        *ray_dir;
+}    t_ray_dir_data;
+
+typedef struct s_step_data
+{
+    t_bdir    ray_dir;
+    t_bpos    delta_dist;
+    t_pos    map;
+    t_pos    *step;
+    t_bpos    *side_dist;
+}    t_step_data;
+
+typedef struct s_dda_data
+{
+    t_parsed_data    *pd;
+    t_pos        *map;
+    t_bpos        *side_dist;
+    t_bpos        delta_dist;
+    t_pos        step;
+    int        *side;
+}    t_dda_data;
+
+typedef struct s_perp_data
+{
+    t_pos    map;
+    t_bpos    pos;
+    t_pos    step;
+    t_bdir    ray_dir;
+    int    side;
+}    t_perp_data;
+
+typedef struct s_line_data
+{
+    int    height;
+    int    draw_start;
+    int    draw_end;
+}    t_line_data;
+
+typedef struct s_column_data
+{
+    t_parsed_data    *pd;
+    int        x;
+    int        h;
+    double        perp_dist;
+    int        side;
+}    t_column_data;
+
+typedef struct s_ray_data
+{
+    t_bdir    ray_dir;
+    t_bpos    player_pos;
+    t_pos    map;
+    t_bpos    delta_dist;
+    t_pos    step;
+    t_bpos    side_dist;
+    int    side;
+}    t_ray_data;
 
 #endif
