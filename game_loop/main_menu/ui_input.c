@@ -28,6 +28,16 @@ void    toggle_characters_ui(t_parsed_data *pd, bool trigger)
     pd->chars_menu.selected.img->enabled = trigger;
 }
 
+void characters_trigger_click(t_parsed_data *pd)
+{
+    if (pd->chars_menu.button_index == JESSE)
+            pd->chars_menu.select_index = JESSE;
+    else if (pd->chars_menu.button_index == CHORUS)
+            pd->chars_menu.select_index = CHORUS;
+    else if (pd->chars_menu.button_index == OUSSMAC)
+            pd->chars_menu.select_index = OUSSMAC;
+}
+
 void    handle_character_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
 {
     if (pd->level.game_started || pd->ui_index != 1 || keydata.action != MLX_PRESS)
@@ -44,18 +54,36 @@ void    handle_character_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
     else if (keydata.key == MLX_KEY_LEFT)
         pd->chars_menu.button_index--;
     else if (keydata.key == MLX_KEY_ENTER)
-    {
-        if (pd->chars_menu.button_index == JESSE)
-            pd->chars_menu.select_index = JESSE;
-        else if (pd->chars_menu.button_index == CHORUS)
-            pd->chars_menu.select_index = CHORUS;
-        else if (pd->chars_menu.button_index == OUSSMAC)
-            pd->chars_menu.select_index = OUSSMAC;
-    }
+        characters_trigger_click(pd);
     if (pd->chars_menu.button_index > 2)
         pd->chars_menu.button_index = 0;
     else if (pd->chars_menu.button_index < 0)
         pd->chars_menu.button_index = 2;
+}
+
+void    menu_trigger_click(t_parsed_data *pd)
+{
+    if (pd->menu.button_index == 0)
+    {
+        pd->level.game_started = true;
+        pd->screen->enabled = true;
+        pd->ui_index = 2;
+        toggle_menu(pd, false);
+        return ;
+    }
+    else if (pd->menu.button_index == 1)
+    {
+        toggle_menu(pd, false);
+        toggle_characters_ui(pd, true);
+        pd->ui_index = 1;
+        return ;
+    }
+    else if (pd->menu.button_index == 2)
+    {
+        print_comm("Exited Game\n");
+        mlx_close_window(pd->mlx);
+        return ;
+    }
 }
 
 void    handle_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
@@ -67,29 +95,10 @@ void    handle_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
         pd->menu.button_index++;
     else if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
         pd->menu.button_index--;
-    else if (keydata.key == MLX_KEY_ENTER)
+    else if (keydata.key == MLX_KEY_ENTER || pd->mouse_clicked)
     {
         // select button in menu logic.
-        if (pd->menu.button_index == 0)
-        {
-            pd->level.game_started = true;
-            pd->screen->enabled = true;
-            toggle_menu(pd, false);
-            return ;
-        }
-        else if (pd->menu.button_index == 1)
-        {
-            toggle_menu(pd, false);
-            toggle_characters_ui(pd, true);
-            pd->ui_index = 1;
-            return ;
-        }
-        else if (pd->menu.button_index == 2)
-        {
-            print_comm("Exited Game\n");
-            mlx_close_window(pd->mlx);
-            return ;
-        }
+        menu_trigger_click(pd);
     }
     if (pd->menu.button_index > 2)
         pd->menu.button_index = 0;

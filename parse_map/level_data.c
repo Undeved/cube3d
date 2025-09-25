@@ -46,6 +46,7 @@ void    get_player_pos(char **map_grid, int *x, int *y, char *dir)
                 {
                     *x = j;
                     *dir = map_grid[i][j];
+                    map_grid[i][j] = '0';
                     break;
                 }
                 j++;

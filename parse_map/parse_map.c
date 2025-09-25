@@ -16,7 +16,10 @@ static void read_map_file(char *map_path, t_cube *cube)
 
     cube->pd.fd = open(map_path, O_RDONLY);
     if (cube->pd.fd == -1)
+    {
+        print_error("Error\nMap File Invalid.\n");
         mind_free_all(EXIT_FAILURE);
+    }
     count = 0;
     line = get_next_line(cube->pd.fd);
     while (line != NULL)

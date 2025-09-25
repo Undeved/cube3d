@@ -18,7 +18,7 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/main_menu/ui_input.c game_loop/characters_ui/character_menu.c \
 	game_loop/characters_ui/init_characters_ui.c game_loop/raycast/raycast_system.c \
 	game_loop/raycast/raycast_data.c game_loop/main_menu/menu_cursor/setup_mouse.c \
-	game_loop/main_menu/menu_cursor/handle_mouse_input.c
+	game_loop/main_menu/menu_cursor/handle_mouse_input.c game_loop/main_menu/menu_cursor/handle_mouse_click.c \
 
 OBJ=$(SRC:.c=.o)
 

@@ -9,6 +9,7 @@ void    game_render(void *param)
     characters_menu(pd);
     if (!pd->level.game_started)
         return ;
+    mlx_set_mouse_pos(pd->mlx, WIDTH / 2, HEIGHT / 2);
     update_player_data(pd);
     raycast_system(pd);
     raycast_render(pd);

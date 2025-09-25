@@ -43,6 +43,7 @@ static void init_precise_data(t_parsed_data *pd)
     pd->player.camera_plane.dir.y = -pd->player.bdir.x;
 
     pd->level.game_started = false;
+    pd->mouse_clicked = false;
     precise_direction(pd);
     init_key_flags(pd);
 }
@@ -75,6 +76,7 @@ void game_loop(t_parsed_data *pd)
 
     mlx_key_hook(pd->mlx, handle_player_input, pd);
     mlx_cursor_hook(pd->mlx, handle_mouse_input, pd);
+    mlx_mouse_hook(pd->mlx, handle_mouse_click, pd);
     mlx_loop_hook(pd->mlx, game_render, pd);
     mlx_loop(pd->mlx);
     mlx_terminate(pd->mlx); // remove this and keep it in gc
