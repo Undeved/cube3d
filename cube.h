@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/08/27 22:44:00 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/09/25 21:34:15 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,5 +333,74 @@ void    handle_mouse_input(double xpos, double ypos, void *param);
 
 // helpers test
 void    print_argv(char **argv);
+
+
+// ------------------------------------------------------------------------------------------------------
+
+typedef struct s_ray_dir_data
+{
+	t_player	*pl;
+	t_plane		*cam;
+	int		x;
+	int		w;
+	t_bdir		*ray_dir;
+}	t_ray_dir_data;
+
+typedef struct s_step_data
+{
+	t_bdir	ray_dir;
+	t_bpos	delta_dist;
+	t_pos	map;
+	t_pos	*step;
+	t_bpos	*side_dist;
+}	t_step_data;
+
+typedef struct s_dda_data
+{
+	t_parsed_data	*pd;
+	t_pos		*map;
+	t_bpos		*side_dist;
+	t_bpos		delta_dist;
+	t_pos		step;
+	int		*side;
+}	t_dda_data;
+
+typedef struct s_perp_data
+{
+	t_pos	map;
+	t_bpos	pos;
+	t_pos	step;
+	t_bdir	ray_dir;
+	int	side;
+}	t_perp_data;
+
+typedef struct s_line_data
+{
+	int	height;
+	int	draw_start;
+	int	draw_end;
+}	t_line_data;
+
+typedef struct s_column_data
+{
+	t_parsed_data	*pd;
+	int		x;
+	int		h;
+	double		perp_dist;
+	int		side;
+}	t_column_data;
+
+typedef struct s_ray_data
+{
+	t_bdir	ray_dir;
+	t_bpos	player_pos;
+	t_pos	map;
+	t_bpos	delta_dist;
+	t_pos	step;
+	t_bpos	side_dist;
+	int	side;
+}	t_ray_data;
+
+
 
 #endif
