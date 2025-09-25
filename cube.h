@@ -49,6 +49,10 @@
 # define ROT_SPEED 0.1
 # define NUDGE_FROM_WALL 0.5
 
+// Camera
+# define SCALER 1;
+# define FOV 60
+
 # define COLLISION 0.2
 
 # define KEYS_NUMBER 350
@@ -162,14 +166,21 @@ typedef struct s_bdir
     double y;
 }   t_bdir;
 
+typedef struct s_plane
+{
+    t_bpos  pos;
+    t_bdir  dir;
+}   t_plane;
+
 typedef struct s_player
 {
     t_pos   pos;
     t_bpos  bpos;
     t_bdir  bdir;
     char    dir;
-    t_bpos   offset;
-    t_bpos   new_pos;
+    t_bpos  offset;
+    t_bpos  new_pos;
+    t_plane camera_plane;
 }   t_player;
 
 typedef struct s_minimap
@@ -307,6 +318,7 @@ void    update_player_data(t_parsed_data *pd);
 
 // Raycast
 void	raycast_system(t_parsed_data *pd);
+void    update_raycast_data(t_parsed_data *pd);
 void    raycast_render(t_parsed_data *pd);
 
 // UI

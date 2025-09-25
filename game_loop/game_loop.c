@@ -37,6 +37,11 @@ static void init_precise_data(t_parsed_data *pd)
 {
     pd->player.bpos.x = pd->player.pos.x + NUDGE_FROM_WALL;
     pd->player.bpos.y = pd->player.pos.y + NUDGE_FROM_WALL;
+    pd->player.camera_plane.pos.x = pd->player.bdir.x * SCALER; // init camera plane
+    pd->player.camera_plane.pos.y = pd->player.bdir.y * SCALER;
+    pd->player.camera_plane.dir.x = pd->player.bdir.y;
+    pd->player.camera_plane.dir.y = -pd->player.bdir.x;
+
     pd->level.game_started = false;
     precise_direction(pd);
     init_key_flags(pd);
