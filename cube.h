@@ -34,7 +34,7 @@
 # define MAX_MAP 500
 # define MINI_MAP_X 0
 # define MINI_MAP_Y 0
-# define PIXEL_BLOCK 38
+# define PIXEL_BLOCK 18
 # define PIXEL_RAY 4
 
 // Minimap colors

@@ -10,7 +10,7 @@ void    game_render(void *param)
     if (!pd->level.game_started)
         return ;
     update_player_data(pd);
-    // draw_minimap(pd);
     raycast_system(pd);
     raycast_render(pd);
+    draw_minimap(pd);
 }
