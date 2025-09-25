@@ -50,10 +50,23 @@ static void update_ch_button_state(t_parsed_data *pd)
     }
 }
 
+static void update_selection(t_parsed_data *pd)
+{
+    if (!pd->chars_menu.selected.img->enabled)
+        pd->chars_menu.selected.img->enabled = true;
+    if (pd->chars_menu.select_index == JESSE && pd->chars_menu.selected.img->instances->x != SELECT_JESSE_X)
+        pd->chars_menu.selected.img->instances->x = SELECT_JESSE_X;
+    else if (pd->chars_menu.select_index == CHORUS && pd->chars_menu.selected.img->instances->x != SELECT_CHORUS_X)
+        pd->chars_menu.selected.img->instances->x = SELECT_CHORUS_X;
+    else if (pd->chars_menu.select_index == OUSSMAC && pd->chars_menu.selected.img->instances->x != SELECT_OUSSMAC_X)
+        pd->chars_menu.selected.img->instances->x = SELECT_OUSSMAC_X;
+}
+
 void    characters_menu(t_parsed_data *pd)
 {
-    if (pd->ui_index != 1)
+    if (pd->level.game_started || pd->ui_index != 1)
         return ;
+    update_selection(pd);
     update_ch_button_state(pd);
 }
 

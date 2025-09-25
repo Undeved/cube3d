@@ -22,5 +22,7 @@
     swl la khask chi blan.
  */
 
-
- 
+void	raycast_render(t_parsed_data *pd)
+{
+	(void)pd;
+}

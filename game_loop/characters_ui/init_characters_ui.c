@@ -65,6 +65,18 @@ static void init_char_buttons(t_parsed_data *pd)
     init_char_flags(pd);
 }
 
+static void init_selected_button(t_parsed_data *pd)
+{
+    pd->chars_menu.selected.txtr = mlx_load_png(SELECTED_BUTTON);
+    if (!pd->chars_menu.selected.txtr)
+        ui_error();
+    pd->chars_menu.selected.img = mlx_texture_to_image(pd->mlx, pd->chars_menu.selected.txtr);
+    if (!pd->chars_menu.selected.img || mlx_image_to_window(pd->mlx, pd->chars_menu.selected.img, SELECT_JESSE_X, SELECT_Y) == -1)
+        mind_free_all(EXIT_FAILURE);
+    pd->chars_menu.selected.img->enabled = false;
+    pd->chars_menu.select_index = JESSE;
+}
+
 void    init_characters_menu(t_parsed_data *pd)
 {
     pd->chars_menu.bg.txtr = mlx_load_png(CHARS_BG);
@@ -73,6 +85,7 @@ void    init_characters_menu(t_parsed_data *pd)
     pd->chars_menu.bg.img = mlx_texture_to_image(pd->mlx, pd->chars_menu.bg.txtr);
     if (!pd->chars_menu.bg.img || mlx_image_to_window(pd->mlx, pd->chars_menu.bg.img, 0, 0) == -1)
         mind_free_all(EXIT_FAILURE);
+    init_selected_button(pd);
     init_char_buttons(pd);
     pd->chars_menu.bg.img->enabled = false;
     pd->chars_menu.button_index = 0; // index_0 is default character jesse

@@ -42,12 +42,12 @@ static void init_precise_data(t_parsed_data *pd)
     init_key_flags(pd);
 }
 
-// static void init_mini_map(t_parsed_data *pd)
-// {
-//     pd->minimap.img = mlx_new_image(pd->mlx, MINI_MAP_SIZE, MINI_MAP_SIZE);
-//     if (!pd->minimap.img || mlx_image_to_window(pd->mlx, pd->minimap.img, 0, 0) == -1)
-//         mind_free_all(EXIT_FAILURE);
-// }
+static void init_mini_map(t_parsed_data *pd)
+{
+    pd->minimap.img = mlx_new_image(pd->mlx, MINI_MAP_SIZE, MINI_MAP_SIZE);
+    if (!pd->minimap.img || mlx_image_to_window(pd->mlx, pd->minimap.img, 0, 0) == -1)
+        mind_free_all(EXIT_FAILURE);
+}
 
 static void init_gameplay_screen(t_parsed_data *pd)
 {
@@ -64,7 +64,7 @@ void game_loop(t_parsed_data *pd)
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
     init_gameplay_screen(pd);
-    // init_mini_map(pd);
+    init_mini_map(pd);
     init_main_menu(pd);
     init_characters_menu(pd);
 

@@ -31,10 +31,10 @@
 # define TITLE "CUBE 3D"
 
 // Mini map
-# define MAX_MAP 250
+# define MAX_MAP 500
 # define MINI_MAP_X 0
 # define MINI_MAP_Y 0
-# define PIXEL_BLOCK 26
+# define PIXEL_BLOCK 38
 # define PIXEL_RAY 4
 
 // Minimap colors
@@ -72,6 +72,10 @@
 # define CHORUS_Y 271
 # define OUSSMAC_X (1286 - 30)
 # define OUSSMAC_Y 271
+# define SELECT_JESSE_X 238 // select button.
+# define SELECT_CHORUS_X 833
+# define SELECT_OUSSMAC_X 1428
+# define SELECT_Y 208
 
 // UI Textures.
 # define MENU_CANVAS_PATH "textures/ui/menu/menu_bg.png"
@@ -90,6 +94,7 @@
 # define JESSE_BUTTON_HV "textures/ui/characters/jesse_hovered.png"
 # define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
+# define SELECTED_BUTTON "textures/ui/characters/selected.png"
 
 
 // Garbage collector struct.
@@ -207,6 +212,8 @@ typedef struct s_main_menu
 typedef struct s_characters_ui
 {
     t_raw_img           bg;
+    t_raw_img           selected;
+    t_character         select_index;
     t_button            b_jesse;
     t_button            b_chorus;
     t_button            b_oussmac;
@@ -299,6 +306,7 @@ void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
 
 // Raycast
+void	raycast_system(t_parsed_data *pd);
 void    raycast_render(t_parsed_data *pd);
 
 // UI

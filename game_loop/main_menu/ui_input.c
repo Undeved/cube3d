@@ -25,17 +25,33 @@ void    toggle_characters_ui(t_parsed_data *pd, bool trigger)
     pd->chars_menu.b_oussmac_hv.img->enabled = trigger;  
     
     pd->chars_menu.bg.img->enabled = trigger;
+    pd->chars_menu.selected.img->enabled = trigger;
 }
 
 void    handle_character_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
 {
     if (pd->level.game_started || pd->ui_index != 1 || keydata.action != MLX_PRESS)
         return ;
-    if (keydata.key == MLX_KEY_RIGHT)
+    if (keydata.key == MLX_KEY_ESCAPE)
+    {
+        toggle_characters_ui(pd, false);
+        toggle_menu(pd, true);
+        pd->ui_index = 0;
+        return ;
+    }
+    else if (keydata.key == MLX_KEY_RIGHT)
         pd->chars_menu.button_index++;
     else if (keydata.key == MLX_KEY_LEFT)
         pd->chars_menu.button_index--;
-    // select character
+    else if (keydata.key == MLX_KEY_ENTER)
+    {
+        if (pd->chars_menu.button_index == JESSE)
+            pd->chars_menu.select_index = JESSE;
+        else if (pd->chars_menu.button_index == CHORUS)
+            pd->chars_menu.select_index = CHORUS;
+        else if (pd->chars_menu.button_index == OUSSMAC)
+            pd->chars_menu.select_index = OUSSMAC;
+    }
     if (pd->chars_menu.button_index > 2)
         pd->chars_menu.button_index = 0;
     else if (pd->chars_menu.button_index < 0)

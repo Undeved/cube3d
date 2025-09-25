@@ -29,10 +29,10 @@ void    put_pixel_block(mlx_image_t *screen, int start_x, int start_y, uint32_t 
         x = 0;
         while (x < PIXEL_BLOCK)
         {
-            if (x == 0 || y == 0 || x + 1 == PIXEL_BLOCK || y + 1 == PIXEL_BLOCK)
-                mlx_put_pixel(screen, start_x + x, start_y + y, 0x000000FF);
-            else
-                mlx_put_pixel(screen, start_x + x, start_y + y, color);
+                if (x == 0 || y == 0 || x + 1 == PIXEL_BLOCK || y + 1 == PIXEL_BLOCK)
+                    mlx_put_pixel(screen, start_x + x, start_y + y, 0x000000FF);
+                else
+                    mlx_put_pixel(screen, start_x + x, start_y + y, color);
             x++;
         }
         y++;
@@ -107,6 +107,7 @@ void draw_minimap(t_parsed_data *pd)
 
     pd->minimap.pos.x = MINI_MAP_X;
     pd->minimap.pos.y = MINI_MAP_Y;
+    // return ;
     y = 0;
     while(pd->map_grid[y])
     {
@@ -119,9 +120,38 @@ void draw_minimap(t_parsed_data *pd)
                 put_pixel_block(pd->screen, pd->minimap.pos.x + x * PIXEL_BLOCK, pd->minimap.pos.y + y * PIXEL_BLOCK, MM_FLOOR_COLOR);
             else if (pd->map_grid[y][x] == ' ')
                     put_pixel_block(pd->screen, pd->minimap.pos.x + x * PIXEL_BLOCK, pd->minimap.pos.y + y * PIXEL_BLOCK, 0x3F4250FF);
-            draw_mini_player(pd);
             x++;
         }
         y++;
     }
+    draw_mini_player(pd);
 }
+
+
+// void draw_minimap(t_parsed_data *pd)
+// {
+//     int x;
+//     int y;
+
+//     pd->minimap.pos.x = MINI_MAP_X;
+//     pd->minimap.pos.y = MINI_MAP_Y;
+//     y = 0;
+//     while(y < MAX_MAP)
+//     {
+//         x = 0;
+//         while (x < MAX_MAP)
+//         {
+
+//             if (!(x < 0 || y < 0 || x > pd-> level.max_x || y > pd->level.max_y))
+//             {
+//                 if (pd->map_grid[y][x] == '1')
+//                     put_pixel_block(pd->minimap.img, x * PIXEL_BLOCK, y * PIXEL_BLOCK, MM_WALL_COLOR);
+//             }
+//             else
+//             {
+//             }
+//             x++;
+//         }
+//         y++;
+//     }
+// }
