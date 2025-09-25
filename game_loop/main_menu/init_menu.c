@@ -82,4 +82,5 @@ void    init_main_menu(t_parsed_data *pd)
     init_buttons(pd);
     pd->menu.button_index = 0; // index 0 is start button
     pd->ui_index = 0;
+    setup_mouse(pd);
 }

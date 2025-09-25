@@ -328,6 +328,8 @@ void    handle_ui_input(mlx_key_data_t keydata, t_parsed_data *pd);
 void    ui_error(void);
 void    init_characters_menu(t_parsed_data *pd);
 void    characters_menu(t_parsed_data *pd);
+void    setup_mouse(t_parsed_data *pd);
+void    handle_mouse_input(double xpos, double ypos, void *param);
 
 // helpers test
 void    print_argv(char **argv);

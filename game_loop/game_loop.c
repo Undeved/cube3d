@@ -74,6 +74,7 @@ void game_loop(t_parsed_data *pd)
     init_characters_menu(pd);
 
     mlx_key_hook(pd->mlx, handle_player_input, pd);
+    mlx_cursor_hook(pd->mlx, handle_mouse_input, pd);
     mlx_loop_hook(pd->mlx, game_render, pd);
     mlx_loop(pd->mlx);
     mlx_terminate(pd->mlx); // remove this and keep it in gc
