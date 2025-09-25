@@ -22,7 +22,7 @@
 
 // raycast_split.c
 #include <math.h>
-#include <stdint.h>
+// #include <stdint.h>
 
 /*
  * Compute delta distances for the ray: the distance the ray has to travel
@@ -49,7 +49,7 @@ compute_delta_dist(double rayDirX, double rayDirY,
  * (sideDistX / sideDistY) used by the DDA loop.
  */
 static void
-init_step_and_sidedist(double posX, double posY, int mapX, int mapY,
+init_step_and_sidedist(t_bpos player, int mapX, int mapY,
                        double rayDirX, double rayDirY,
                        double deltaDistX, double deltaDistY,
                        int *stepX, int *stepY,
@@ -58,23 +58,23 @@ init_step_and_sidedist(double posX, double posY, int mapX, int mapY,
     if (rayDirX < 0.0)
     {
         *stepX = -1;
-        *sideDistX = (posX - (double)mapX) * deltaDistX;
+        *sideDistX = (player.x - (double)mapX) * deltaDistX;
     }
     else
     {
         *stepX = 1;
-        *sideDistX = ((double)mapX + 1.0 - posX) * deltaDistX;
+        *sideDistX = ((double)mapX + 1.0 - player.x) * deltaDistX;
     }
 
     if (rayDirY < 0.0)
     {
         *stepY = -1;
-        *sideDistY = (posY - (double)mapY) * deltaDistY;
+        *sideDistY = (player.y - (double)mapY) * deltaDistY;
     }
     else
     {
         *stepY = 1;
-        *sideDistY = ((double)mapY + 1.0 - posY) * deltaDistY;
+        *sideDistY = ((double)mapY + 1.0 - player.y) * deltaDistY;
     }
 }
 
@@ -152,28 +152,26 @@ compute_perp_wall_dist(int side, int mapX, int mapY,
 /*
  * Main raycast renderer.
  * Iterates over screen columns, casts rays, runs DDA, computes wall slice and draws sky/wall/floor.
+ * 
  */
-void
-raycast_render(t_parsed_data *pd)
+void raycast_render(t_parsed_data *pd)
 {
     int w = pd->screen->width;
     int h = pd->screen->height;
-    double posX = pd->player.bpos.x;
-    double posY = pd->player.bpos.y;
-    double dirX = pd->player.bdir.x;
-    double dirY = pd->player.bdir.y;
-    double planeX = pd->player.camera_plane.dir.x;
-    double planeY = pd->player.camera_plane.dir.y;
-    int x = 0;
+    /* pointer aliases to avoid repeating pd->player and pd->player.camera_plane */
+    t_player *pl = &pd->player;
+    t_plane  *cam = &pl->camera_plane;
 
+    int x = 0;
     while (x < w)
     {
         double cameraX = 2.0 * (double)x / (double)w - 1.0;
-        double rayDirX = dirX + planeX * cameraX;
-        double rayDirY = dirY + planeY * cameraX;
+        /* access position/direction through aliases */
+        double rayDirX = pl->bdir.x + cam->dir.x * cameraX;
+        double rayDirY = pl->bdir.y + cam->dir.y * cameraX;
 
-        int mapX = (int)posX;
-        int mapY = (int)posY;
+        int mapX = (int)pl->bpos.x;
+        int mapY = (int)pl->bpos.y;
 
         double sideDistX;
         double sideDistY;
@@ -184,36 +182,30 @@ raycast_render(t_parsed_data *pd)
 
         int stepX;
         int stepY;
+        init_step_and_sidedist((t_bpos){pl->bpos.x, pl->bpos.y}, mapX, mapY,rayDirX, rayDirY, deltaDistX, deltaDistY, &stepX, &stepY, &sideDistX, &sideDistY);
+
         int side = 0;
-
-        init_step_and_sidedist(posX, posY, mapX, mapY,
-                               rayDirX, rayDirY,
-                               deltaDistX, deltaDistY,
-                               &stepX, &stepY,
-                               &sideDistX, &sideDistY);
-
         perform_dda(pd, &mapX, &mapY, &sideDistX, &sideDistY,
                     deltaDistX, deltaDistY, stepX, stepY, &side);
 
         double perpWallDist = compute_perp_wall_dist(side, mapX, mapY,
-                                                     posX, posY, stepX, stepY,
+                                                     pl->bpos.x, pl->bpos.y,
+                                                     stepX, stepY,
                                                      rayDirX, rayDirY);
 
         int lineHeight = (int)((double)h / perpWallDist);
         int drawStart = -lineHeight / 2 + h / 2;
-        if (drawStart < 0)
-            drawStart = 0;
+        if (drawStart < 0) drawStart = 0;
         int drawEnd = lineHeight / 2 + h / 2;
-        if (drawEnd >= h)
-            drawEnd = h - 1;
+        if (drawEnd >= h) drawEnd = h - 1;
 
-        uint32_t sky_col = 0x0018B8FF;     /* sky */
-        uint32_t floor_col = 0x0022B14C;   /* floor */
+        uint32_t sky_col = 0x0018B8FF;
+        uint32_t floor_col = 0xAAAAAAFF;
         uint32_t wall_col;
         if (side == 1)
-            wall_col = 0x007F7F7F;   /* darker wall when Y-side */
+            wall_col = 0x007F7F7F;
         else
-            wall_col = 0x00FFFFFF;   /* brighter wall when X-side */
+            wall_col = 0x00FFFFFF;
 
         int y = 0;
         while (y < drawStart)
@@ -226,7 +218,5 @@ raycast_render(t_parsed_data *pd)
         x++;
     }
 
-    /* push image to window (MLX42 style) */
-    // mlx_image_to_window(pd->mlx, pd->screen, 0, 0);
+    /* if you want to blit: mlx_image_to_window(pd->mlx, pd->screen, 0, 0); */
 }
-
