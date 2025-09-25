@@ -1,9 +1,9 @@
 CC= cc
-SANITIZE= -fsanitize=address -g3
+SANITIZE= #-fsanitize=address -g3
 FLAGS= -Wall -Werror -Wextra
 
 INCLUDES= -Iinclude -I$(HOME)/local/include
-LIBS= MLX42/build/libmlx42.a -L$(HOME)/local/lib -lglfw3 -ldl -pthread -lm
+LIBS= MLX42/build/libmlx42.a -L$(HOME)/local/lib -lglfw -ldl -pthread -lm
 
 HEADER= cube.h
 
@@ -17,7 +17,7 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/main_menu/main_menu.c game_loop/main_menu/init_menu.c \
 	game_loop/main_menu/ui_input.c game_loop/characters_ui/character_menu.c \
 	game_loop/characters_ui/init_characters_ui.c game_loop/raycast/raycast_system.c \
-	game_loop/raycast/raycast_helpers.c game_loop/raycast/raycast_data.c
+	game_loop/raycast/raycast_data.c
 
 OBJ=$(SRC:.c=.o)
 

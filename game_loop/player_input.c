@@ -51,7 +51,7 @@ static void forward_backward(t_parsed_data *pd)
 // 3la direction vector, cancalculiw mnha.
 static void strafe(t_parsed_data *pd)
 {
-    if (pd->keys.pressed[MLX_KEY_A])
+    if (pd->keys.pressed[MLX_KEY_D])
     {
         pd->player.new_pos.x += pd->player.bdir.y * STRAFE_SPEED;
         pd->player.new_pos.y += -pd->player.bdir.x * STRAFE_SPEED;
@@ -60,7 +60,7 @@ static void strafe(t_parsed_data *pd)
         if (!is_wall(pd->map_grid, pd->player.bpos.x, pd->player.new_pos.y - pd->player.offset.x, pd))
             pd->player.bpos.y = pd->player.new_pos.y;
     }
-    if (pd->keys.pressed[MLX_KEY_D])
+    if (pd->keys.pressed[MLX_KEY_A])
     {
         pd->player.new_pos.x += -pd->player.bdir.y * STRAFE_SPEED;
         pd->player.new_pos.y += pd->player.bdir.x * STRAFE_SPEED;
@@ -85,7 +85,7 @@ static void player_movement(t_parsed_data *pd)
 
 static void player_rotation(t_parsed_data *pd)
 {
-    if (pd->keys.pressed[MLX_KEY_RIGHT])
+    if (pd->keys.pressed[MLX_KEY_LEFT])
     {
         double old_x = pd->player.bdir.x;
         double old_y = pd->player.bdir.y;
@@ -93,7 +93,7 @@ static void player_rotation(t_parsed_data *pd)
         pd->player.bdir.x = old_x * cos(ROT_SPEED) - old_y * sin(ROT_SPEED);
         pd->player.bdir.y = old_x * sin(ROT_SPEED) + old_y * cos(ROT_SPEED);
     }
-    if (pd->keys.pressed[MLX_KEY_LEFT])
+    if (pd->keys.pressed[MLX_KEY_RIGHT])
     {
         double old_x = pd->player.bdir.x;
         double old_y = pd->player.bdir.y;
