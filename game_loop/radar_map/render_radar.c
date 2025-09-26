@@ -57,6 +57,8 @@ static void draw_minimap_grid(t_parsed_data *pd)
                     else
                         mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, 0xAAAAAAFF); // floor
                 }
+                else
+                    mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, 0x444444FF);
             }
             pixel.x++;
         }
