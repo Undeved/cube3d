@@ -1,6 +1,6 @@
 #include "../../cube.h"
 
-static int  sqr(int x)
+int  sqr(int x)
 {
     return (x * x);
 }

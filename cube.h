@@ -43,6 +43,7 @@
 
 # define CIRCLE_BORDER 0x38761DFF
 # define CIRCLE_FRAME 0x102308FF
+# define PLAYER_ICON 0xB0F01BFF
 
 
 // Minimap colors
@@ -350,6 +351,8 @@ void    characters_trigger_click(t_parsed_data *pd);
 void    toggle_game_ui(t_parsed_data *pd);
 void    init_radar(t_parsed_data *pd);
 void    render_radar(t_parsed_data *pd);
+void    render_player_icon(t_parsed_data *pd);
+int     sqr(int x);
 
 // helpers test
 void    print_argv(char **argv);
@@ -425,7 +428,6 @@ typedef struct s_ray_data
 // ----------------------------------------------------------------------------------------
 
 // Raycast Light engine
-uint32_t    apply_shading(uint32_t base_col, double dist, double ao);
 uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
 uint32_t shade_color(uint32_t base_col, double dist, double magnitude);
 
