@@ -465,8 +465,8 @@ uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map)
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
 uint32_t shade_wall(uint32_t base_col, double dist, double magnitude);
 
-# define CEILING 0xE5B75DFF
-# define FLOOR 0x604C27FF
+# define CEILING 0xB5AB6BFF
+# define FLOOR 0x876D46FF
 # define WALL_SIDE 0xCC9D44FF
 # define WALL 0xA37D36FF
 

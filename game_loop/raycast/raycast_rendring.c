@@ -109,7 +109,7 @@ static void draw_textured_column(t_parsed_data *pd, int x, t_line_data *line,
 			if (side == 1)
 				sample = darken_color(sample);
 
-			mlx_put_pixel(pd->screen, x, y, shade_wall(sample, perp_dist, 0.20));
+			mlx_put_pixel(pd->screen, x, y, shade_wall(sample, perp_dist, 0.25));
 		}
 
 		tex_pos += step;
@@ -248,7 +248,7 @@ static void draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon)
 	y = 0;
 	while (y < draw_start)
 	{
-		color = shade_color(CEILING, horizon + y, 0.0015);
+		color = shade_color(CEILING, horizon + y, 0.0042);
 		mlx_put_pixel(pd->screen, x, y, color);
 		y++;
 	}
@@ -262,7 +262,7 @@ static void draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
 	y = draw_end + 1;
 	while (y < (horizon * 2))
 	{
-		color = shade_color(FLOOR, (horizon * 2) - y, 0.0015);
+		color = shade_color(FLOOR, (horizon * 2) - y, 0.0042);
 		mlx_put_pixel(pd->screen, x, y, color);
 		y++;
 	}

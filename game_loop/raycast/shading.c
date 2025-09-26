@@ -45,5 +45,5 @@ uint32_t shade_wall(uint32_t base_col, double dist, double magnitude)
     if (shade < 0.2)
         shade = 0.2;
 
-    return (shade_color(base_col,  dist, 0.20));
+    return (shade_color(base_col,  dist, magnitude));
 }
