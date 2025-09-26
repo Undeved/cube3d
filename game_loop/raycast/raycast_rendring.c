@@ -120,7 +120,7 @@ static void	calc_line_params(int h, double perp_dist, t_line_data *line)
 		line->draw_end = h - 1;
 }
 
-static void draw_ceiling(t_parsed_data *pd, int x, int draw_start)
+static void draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon)
 {
     int y;
     uint32_t color;
@@ -128,31 +128,30 @@ static void draw_ceiling(t_parsed_data *pd, int x, int draw_start)
     y = 0;
     while (y < draw_start)
     {
-        color = shade_color(0xE5B75DFF, draw_start - y);
+        color = shade_color(CEILING, horizon + y);
         mlx_put_pixel(pd->screen, x, y, color);
         y++;
     }
 }
 
-static void draw_floor(t_parsed_data *pd, int x, int draw_end, int h)
+static void draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
 {
     int y;
     uint32_t color;
 
     y = draw_end + 1;
-    while (y < h)
+    while (y < (horizon * 2))
     {
-        color = shade_color(0x604C27FF, y - draw_end);
+        color = shade_color(FLOOR, (horizon * 2) - y);
         mlx_put_pixel(pd->screen, x, y, color);
         y++;
     }
 }
 
-static void draw_wall(t_parsed_data *pd, int x, t_line_data *line, int side, uint32_t wall_col)
+static void draw_wall(t_parsed_data *pd, int x, t_line_data *line, uint32_t wall_col)
 {
     int y;
 
-	(void)side; // mab9inach m7tajin side
     y = line->draw_start;
     while (y <= line->draw_end)
     {
@@ -166,9 +165,9 @@ static void	draw_column(t_parsed_data *pd, t_column_data *col, uint32_t wall_col
 	t_line_data	line;
 
 	calc_line_params(col->h, col->perp_dist, &line);
-	draw_ceiling(pd, col->x, line.draw_start);
-	draw_wall(pd, col->x, &line, col->side, wall_col);
-	draw_floor(pd, col->x, line.draw_end, col->h);
+	draw_ceiling(pd, col->x, line.draw_start, col->h / 2);
+	draw_wall(pd, col->x, &line, wall_col);
+	draw_floor(pd, col->x, line.draw_end, col->h / 2);
 }
 
 static void	set_ray_dir(t_ray_dir_data *data)

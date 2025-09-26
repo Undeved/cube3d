@@ -416,8 +416,12 @@ typedef struct s_ray_data
 
 // Raycast Light engine
 uint32_t    apply_shading(uint32_t base_col, double dist, double ao);
-double      get_ambient_occlusion(t_parsed_data *pd, t_pos map);
 uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
 uint32_t    shade_color(uint32_t base_col, double dist);
+
+# define CEILING 0xE5B75DFF
+# define FLOOR 0x604C27FF
+# define WALL_SIDE 0xCC9D44FF
+# define WALL 0xA37D36FF
 
 #endif
