@@ -34,11 +34,11 @@ static void draw_circle_frame(t_parsed_data *pd)
         {
             diff.x = pixel.x - center.x;
             diff.y = pixel.y - center.y;
-                pixel_dist = sqrt(sqr(diff.x) + sqr(diff.y));
+            pixel_dist = sqrt(sqr(diff.x) + sqr(diff.y));
             if (sqr(diff.x) + sqr(diff.y) < sqr(radious - BORDER_WIDTH))
                 mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(CIRCLE_FRAME, pixel_dist, 0.005));
             else if (within_circle_radious(diff.x, diff.y, radious, BORDER_WIDTH))
-                mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(CIRCLE_BORDER, pixel_dist, 0.005));
+                mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(CIRCLE_BORDER, pixel_dist, 0.008));
             pixel.x++;
         }
         pixel.y++;

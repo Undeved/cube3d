@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/09/26 21:12:55 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/08/27 22:44:00 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 // Mini map
 # define MAX_MAP 500
-# define MINI_MAP_SIZE 350
+# define MINI_MAP_SIZE 400
 # define MINI_MAP_Y 20
 # define MINI_MAP_X (WIDTH - MINI_MAP_SIZE - MINI_MAP_Y)
 # define PIXEL_BLOCK 18
@@ -41,9 +41,11 @@
 
 # define BORDER_WIDTH 8
 
-# define CIRCLE_BORDER 0x38761DFF
+# define CIRCLE_BORDER 0x8EB82CFF
 # define CIRCLE_FRAME 0x102308FF
 # define PLAYER_ICON 0xB0F01BFF
+# define WALL_ICON 0x2D4225FF
+# define FLOOR_ICON 0x4F6845FF
 
 
 // Minimap colors
@@ -52,17 +54,18 @@
 # define MM_PLAYER_COLOR 0xBE0000FF
 
 // Player movement.
-# define SPEED 0.07;
-# define STRAFE_SPEED 0.04
-# define ROT_SPEED 0.1
+# define SPEED 0.095;
+# define STRAFE_SPEED 0.052
+# define ROT_SPEED 0.12
 # define NUDGE_FROM_WALL 0.5
 # define MOUSE_SENSITIVITY 0.0006
+# define PI 3.14159
 
 // Camera
 # define SCALER 0.3
 # define FOV 60
 
-# define COLLISION 0.2
+# define COLLISION 0.1
 
 # define KEYS_NUMBER 350
 
@@ -111,6 +114,11 @@
 # define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
+# define VIGNETTE "textures/ui/in_game/vignette.png"
+# define GUN_IDLE "textures/ui/in_game/gun/gun_idle.png"
+
+# define GUN_X 767
+# define GUN_Y 432
 
 
 // Garbage collector struct.
@@ -142,9 +150,9 @@ typedef struct s_texture
 {
     t_direction dir;
     char        *path;
-    bool        already_extracted;
     mlx_texture_t   *txtr;
     mlx_image_t     *img;
+    bool        already_extracted;
 }   t_texture;
 
 typedef struct s_floor_roof
@@ -249,6 +257,11 @@ typedef struct s_characters_ui
     int                 button_index;
 }   t_characters_ui;
 
+typedef struct s_game_ui
+{
+    t_raw_img           vignette;
+}   t_game_ui;
+
 typedef struct s_pd
 {
     // parsed data
@@ -270,6 +283,7 @@ typedef struct s_pd
     t_keys          keys;
     t_main_menu     menu;
     t_characters_ui chars_menu;
+    t_game_ui       game_ui;
     int             ui_index;
     bool            mouse_clicked;
     t_pos           mouse;
@@ -355,6 +369,7 @@ void    init_radar(t_parsed_data *pd);
 void    render_radar(t_parsed_data *pd);
 void    render_player_icon(t_parsed_data *pd);
 int     sqr(int x);
+void    init_game_ui(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
@@ -412,10 +427,10 @@ typedef struct s_column_data
     int        x;
     int        h;
     double        perp_dist;
-    int        side;
     t_bdir           ray_dir;      // add this
     t_bpos           player_pos;
     t_bpos           pos;
+    int        side;
 }    t_column_data;
 
 typedef struct s_ray_data

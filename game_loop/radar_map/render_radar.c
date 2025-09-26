@@ -16,12 +16,17 @@ static void draw_minimap_grid(t_parsed_data *pd)
     int radius;
     t_pos pixel;
     t_pos diff;
+    t_bpos  w;
+    t_pos   map;
+    char    cell;
+    int     pixel_dist; // for shading.
 
     center.x = MINI_MAP_SIZE / 2;
     center.y = MINI_MAP_SIZE / 2;
     radius = MINI_MAP_SIZE / 2 - RADIOUS_MARGIN;
 
-    double angle = atan2(pd->player.bdir.y, pd->player.bdir.x);
+    // devided to pi / 2 to rotate cuz it wasnt rotated correctly.
+    double angle = atan2(-pd->player.bdir.y, pd->player.bdir.x) - (PI / 2);
     // angle of player direction (so minimap rotates with player)
 
     pixel.y = 0;
@@ -32,33 +37,33 @@ static void draw_minimap_grid(t_parsed_data *pd)
         {
             diff.x = pixel.x - center.x;
             diff.y = pixel.y - center.y;
-
+            pixel_dist = sqrt(sqr(diff.x) + sqr(diff.y));
             // only draw inside the minimap circle
             if (sqr(diff.x) + sqr(diff.y) <= sqr(radius - BORDER_WIDTH))
             {
                 // scale pixel distance into "world units"
                 double scale = 0.1; // tuning factor: how many pixels per tile
-                double wx = diff.x * scale;
-                double wy = diff.y * scale;
+                w.x = diff.x * scale;
+                w.y = diff.y * scale;
 
                 // rotate relative to player dir
-                rotate_point(&wx, &wy, -angle);
+                rotate_point(&w.x, &w.y, -angle);
 
                 // translate relative to player world position
-                int map_x = (int)(pd->player.bpos.x + wx);
-                int map_y = (int)(pd->player.bpos.y + wy);
+                map.x = (int)(pd->player.bpos.x + w.x);
+                map.y = (int)(pd->player.bpos.y + w.y);
 
-                if (map_x >= 0 && map_x < pd->level.max_x &&
-                    map_y >= 0 && map_y < pd->level.max_y)
+                if (map.x >= 0 && map.x < pd->level.max_x &&
+                    map.y >= 0 && map.y < pd->level.max_y)
                 {
-                    char cell = pd->map_grid[map_y][map_x];
+                    cell = pd->map_grid[map.y][map.x];
                     if (cell == '1')
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, 0x444444FF); // wall
+                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
                     else
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, 0xAAAAAAFF); // floor
+                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(FLOOR_ICON, pixel_dist, 0.015));
                 }
                 else
-                    mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, 0x444444FF);
+                    mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
             }
             pixel.x++;
         }

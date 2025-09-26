@@ -128,6 +128,7 @@ void game_loop(t_parsed_data *pd)
     init_mini_map(pd);
     init_main_menu(pd);
     init_characters_menu(pd);
+    init_game_ui(pd);
 
     mlx_key_hook(pd->mlx, handle_player_input, pd);
     mlx_cursor_hook(pd->mlx, handle_mouse_input, pd);
