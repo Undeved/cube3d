@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/08/27 22:44:00 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/09/26 21:12:55 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ typedef struct s_texture
     t_direction dir;
     char        *path;
     bool        already_extracted;
+    mlx_texture_t   *txtr;
+    mlx_image_t     *img;
 }   t_texture;
 
 typedef struct s_floor_roof
@@ -411,6 +413,9 @@ typedef struct s_column_data
     int        h;
     double        perp_dist;
     int        side;
+    t_bdir           ray_dir;      // add this
+    t_bpos           player_pos;
+    t_bpos           pos;
 }    t_column_data;
 
 typedef struct s_ray_data
@@ -424,12 +429,26 @@ typedef struct s_ray_data
     int    side;
 }    t_ray_data;
 
+typedef struct s_texture_data
+{
+	mlx_texture_t	*texture;
+	double		perp_dist;
+	int		side;
+	t_bdir		ray_dir;
+	t_bpos		pos;
+	int		tex_x;
+	int		tex_y;
+	double		step;
+	double		tex_pos;
+}	t_texture_data;
+
 
 // ----------------------------------------------------------------------------------------
 
 // Raycast Light engine
 uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
-uint32_t shade_color(uint32_t base_col, double dist, double magnitude);
+uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
+uint32_t shade_wall(uint32_t base_col, double dist, double magnitude);
 
 # define CEILING 0xE5B75DFF
 # define FLOOR 0x604C27FF

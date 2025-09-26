@@ -35,3 +35,15 @@ uint32_t prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map)
 
     return (shade_color(base_col, col->perp_dist, 0.20));
 }
+
+uint32_t shade_wall(uint32_t base_col, double dist, double magnitude)
+{
+    double   shade;
+
+
+    shade = 1.0 / (1.0 +  dist * magnitude);
+    if (shade < 0.2)
+        shade = 0.2;
+
+    return (shade_color(base_col,  dist, 0.20));
+}

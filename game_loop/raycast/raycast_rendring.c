@@ -1,6 +1,124 @@
 #include "../../cube.h"
 
-static void	compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist)
+/*draw_wall used by textured fallback */
+static void draw_wall(t_parsed_data *pd, int x, t_line_data *line, uint32_t wall_col)
+{
+	int y;
+
+	y = line->draw_start;
+	while (y <= line->draw_end)
+	{
+		mlx_put_pixel(pd->screen, x, y, wall_col);
+		y++;
+	}
+}
+
+/* Select the correct wall texture (NO / SO / WE / EA) */
+static mlx_texture_t *get_wall_texture(t_parsed_data *pd, int side, t_bdir ray_dir)
+{
+	mlx_texture_t *tx;
+
+	if (side == 0)
+	{
+		if (ray_dir.x > 0)
+			tx = pd->txtr_we.txtr;
+		else
+			tx = pd->txtr_ea.txtr;
+	}
+	else
+	{
+		if (ray_dir.y > 0)
+			tx = pd->txtr_no.txtr;
+		else
+			tx = pd->txtr_so.txtr;
+	}
+	return (tx);
+}
+
+/* darken a 32-bit packed color (same byte layout you use for sample) */
+static inline uint32_t darken_color(uint32_t c)
+{
+	uint32_t r = (c >> 24) & 0xFF;
+	uint32_t g = (c >> 16) & 0xFF;
+	uint32_t b = (c >> 8) & 0xFF;
+	r >>= 1; g >>= 1; b >>= 1;
+	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
+}
+
+/* draw textured vertical column */
+static void draw_textured_column(t_parsed_data *pd, int x, t_line_data *line,
+					 double perp_dist, int side, t_bdir ray_dir, t_bpos pos)
+{
+	mlx_texture_t *tx;
+	double		 wall_x;
+	int			 tex_x;
+	int			 tex_y;
+	int			 y;
+	int			 tex_h;
+	int			 tex_w;
+	double		 step;
+	double		 tex_pos;
+	int			 screen_h;
+
+	tx = get_wall_texture(pd, side, ray_dir);
+	if (!tx || !tx->pixels)
+	{
+		draw_wall(pd, x, line, 0x00FFFFFF);
+		return ;
+	}
+
+	tex_w = (int)tx->width;
+	tex_h = (int)tx->height;
+	screen_h = pd->screen->height;
+
+	if (side == 0)
+		wall_x = pos.y + perp_dist * ray_dir.y;
+	else
+		wall_x = pos.x + perp_dist * ray_dir.x;
+	wall_x -= floor(wall_x);
+
+	tex_x = (int)(wall_x * (double)tex_w);
+	if (tex_x < 0) tex_x = 0;
+	if (tex_x >= tex_w) tex_x = tex_w - 1;
+
+	if (side == 0 && ray_dir.x > 0.0)
+		tex_x = tex_w - tex_x - 1;
+	if (side == 1 && ray_dir.y < 0.0)
+		tex_x = tex_w - tex_x - 1;
+
+	step = (double)tex_h / (double)line->height;
+	tex_pos = ((double)line->draw_start - (double)screen_h / 2.0
+			   + (double)line->height / 2.0) * step;
+
+	y = line->draw_start;
+	while (y <= line->draw_end)
+	{
+		tex_y = (int)tex_pos;
+		if (tex_y < 0) tex_y = 0;
+		if (tex_y >= tex_h) tex_y = tex_h - 1;
+
+		/* safe byte-based sampling (assumes 4 bytes per pixel: R,G,B,A) */
+		{
+			unsigned char *p = (unsigned char *)tx->pixels;
+			int idx = (tex_y * tx->width + tex_x) * 4;
+			unsigned int r = p[idx + 0];
+			unsigned int g = p[idx + 1];
+			unsigned int b = p[idx + 2];
+			uint32_t sample = (r << 24) | (g << 16) | (b << 8) | 0xFF;
+
+			if (side == 1)
+				sample = darken_color(sample);
+
+			mlx_put_pixel(pd->screen, x, y, shade_wall(sample, perp_dist, 0.20));
+		}
+
+		tex_pos += step;
+		y++;
+	}
+}
+
+/* delta distances for DDA */
+static void compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist)
 {
 	if (ray_dir.x == 0.0)
 		delta_dist->x = 1000000.0;
@@ -12,7 +130,8 @@ static void	compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist)
 		delta_dist->y = fabs(1.0 / ray_dir.y);
 }
 
-static void	set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
+/* init x step + initial sidedist */
+static void set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 {
 	if (ray_dir.x < 0.0)
 	{
@@ -26,7 +145,8 @@ static void	set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 	}
 }
 
-static void	set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
+/* init y step + initial sidedist */
+static void set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 {
 	if (ray_dir.y < 0.0)
 	{
@@ -40,27 +160,27 @@ static void	set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 	}
 }
 
-static void	init_step_and_sidedist(t_bpos player, t_step_data *data)
+static void init_step_and_sidedist(t_bpos player, t_step_data *data)
 {
 	set_x_step(player, data->map, data->ray_dir, data);
 	set_y_step(player, data->map, data->ray_dir, data);
 }
 
-static void	update_x_side(t_dda_data *data)
+static void update_x_side(t_dda_data *data)
 {
 	data->side_dist->x += data->delta_dist.x;
 	data->map->x += data->step.x;
 	*data->side = 0;
 }
 
-static void	update_y_side(t_dda_data *data)
+static void update_y_side(t_dda_data *data)
 {
 	data->side_dist->y += data->delta_dist.y;
 	data->map->y += data->step.y;
 	*data->side = 1;
 }
 
-static bool	is_wall_hit(t_parsed_data *pd, t_pos map)
+static bool is_wall_hit(t_parsed_data *pd, t_pos map)
 {
 	if (map.y < 0 || !pd->map_grid[map.y])
 		return (false);
@@ -69,9 +189,9 @@ static bool	is_wall_hit(t_parsed_data *pd, t_pos map)
 	return (pd->map_grid[map.y][map.x] != '0');
 }
 
-static void	perform_dda(t_parsed_data *pd, t_dda_data *data)
+static void perform_dda(t_parsed_data *pd, t_dda_data *data)
 {
-	while (true)
+	while (1)
 	{
 		if (data->side_dist->x < data->side_dist->y)
 			update_x_side(data);
@@ -82,21 +202,21 @@ static void	perform_dda(t_parsed_data *pd, t_dda_data *data)
 	}
 }
 
-static double	calc_x_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir)
+static double calc_x_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir)
 {
 	if (ray_dir.x == 0.0)
 		return (0.000001);
 	return (((double)map.x - pos.x + (1 - step.x) / 2.0) / ray_dir.x);
 }
 
-static double	calc_y_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir)
+static double calc_y_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir)
 {
 	if (ray_dir.y == 0.0)
 		return (0.000001);
 	return (((double)map.y - pos.y + (1 - step.y) / 2.0) / ray_dir.y);
 }
 
-static double	compute_perp_wall_dist(t_perp_data *data)
+static double compute_perp_wall_dist(t_perp_data *data)
 {
 	double	perp_wall_dist;
 
@@ -109,7 +229,7 @@ static double	compute_perp_wall_dist(t_perp_data *data)
 	return (perp_wall_dist);
 }
 
-static void	calc_line_params(int h, double perp_dist, t_line_data *line)
+static void calc_line_params(int h, double perp_dist, t_line_data *line)
 {
 	line->height = (int)((double)h / perp_dist);
 	line->draw_start = -line->height / 2 + h / 2;
@@ -122,66 +242,55 @@ static void	calc_line_params(int h, double perp_dist, t_line_data *line)
 
 static void draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon)
 {
-    int y;
-    uint32_t color;
+	int		 y;
+	uint32_t color;
 
-    y = 0;
-    while (y < draw_start)
-    {
-        color = shade_color(CEILING, horizon + y, 0.0015);
-        mlx_put_pixel(pd->screen, x, y, color);
-        y++;
-    }
+	y = 0;
+	while (y < draw_start)
+	{
+		color = shade_color(CEILING, horizon + y, 0.0015);
+		mlx_put_pixel(pd->screen, x, y, color);
+		y++;
+	}
 }
 
 static void draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
 {
-    int y;
-    uint32_t color;
+	int		 y;
+	uint32_t color;
 
-    y = draw_end + 1;
-    while (y < (horizon * 2))
-    {
-        color = shade_color(FLOOR, (horizon * 2) - y, 0.0015);
-        mlx_put_pixel(pd->screen, x, y, color);
-        y++;
-    }
+	y = draw_end + 1;
+	while (y < (horizon * 2))
+	{
+		color = shade_color(FLOOR, (horizon * 2) - y, 0.0015);
+		mlx_put_pixel(pd->screen, x, y, color);
+		y++;
+	}
 }
 
-static void draw_wall(t_parsed_data *pd, int x, t_line_data *line, uint32_t wall_col)
+static void draw_column(t_parsed_data *pd, t_column_data *col)
 {
-    int y;
-
-    y = line->draw_start;
-    while (y <= line->draw_end)
-    {
-        mlx_put_pixel(pd->screen, x, y, wall_col);
-        y++;
-    }
-}
-
-static void	draw_column(t_parsed_data *pd, t_column_data *col, uint32_t wall_col)
-{
-	t_line_data	line;
+	t_line_data line;
 
 	calc_line_params(col->h, col->perp_dist, &line);
 	draw_ceiling(pd, col->x, line.draw_start, col->h / 2);
-	draw_wall(pd, col->x, &line, wall_col);
+	draw_textured_column(pd, col->x, &line, col->perp_dist, col->side,
+						 col->ray_dir, col->player_pos);
 	draw_floor(pd, col->x, line.draw_end, col->h / 2);
 }
 
-static void	set_ray_dir(t_ray_dir_data *data)
+static void set_ray_dir(t_ray_dir_data *data)
 {
-	double	camera_x;
+	double camera_x;
 
 	camera_x = 2.0 * data->x / (double)data->w - 1.0;
 	data->ray_dir->x = data->pl->bdir.x + -data->cam->dir.x * camera_x;
 	data->ray_dir->y = data->pl->bdir.y + -data->cam->dir.y * camera_x;
 }
 
-static void	init_ray_data(t_ray_data *ray, t_player *pl, int x, int w)
+static void init_ray_data(t_ray_data *ray, t_player *pl, int x, int w)
 {
-	t_ray_dir_data	ray_dir_data;
+	t_ray_dir_data ray_dir_data;
 
 	ray_dir_data.pl = pl;
 	ray_dir_data.cam = &pl->camera_plane;
@@ -195,7 +304,7 @@ static void	init_ray_data(t_ray_data *ray, t_player *pl, int x, int w)
 	ray->map.y = (int)ray->player_pos.y;
 }
 
-static void	init_dda_data(t_parsed_data *pd, t_ray_data *ray, t_dda_data *dda_data)
+static void init_dda_data(t_parsed_data *pd, t_ray_data *ray, t_dda_data *dda_data)
 {
 	dda_data->pd = pd;
 	dda_data->map = &ray->map;
@@ -205,8 +314,8 @@ static void	init_dda_data(t_parsed_data *pd, t_ray_data *ray, t_dda_data *dda_da
 	dda_data->side = &ray->side;
 }
 
-static void	init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray,
-				t_perp_data *perp_data, t_column_data *col_data)
+static void init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray,
+					   t_perp_data *perp_data, t_column_data *col_data)
 {
 	perp_data->map = ray->map;
 	perp_data->pos = ray->player_pos;
@@ -218,15 +327,17 @@ static void	init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray,
 	col_data->h = pd->screen->height;
 	col_data->perp_dist = compute_perp_wall_dist(perp_data);
 	col_data->side = ray->side;
+	col_data->ray_dir = ray->ray_dir;
+	col_data->player_pos = ray->player_pos;
 }
-static void	cast_single_ray(t_parsed_data *pd, int x)
+
+static void cast_single_ray(t_parsed_data *pd, int x)
 {
-	t_ray_data		ray;
-	t_step_data		step_data;
-	t_dda_data		dda_data;
-	t_perp_data		perp_data;
-	t_column_data	col_data;
-	uint32_t		wall_col; // zdto
+	t_ray_data	ray;
+	t_step_data	step_data;
+	t_dda_data	dda_data;
+	t_perp_data	perp_data;
+	t_column_data col_data;
 
 	init_ray_data(&ray, &pd->player, x, pd->screen->width);
 	compute_delta_dist(ray.ray_dir, &ray.delta_dist);
@@ -239,10 +350,10 @@ static void	cast_single_ray(t_parsed_data *pd, int x)
 	init_dda_data(pd, &ray, &dda_data);
 	perform_dda(pd, &dda_data);
 	init_perp_and_col_data(pd, x, &ray, &perp_data, &col_data);
-	wall_col = prepare_wall_color(pd, &col_data, ray.map); // shading.
-	draw_column(pd, &col_data, wall_col);
+	draw_column(pd, &col_data);
 }
-void	raycast_render(t_parsed_data *pd)
+
+void raycast_render(t_parsed_data *pd)
 {
 	int	x;
 	int	w;

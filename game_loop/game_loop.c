@@ -64,6 +64,58 @@ static void init_gameplay_screen(t_parsed_data *pd)
         mind_free_all(EXIT_FAILURE);
     pd->screen->enabled = false;
 }
+static void load_one_texture(t_parsed_data *pd, t_texture *t)
+{
+	if (t->path == NULL)
+		mind_free_all(EXIT_FAILURE);
+	t->txtr = mlx_load_png(t->path);
+	if (t->txtr == NULL)
+    {
+        print_error("Error\nTexture Path Missing.\n");
+		mind_free_all(EXIT_FAILURE);
+    }
+	t->img = mlx_texture_to_image(pd->mlx, t->txtr);
+	if (t->img == NULL)
+		mind_free_all(EXIT_FAILURE);
+	t->already_extracted = true;
+}
+
+/* Role: initialize all wall textures (NO, SO, WE, EA).
+ * Keep this call after mlx_init(pd->mlx) so PD->mlx is valid.
+ */
+void init_textures(t_parsed_data *pd)
+{
+	load_one_texture(pd, &pd->txtr_no);
+	load_one_texture(pd, &pd->txtr_so);
+	load_one_texture(pd, &pd->txtr_we);
+	load_one_texture(pd, &pd->txtr_ea);
+}
+
+/* Role: free textures and images on shutdown.
+ * Call from your cleanup path (mind_free_all / gc).
+ */
+void free_textures(t_parsed_data *pd)
+{
+	if (pd->txtr_no.img)
+		mlx_delete_image(pd->mlx, pd->txtr_no.img);
+	if (pd->txtr_no.txtr)
+		mlx_delete_texture(pd->txtr_no.txtr);
+
+	if (pd->txtr_so.img)
+		mlx_delete_image(pd->mlx, pd->txtr_so.img);
+	if (pd->txtr_so.txtr)
+		mlx_delete_texture(pd->txtr_so.txtr);
+
+	if (pd->txtr_we.img)
+		mlx_delete_image(pd->mlx, pd->txtr_we.img);
+	if (pd->txtr_we.txtr)
+		mlx_delete_texture(pd->txtr_we.txtr);
+
+	if (pd->txtr_ea.img)
+		mlx_delete_image(pd->mlx, pd->txtr_ea.img);
+	if (pd->txtr_ea.txtr)
+		mlx_delete_texture(pd->txtr_ea.txtr);
+}
 
 void game_loop(t_parsed_data *pd)
 {
@@ -71,6 +123,7 @@ void game_loop(t_parsed_data *pd)
     pd->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
+    init_textures(pd);
     init_gameplay_screen(pd);
     init_mini_map(pd);
     init_main_menu(pd);
