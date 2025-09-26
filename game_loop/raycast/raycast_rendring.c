@@ -128,7 +128,7 @@ static void draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon)
     y = 0;
     while (y < draw_start)
     {
-        color = shade_color(CEILING, horizon + y);
+        color = shade_color(CEILING, horizon + y, 0.0015);
         mlx_put_pixel(pd->screen, x, y, color);
         y++;
     }
@@ -142,7 +142,7 @@ static void draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
     y = draw_end + 1;
     while (y < (horizon * 2))
     {
-        color = shade_color(FLOOR, (horizon * 2) - y);
+        color = shade_color(FLOOR, (horizon * 2) - y, 0.0015);
         mlx_put_pixel(pd->screen, x, y, color);
         y++;
     }

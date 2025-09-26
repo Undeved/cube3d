@@ -18,12 +18,12 @@ uint32_t    apply_shading(uint32_t base_col, double dist, double ao)
 
     return (r << 24) | (g << 16) | (b << 8) | 0xFF;
 }
-uint32_t shade_color(uint32_t base_col, double dist)
+uint32_t shade_color(uint32_t base_col, double dist, double magnitude)
 {
     double shade;
     uint8_t r, g, b;
 
-    shade = 1.0 / (1.0 + dist * 0.0015); // gentler than wall shading
+    shade = 1.0 / (1.0 + dist * magnitude); // gentler than wall shading
     // inverse linear fall_off equation
 
     r = ((base_col >> 24) & 0xFF) * shade;

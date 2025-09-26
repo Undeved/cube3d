@@ -20,7 +20,8 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/raycast/raycast_data.c game_loop/main_menu/menu_cursor/setup_mouse.c \
 	game_loop/main_menu/menu_cursor/handle_mouse_input.c \
 	game_loop/main_menu/menu_cursor/handle_mouse_click.c game_loop/game_ui/game_ui.c \
-	game_loop/raycast/shading.c
+	game_loop/raycast/shading.c game_loop/radar_map/render_radar.c \
+	game_loop/radar_map/init_radar.c
 
 OBJ=$(SRC:.c=.o)
 

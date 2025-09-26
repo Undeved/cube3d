@@ -51,8 +51,11 @@ static void init_precise_data(t_parsed_data *pd)
 static void init_mini_map(t_parsed_data *pd)
 {
     pd->minimap.img = mlx_new_image(pd->mlx, MINI_MAP_SIZE, MINI_MAP_SIZE);
-    if (!pd->minimap.img || mlx_image_to_window(pd->mlx, pd->minimap.img, 0, 0) == -1)
+    if (!pd->minimap.img || mlx_image_to_window(pd->mlx, pd->minimap.img, MINI_MAP_X, MINI_MAP_Y) == -1)
         mind_free_all(EXIT_FAILURE);
+    pd->minimap.img->instances->z++;
+    pd->minimap.img->enabled = false;
+    init_radar(pd);
 }
 
 static void init_gameplay_screen(t_parsed_data *pd)

@@ -12,5 +12,6 @@ void    game_render(void *param)
     update_player_data(pd);
     raycast_system(pd);
     raycast_render(pd);
-    draw_minimap(pd);
+    render_radar(pd);
+    // draw_minimap(pd);
 }

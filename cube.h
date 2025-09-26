@@ -32,16 +32,23 @@
 
 // Mini map
 # define MAX_MAP 500
-# define MINI_MAP_X 0
-# define MINI_MAP_Y 0
+# define MINI_MAP_SIZE 350
+# define MINI_MAP_Y 20
+# define MINI_MAP_X (WIDTH - MINI_MAP_SIZE - MINI_MAP_Y)
 # define PIXEL_BLOCK 18
 # define PIXEL_RAY 4
+# define RADIOUS_MARGIN 20
+
+# define BORDER_WIDTH 8
+
+# define CIRCLE_BORDER 0x38761DFF
+# define CIRCLE_FRAME 0x102308FF
+
 
 // Minimap colors
 # define MM_WALL_COLOR 0x7851A9FF
 # define MM_FLOOR_COLOR 0xA085C2FF
 # define MM_PLAYER_COLOR 0xBE0000FF
-# define MINI_MAP_SIZE 320
 
 // Player movement.
 # define SPEED 0.07;
@@ -152,6 +159,7 @@ typedef struct s_level
     bool    game_started;
 }   t_level;
 
+// point object [x, y].
 typedef struct s_pos
 {
     int x;
@@ -340,6 +348,8 @@ void    handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t m
 void    menu_trigger_click(t_parsed_data *pd);
 void    characters_trigger_click(t_parsed_data *pd);
 void    toggle_game_ui(t_parsed_data *pd);
+void    init_radar(t_parsed_data *pd);
+void    render_radar(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
@@ -417,7 +427,7 @@ typedef struct s_ray_data
 // Raycast Light engine
 uint32_t    apply_shading(uint32_t base_col, double dist, double ao);
 uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
-uint32_t    shade_color(uint32_t base_col, double dist);
+uint32_t shade_color(uint32_t base_col, double dist, double magnitude);
 
 # define CEILING 0xE5B75DFF
 # define FLOOR 0x604C27FF
