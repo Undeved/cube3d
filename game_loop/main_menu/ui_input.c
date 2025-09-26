@@ -69,6 +69,8 @@ void    menu_trigger_click(t_parsed_data *pd)
         pd->screen->enabled = true;
         pd->ui_index = 2;
         toggle_menu(pd, false);
+        mlx_set_cursor_mode(pd->mlx, MLX_MOUSE_HIDDEN); // hide cursor.
+        toggle_game_ui(pd);
         return ;
     }
     else if (pd->menu.button_index == 1)

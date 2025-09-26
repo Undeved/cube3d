@@ -120,54 +120,54 @@ static void	calc_line_params(int h, double perp_dist, t_line_data *line)
 		line->draw_end = h - 1;
 }
 
-static void	draw_ceiling(t_parsed_data *pd, int x, int draw_start)
+static void draw_ceiling(t_parsed_data *pd, int x, int draw_start)
 {
-	int	y;
+    int y;
+    uint32_t color;
 
-	y = 0;
-	while (y < draw_start)
-	{
-		mlx_put_pixel(pd->screen, x, y,  0xE5B75DFF);
-		y++;
-	}
+    y = 0;
+    while (y < draw_start)
+    {
+        color = shade_color(0xE5B75DFF, draw_start - y);
+        mlx_put_pixel(pd->screen, x, y, color);
+        y++;
+    }
 }
 
-static void	draw_wall(t_parsed_data *pd, int x, t_line_data *line, int side)
+static void draw_floor(t_parsed_data *pd, int x, int draw_end, int h)
 {
-	uint32_t	wall_col;
-	int			y;
+    int y;
+    uint32_t color;
 
-	if (side == 1)
-		wall_col = 0xCC9D44FF;
-	else
-		wall_col = 0xA37D36FF;
-	y = line->draw_start;
-	while (y <= line->draw_end)
-	{
-		mlx_put_pixel(pd->screen, x, y, wall_col);
-		y++;
-	}
+    y = draw_end + 1;
+    while (y < h)
+    {
+        color = shade_color(0x604C27FF, y - draw_end);
+        mlx_put_pixel(pd->screen, x, y, color);
+        y++;
+    }
 }
 
-static void	draw_floor(t_parsed_data *pd, int x, int draw_end, int h)
+static void draw_wall(t_parsed_data *pd, int x, t_line_data *line, int side, uint32_t wall_col)
 {
-	int	y;
+    int y;
 
-	y = draw_end + 1;
-	while (y < h)
-	{
-		mlx_put_pixel(pd->screen, x, y,  0x604C27FF);
-		y++;
-	}
+	(void)side; // mab9inach m7tajin side
+    y = line->draw_start;
+    while (y <= line->draw_end)
+    {
+        mlx_put_pixel(pd->screen, x, y, wall_col);
+        y++;
+    }
 }
 
-static void	draw_column(t_parsed_data *pd, t_column_data *col)
+static void	draw_column(t_parsed_data *pd, t_column_data *col, uint32_t wall_col)
 {
 	t_line_data	line;
 
 	calc_line_params(col->h, col->perp_dist, &line);
 	draw_ceiling(pd, col->x, line.draw_start);
-	draw_wall(pd, col->x, &line, col->side);
+	draw_wall(pd, col->x, &line, col->side, wall_col);
 	draw_floor(pd, col->x, line.draw_end, col->h);
 }
 
@@ -227,6 +227,7 @@ static void	cast_single_ray(t_parsed_data *pd, int x)
 	t_dda_data		dda_data;
 	t_perp_data		perp_data;
 	t_column_data	col_data;
+	uint32_t		wall_col; // zdto
 
 	init_ray_data(&ray, &pd->player, x, pd->screen->width);
 	compute_delta_dist(ray.ray_dir, &ray.delta_dist);
@@ -239,7 +240,8 @@ static void	cast_single_ray(t_parsed_data *pd, int x)
 	init_dda_data(pd, &ray, &dda_data);
 	perform_dda(pd, &dda_data);
 	init_perp_and_col_data(pd, x, &ray, &perp_data, &col_data);
-	draw_column(pd, &col_data);
+	wall_col = prepare_wall_color(pd, &col_data, ray.map); // shading.
+	draw_column(pd, &col_data, wall_col);
 }
 void	raycast_render(t_parsed_data *pd)
 {

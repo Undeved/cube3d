@@ -48,9 +48,10 @@
 # define STRAFE_SPEED 0.04
 # define ROT_SPEED 0.1
 # define NUDGE_FROM_WALL 0.5
+# define MOUSE_SENSITIVITY 0.0006
 
 // Camera
-# define SCALER 1
+# define SCALER 0.3
 # define FOV 60
 
 # define COLLISION 0.2
@@ -260,6 +261,7 @@ typedef struct s_pd
     t_characters_ui chars_menu;
     int             ui_index;
     bool            mouse_clicked;
+    t_pos           mouse;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -337,6 +339,7 @@ void    handle_mouse_input(double xpos, double ypos, void *param);
 void    handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
 void    menu_trigger_click(t_parsed_data *pd);
 void    characters_trigger_click(t_parsed_data *pd);
+void    toggle_game_ui(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
@@ -407,5 +410,14 @@ typedef struct s_ray_data
     t_bpos    side_dist;
     int    side;
 }    t_ray_data;
+
+
+// ----------------------------------------------------------------------------------------
+
+// Raycast Light engine
+uint32_t    apply_shading(uint32_t base_col, double dist, double ao);
+double      get_ambient_occlusion(t_parsed_data *pd, t_pos map);
+uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
+uint32_t    shade_color(uint32_t base_col, double dist);
 
 #endif
