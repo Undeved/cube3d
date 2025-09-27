@@ -474,5 +474,9 @@ uint32_t shade_wall(uint32_t base_col, double dist, double magnitude);
 # define FLOOR 0x876D46FF
 # define WALL_SIDE 0xCC9D44FF
 # define WALL 0xA37D36FF
+# define FLOOR_FALLOF 0.0065
+# define ROOF_FALLOF 0.0042
+# define WALLS_FALLOF 0.35
+# define SHIFT_FLOOR_SHADE 100
 
 #endif

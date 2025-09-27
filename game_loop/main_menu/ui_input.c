@@ -70,6 +70,7 @@ void    menu_trigger_click(t_parsed_data *pd)
         pd->ui_index = 2;
         toggle_menu(pd, false);
         mlx_set_cursor_mode(pd->mlx, MLX_MOUSE_HIDDEN); // hide cursor.
+        // delete menu textures and images, will not be used anymore.
         toggle_game_ui(pd);
         return ;
     }

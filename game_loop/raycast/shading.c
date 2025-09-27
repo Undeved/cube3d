@@ -16,34 +16,3 @@ uint32_t shade_color(uint32_t base_col, double dist, double magnitude)
     // return (base_col);
     return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 }
-
-uint32_t prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map)
-{
-    uint32_t base_col;
-    double   shade;
-
-    if (col->side == 1)
-        base_col = WALL_SIDE;
-    else
-        base_col = WALL;
-
-    (void)pd;
-    (void)map;
-    shade = 1.0 / (1.0 + col->perp_dist * 0.1);
-    if (shade < 0.2)
-        shade = 0.2;
-
-    return (shade_color(base_col, col->perp_dist, 0.20));
-}
-
-uint32_t shade_wall(uint32_t base_col, double dist, double magnitude)
-{
-    double   shade;
-
-
-    shade = 1.0 / (1.0 +  dist * magnitude);
-    if (shade < 0.2)
-        shade = 0.2;
-
-    return (shade_color(base_col,  dist, magnitude));
-}

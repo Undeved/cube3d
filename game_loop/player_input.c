@@ -103,15 +103,30 @@ static void player_rotation(t_parsed_data *pd)
     // if (pd->keys.pressed[MLX_KEY_RIGHT] || pd->keys.pressed[MLX_KEY_LEFT])
         // printf("rotation vector ==> v[x=%.2f, y=%.2f]\n", pd->player.bdir.x, pd->player.bdir.y);
 }
+// might remove just for debegguing
+static void update_vignette(mlx_key_data_t keydata, t_parsed_data *pd)
+{
+    if (keydata.action == MLX_PRESS)
+    {
+        if (keydata.key == MLX_KEY_SPACE)
+        {
+            if (pd->game_ui.vignette.img->enabled)
+                pd->game_ui.vignette.img->enabled = false;
+            else
+                pd->game_ui.vignette.img->enabled = true;
+        }
+    }
+}
 
 void    update_player_data(t_parsed_data *pd)
 {
     int32_t m_x;
     int32_t m_y;
-    player_movement(pd);
+
     m_x = 0;
     m_y = 0;
-    mlx_get_mouse_pos(pd->mlx, &m_x, &m_y);
+    player_movement(pd);
+    mlx_get_mouse_pos(pd->mlx, &m_x, &m_y); // get mouse pos to update rot.
     pd->mouse.x = m_x;
     pd->mouse.y = m_y;
     player_rotation(pd);
@@ -132,6 +147,7 @@ void    handle_player_input(mlx_key_data_t keydata, void *param)
         return ;
     if (keydata.key >= 0 && keydata.key < KEYS_NUMBER)
     {
+        update_vignette(keydata, pd); // update onscreen vignette
         if (keydata.action == MLX_PRESS)
             pd->keys.pressed[keydata.key] = true;
         else if (keydata.action == MLX_RELEASE)
