@@ -1,6 +1,6 @@
 CC= cc
 SANITIZE= #-fsanitize=address -g3
-FLAGS= -Wall -Werror -Wextra
+FLAGS= #-Wall -Werror -Wextra
 
 INCLUDES= -Iinclude -I$(HOME)/local/include
 LIBS= MLX42/build/libmlx42.a -L$(HOME)/local/lib -lglfw -ldl -pthread -lm -Ofast -O3

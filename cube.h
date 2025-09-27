@@ -54,7 +54,7 @@
 # define MM_PLAYER_COLOR 0xBE0000FF
 
 // Player movement.
-# define SPEED 0.095;
+# define SPEED 0.155;
 # define STRAFE_SPEED 0.052
 # define ROT_SPEED 0.12
 # define NUDGE_FROM_WALL 0.5
@@ -116,9 +116,12 @@
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
 # define VIGNETTE "textures/ui/in_game/vignette.png"
 # define GUN_IDLE "textures/ui/in_game/gun/gun_idle.png"
+# define GUN_AIM "textures/ui/in_game/gun/gun_aim.png"
 
 # define GUN_X 767
 # define GUN_Y 432
+# define GUN_AIM_X 383
+# define GUN_AIM_Y 431
 
 
 // Garbage collector struct.
@@ -226,7 +229,7 @@ typedef struct s_raw_img
 typedef struct s_button
 {
     mlx_texture_t       *txtr;
-    mlx_image_t     *img;
+    mlx_image_t         *img;
     bool            hoverd;
 }   t_button;
 
@@ -260,6 +263,8 @@ typedef struct s_characters_ui
 typedef struct s_game_ui
 {
     t_raw_img           vignette;
+    t_raw_img           gun;
+    t_raw_img           gun_aim;
 }   t_game_ui;
 
 typedef struct s_pd

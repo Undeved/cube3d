@@ -254,130 +254,21 @@ static void draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon)
 	}
 }
 
-/* compute minimum distance from point (fx,fy) to any wall cell within radius.
- * Distance to rectangle [wx,wx+1]x[wy,wy+1] is used so the band hugs walls.
- */
-static double
-floor_min_dist_to_wall(t_parsed_data *pd, double fx, double fy, double radius)
+static void draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
 {
-	int cx = (int)floor(fx);
-	int cy = (int)floor(fy);
-	int r = (int)ceil(radius);
-	int wx, wy;
-	double minDist = 1e9;
-	char **grid = pd->map_grid;
-
-	for (wy = cy - r; wy <= cy + r; ++wy)
-	{
-		if (wy < 0 || !grid[wy])
-			continue;
-		for (wx = cx - r; wx <= cx + r; ++wx)
-		{
-			if (wx < 0 || !grid[wy][wx])
-				continue;
-			if (grid[wy][wx] == '0')
-				continue;
-
-			/* distance to rectangle [wx,wx+1] x [wy,wy+1] */
-			double dx = 0.0;
-			double dy = 0.0;
-
-			if (fx < (double)wx) dx = (double)wx - fx;
-			else if (fx > (double)(wx + 1)) dx = fx - (double)(wx + 1);
-			if (fy < (double)wy) dy = (double)wy - fy;
-			else if (fy > (double)(wy + 1)) dy = fy - (double)(wy + 1);
-
-			double dist = sqrt(dx * dx + dy * dy);
-			if (dist < minDist) minDist = dist;
-			if (minDist <= 0.0) return 0.0;
-		}
-	}
-	return minDist;
-}
-
-/* convert minDist -> AO factor (0..1) with smooth quadratic falloff */
-static double
-floor_ao_factor(double minDist, double maxRadius, double strength)
-{
-	if (minDist >= maxRadius) return 1.0;
-	if (minDist <= 0.0) return 1.0 - strength;
-	double t = minDist / maxRadius;   /* 0..1 */
-	double inv = 1.0 - t;
-	double ao = 1.0 - (inv * inv) * strength;
-	if (ao < 0.0) ao = 0.0;
-	if (ao > 1.0) ao = 1.0;
-	return ao;
-}
-
-/* multiply packed color (r<<24 | g<<16 | b<<8 | 0xFF) by factor (0..1) */
-static uint32_t
-multiply_color(uint32_t col, double factor)
-{
-	unsigned int r = (col >> 24) & 0xFF;
-	unsigned int g = (col >> 16) & 0xFF;
-	unsigned int b = (col >> 8) & 0xFF;
-
-	r = (unsigned int)(r * factor);
-	g = (unsigned int)(g * factor);
-	b = (unsigned int)(b * factor);
-
-	if (r > 255) r = 255;
-	if (g > 255) g = 255;
-	if (b > 255) b = 255;
-
-	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
-}
-
-/* draw floor with thin smooth AO band beside walls.
- * Keep this small and self-contained — no global state changes.
- */
-static void
-draw_floor(t_parsed_data *pd, int x, int draw_end, t_column_data *col)
-{
-	int y;
-	int h = col->h;
-	t_bpos player = col->player_pos;
-	t_bdir ray = col->ray_dir;
-
-	/* tweak these for band width & darkness */
-	const double maxRadius = 0.8; /* world units; 0.6..0.9 recommended */
-	const double strength  = 0.7; /* 0..1 */
+	int		 y;
+	uint32_t color;
 
 	y = draw_end + 1;
-	while (y < h)
+	while (y < (horizon * 2))
 	{
-		double p = (double)y - (double)h / 2.0;
-		if (p == 0.0)
-		{
-			mlx_put_pixel(pd->screen, x, y, shade_color(FLOOR, h - y, 0.0042));
-			y++;
-			continue;
-		}
-
-		double rowDist = ((double)h * 0.5) / p;
-		double floorX = player.x + rowDist * ray.x;
-		double floorY = player.y + rowDist * ray.y;
-
-		double minDist = floor_min_dist_to_wall(pd, floorX, floorY, maxRadius);
-		/* fast out: if farther than band, keep normal shading */
-		if (minDist >= maxRadius)
-		{
-			mlx_put_pixel(pd->screen, x, y, shade_color(FLOOR, (int)rowDist, 0.0042));
-			y++;
-			continue;
-		}
-
-		double ao = floor_ao_factor(minDist, maxRadius, strength);
-		uint32_t base = shade_color(FLOOR, (int)rowDist, 0.0042);
-		uint32_t shaded = multiply_color(base, ao);
-		mlx_put_pixel(pd->screen, x, y, shaded);
+		color = shade_color(FLOOR, (horizon * 2) - y, 0.0042);
+		mlx_put_pixel(pd->screen, x, y, color);
 		y++;
 	}
 }
 
-/* draw_column must call new draw_floor signature (pass col) */
-static void
-draw_column(t_parsed_data *pd, t_column_data *col)
+static void draw_column(t_parsed_data *pd, t_column_data *col)
 {
 	t_line_data line;
 
@@ -385,9 +276,8 @@ draw_column(t_parsed_data *pd, t_column_data *col)
 	draw_ceiling(pd, col->x, line.draw_start, col->h / 2);
 	draw_textured_column(pd, col->x, &line, col->perp_dist, col->side,
 						 col->ray_dir, col->player_pos);
-	draw_floor(pd, col->x, line.draw_end, col);
+	draw_floor(pd, col->x, line.draw_end, col->h / 2);
 }
-
 
 static void set_ray_dir(t_ray_dir_data *data)
 {
