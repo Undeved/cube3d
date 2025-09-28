@@ -2,7 +2,6 @@
 
 static bool is_collision(char **map_grid, double x, double y)
 {
-
     if (map_grid[(int)y][(int)x] == '1')
         return (true);
     if (map_grid[(int)y][(int)(x + COLLISION)] == '1'

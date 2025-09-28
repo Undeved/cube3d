@@ -9,6 +9,22 @@ static void rotate_point(double *x, double *y, double angle)
     *y = old_x * sin(angle) + old_y * cos(angle);
 }
 
+// draw enemies pixels if within range of x and y
+static bool enemy_icon(double curr_map_x, double curr_map_y, t_parsed_data *pd)
+{
+    int e;
+
+    e = 0;
+    while (e < pd->enemy_count)
+    {
+        if (!pd->enemies[e].dead &&
+            fabs(pd->enemies[e].pos.x - curr_map_x) < 0.5 &&
+            fabs(pd->enemies[e].pos.y - curr_map_y) < 0.5)
+            return (true);
+        e++;
+    }
+    return (false);
+}
 
 static void draw_minimap_grid(t_parsed_data *pd)
 {
@@ -57,10 +73,12 @@ static void draw_minimap_grid(t_parsed_data *pd)
                     map.y >= 0 && map.y < pd->level.max_y)
                 {
                     cell = pd->map_grid[map.y][map.x];
-                    if (cell == '1')
+                    if (cell == '1' || cell == ' ')
                         mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
-                    else
+                    else if (cell == '0')
                         mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(FLOOR_ICON, pixel_dist, 0.015));
+                    if (enemy_icon((double)map.x, (double)map.y, pd))
+                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(0xFF0000FF, pixel_dist, 0.015));
                 }
                 else
                     mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
