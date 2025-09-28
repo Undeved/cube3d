@@ -15,7 +15,9 @@ bool valid_grid_chars(char *str, int *player_count, bool map_grid)
         }
         if (str[i] != '1' && str[i] != '0' && str[i] != 'N'
             && str[i] != 'S' && str[i] != 'E' 
-            && str[i] != 'W' && str[i] != ' ')
+            && str[i] != 'W' && str[i] != ' ' 
+            && str[i] != 'X' && str[i] != 'Y' 
+            && str[i] != 'Z')
             return (false);
         i++;
     }

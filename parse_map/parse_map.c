@@ -28,6 +28,7 @@ static void read_map_file(char *map_path, t_cube *cube)
         free(line);
         line = get_next_line(cube->pd.fd);
     }
+    // gnl -1
     if (count >= MAX_MAP)
     {
         print_error("Error\nBig Map.\n");
@@ -49,6 +50,7 @@ static void read_map_file(char *map_path, t_cube *cube)
         if (!cube->pd.map_file[i])
         {
             closer(&cube->pd.fd);
+            //gnl -1
             mind_free_all(EXIT_FAILURE);
         }
         i++;

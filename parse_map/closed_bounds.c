@@ -83,6 +83,7 @@ void closed_bounds(t_cube *cube)
     get_level_data(cube);
     get_player_pos(cube->pd.map_grid, &cube->pd.player.pos.x,
         &cube->pd.player.pos.y, &cube->pd.player.dir);
+    get_enemies(cube);
     flood_fill(grid_dup(cube->pd.map_grid), cube->pd.player.pos,
         (t_pos){cube->pd.level.max_x, cube->pd.level.max_y});
     

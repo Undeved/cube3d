@@ -55,7 +55,7 @@
 
 // Player movement.
 # define SPEED 0.155;
-# define STRAFE_SPEED 0.052
+# define STRAFE_SPEED 0.095
 # define ROT_SPEED 0.12
 # define NUDGE_FROM_WALL 0.5
 # define MOUSE_SENSITIVITY 0.0006
@@ -122,6 +122,8 @@
 # define GUN_Y 432
 # define GUN_AIM_X 383
 # define GUN_AIM_Y 431
+
+# define MAX_ENEMIES 10
 
 
 // Garbage collector struct.
@@ -267,6 +269,29 @@ typedef struct s_game_ui
     t_raw_img           gun_aim;
 }   t_game_ui;
 
+
+// Enemy Objects [X]
+
+// Enemy Types.
+typedef enum e_enemy_type
+{
+    FT_SKIN_WALKER,
+    MEMORY_LEAK,
+    SEGV,
+}   t_enemy_type;
+
+// Enemy object
+typedef struct s_enemy
+{
+    t_pos          pos;
+    t_bdir          dir;
+    t_enemy_type    type;
+    t_raw_img       skin;
+    int             health;
+    int             damage;
+    bool            dead;
+}   t_enemy;
+
 typedef struct s_pd
 {
     // parsed data
@@ -292,6 +317,8 @@ typedef struct s_pd
     int             ui_index;
     bool            mouse_clicked;
     t_pos           mouse;
+    t_enemy         *enemies;
+    uint8_t         enemy_count;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -375,6 +402,9 @@ void    render_radar(t_parsed_data *pd);
 void    render_player_icon(t_parsed_data *pd);
 int     sqr(int x);
 void    init_game_ui(t_parsed_data *pd);
+
+// Enemies Logic
+void    get_enemies(t_cube *cube);
 
 // helpers test
 void    print_argv(char **argv);
@@ -468,7 +498,6 @@ typedef struct s_texture_data
 // Raycast Light engine
 uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
-uint32_t shade_wall(uint32_t base_col, double dist, double magnitude);
 
 # define CEILING 0xB5AB6BFF
 # define FLOOR 0x876D46FF

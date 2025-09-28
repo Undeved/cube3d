@@ -45,6 +45,23 @@ void print_parsed_data(t_parsed_data *pd)
     printf("player x pos %d\n", pd->player.pos.x);
     printf("player y pos %d\n", pd->player.pos.y);
     printf("player direction %c\n", pd->player.dir);
+
+    printf("Enemies (%d total):\n", pd->enemy_count);
+    for (int e = 0; e < pd->enemy_count; e++)
+    {
+        printf("Enemy[%d]:\n", e);
+        printf("  pos: x = %d, y = %d\n", pd->enemies[e].pos.x, pd->enemies[e].pos.y);
+        printf("  dir: x = %f, y = %f\n", pd->enemies[e].dir.x, pd->enemies[e].dir.y);
+        if (pd->enemies[e].type == 0)
+            printf("  type: -42 Skin Walker\n");
+        else if (pd->enemies[e].type == 1)
+            printf("  type: Memory Leak\n");
+        else if (pd->enemies[e].type == 2)
+            printf("  type: SEGV\n");
+        printf("  health: %d\n", pd->enemies[e].health);
+        printf("  damage: %d\n", pd->enemies[e].damage);
+        printf("  dead: %s\n", pd->enemies[e].dead ? "true" : "false");
+    }
 }
 
 int main(int argc, char **argv)

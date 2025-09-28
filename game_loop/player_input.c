@@ -148,9 +148,9 @@ void    handle_player_input(mlx_key_data_t keydata, void *param)
     if (keydata.key >= 0 && keydata.key < KEYS_NUMBER)
     {
         update_vignette(keydata, pd); // update onscreen vignette
-        if (keydata.action == MLX_PRESS)
-            pd->keys.pressed[keydata.key] = true;
-        else if (keydata.action == MLX_RELEASE)
+        if (keydata.action == MLX_RELEASE)
             pd->keys.pressed[keydata.key] = false;
+        else
+            pd->keys.pressed[keydata.key] = true;
     }
 }
