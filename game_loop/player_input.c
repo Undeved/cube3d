@@ -117,6 +117,22 @@ static void update_vignette(mlx_key_data_t keydata, t_parsed_data *pd)
     }
 }
 
+static void player_pitch(t_parsed_data *pd)
+{
+    if (pd->keys.pressed[MLX_KEY_UP] || pd->mouse.y < (HEIGHT / 2))
+    {
+        pd->player.pitch += PITCH_SPEED;
+        if (pd->player.pitch > MAX_PITCH)
+            pd->player.pitch = MAX_PITCH;
+    }
+    if (pd->keys.pressed[MLX_KEY_DOWN] || pd->mouse.y > (HEIGHT / 2))
+    {
+        pd->player.pitch -= PITCH_SPEED;
+        if (pd->player.pitch < MIN_PITCH)
+            pd->player.pitch = MIN_PITCH;
+    }
+}
+
 void    update_player_data(t_parsed_data *pd)
 {
     int32_t m_x;
@@ -129,6 +145,7 @@ void    update_player_data(t_parsed_data *pd)
     pd->mouse.x = m_x;
     pd->mouse.y = m_y;
     player_rotation(pd);
+    player_pitch(pd);
 }
 
 void    handle_player_input(mlx_key_data_t keydata, void *param)

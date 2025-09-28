@@ -134,7 +134,7 @@ void    draw_enemies(t_parsed_data *pd)
 
     if (!pd->enemies || pd->enemy_count == 0)
         return ;
-    
+
     // First pass: collect all visible enemies and compute their drawing data
     draw_count = 0;
     i = 0;
@@ -193,15 +193,20 @@ void    draw_enemies(t_parsed_data *pd)
     
     // Second pass: draw enemies from farthest to closest
     i = 0;
+
     while (i < draw_count)
     {
         t_enemy_draw_data *curr = &draw_data[i];
-        
-        // Calculate drawing bounds
-        draw_start_y = -curr->sprite_height / 2 + HEIGHT / 2;
-        if (draw_start_y < 0) draw_start_y = 0;
-        draw_end_y = curr->sprite_height / 2 + HEIGHT / 2;
-        if (draw_end_y >= HEIGHT) draw_end_y = HEIGHT - 1;
+
+        // zdt had chi 7to fchi function -------------------
+        int horizon = HEIGHT / 2 + (int)pd->player.pitch;
+
+        draw_start_y = -curr->sprite_height / 2 + horizon;
+        if (draw_start_y < 0) 
+            draw_start_y = 0;
+        draw_end_y   =  curr->sprite_height / 2 + horizon;
+        if (draw_end_y >= HEIGHT) 
+            draw_end_y = HEIGHT - 1;
         
         draw_start_x = -curr->sprite_width / 2 + curr->sprite_screen_x;
         if (draw_start_x < 0) draw_start_x = 0;

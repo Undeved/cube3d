@@ -12,12 +12,13 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     // skin walker
     curr_enemy->dir.x = 0;
     curr_enemy->dir.y = 1; // defaut direction.
+    curr_enemy->b_pos.x = (double)x + 0.5; // Center in the cell
+    curr_enemy->b_pos.y = (double)y + 0.5;
+    curr_enemy->skin.img = NULL;
+    curr_enemy->skin.txtr = NULL;
     if (c == 'X')
     {
         curr_enemy->type = FT_SKIN_WALKER;
-        curr_enemy->pos.x = x;
-        curr_enemy->pos.y = y;
-        curr_enemy->skin.img = NULL; // for now no texture
         curr_enemy->dead = false;
         curr_enemy->damage = 5;
         curr_enemy->health = 10;
@@ -25,9 +26,6 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     else if (c == 'Z')
     {
         curr_enemy->type = MEMORY_LEAK;
-        curr_enemy->pos.x = x;
-        curr_enemy->pos.y = y;
-        curr_enemy->skin.img = NULL; // for now no texture
         curr_enemy->dead = false;
         curr_enemy->damage = 8;
         curr_enemy->health = 20;
@@ -35,9 +33,6 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     else if (c == 'Y')
     {
         curr_enemy->type = SEGV;
-        curr_enemy->pos.x = x;
-        curr_enemy->pos.y = y;
-        curr_enemy->skin.img = NULL; // for now no texture
         curr_enemy->dead = false;
         curr_enemy->damage = 10;
         curr_enemy->health = 30;

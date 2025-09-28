@@ -87,8 +87,9 @@ static void draw_textured_column(t_parsed_data *pd, int x, t_line_data *line,
 		tex_x = tex_w - tex_x - 1;
 
 	step = (double)tex_h / (double)line->height;
-	tex_pos = ((double)line->draw_start - (double)screen_h / 2.0
-			   + (double)line->height / 2.0) * step;
+	tex_pos = ((double)line->draw_start
+           - ((double)screen_h / 2.0 + (double)pd->player.pitch)
+           + (double)line->height / 2.0) * step;
 
 	y = line->draw_start;
 	while (y <= line->draw_end)
@@ -229,13 +230,13 @@ static double compute_perp_wall_dist(t_perp_data *data)
 	return (perp_wall_dist);
 }
 
-static void calc_line_params(int h, double perp_dist, t_line_data *line)
+static void calc_line_params(int h, double perp_dist, t_line_data *line, t_parsed_data *pd)
 {
 	line->height = (int)((double)h / perp_dist);
-	line->draw_start = -line->height / 2 + h / 2;
+	line->draw_start = -line->height / 2 + (h / 2 + (int)pd->player.pitch);
 	if (line->draw_start < 0)
 		line->draw_start = 0;
-	line->draw_end = line->height / 2 + h / 2;
+	line->draw_end = line->height / 2 + (h / 2 + (int)pd->player.pitch);
 	if (line->draw_end >= h)
 		line->draw_end = h - 1;
 }
@@ -272,7 +273,7 @@ static void draw_column(t_parsed_data *pd, t_column_data *col)
 {
 	t_line_data line;
 
-	calc_line_params(col->h, col->perp_dist, &line);
+	calc_line_params(col->h, col->perp_dist, &line, pd);
 	draw_ceiling(pd, col->x, line.draw_start, col->h / 2);
 	draw_textured_column(pd, col->x, &line, col->perp_dist, col->side,
 						 col->ray_dir, col->player_pos);
@@ -365,4 +366,5 @@ void raycast_render(t_parsed_data *pd)
 		cast_single_ray(pd, x);
 		x++;
 	}
+	draw_enemies(pd);
 }

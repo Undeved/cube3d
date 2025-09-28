@@ -44,6 +44,7 @@ static void init_precise_data(t_parsed_data *pd)
 
     pd->level.game_started = false;
     pd->mouse_clicked = false;
+    pd->player.pitch = 0;
     precise_direction(pd);
     init_key_flags(pd);
 }
@@ -80,6 +81,55 @@ static void load_one_texture(t_parsed_data *pd, t_texture *t)
 	t->already_extracted = true;
 }
 
+void init_enemy_textures(t_parsed_data *pd)
+{
+    int i;
+
+    if (pd->enemy_count == 0 || pd->enemies == NULL)
+        return ;
+    i = 0;
+    while (i < pd->enemy_count)
+    {
+        if (pd->enemies[i].skin.txtr == NULL)
+        {
+            if (pd->enemies[i].type == FT_SKIN_WALKER)
+            {
+                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER);
+                if (pd->enemies[i].skin.txtr == NULL)
+                {
+                    print_error("Error\nEnemy Texture Path Missing.\n");
+                    mind_free_all(EXIT_FAILURE);
+                }
+            }
+            else if (pd->enemies[i].type == MEMORY_LEAK)
+            {
+                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER); // change later
+                if (pd->enemies[i].skin.txtr == NULL)
+                {
+                    print_error("Error\nEnemy Texture Path Missing.\n");
+                    mind_free_all(EXIT_FAILURE);
+                }
+            }
+            else if (pd->enemies[i].type == SEGV)
+            {
+                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER); // change later
+                if (pd->enemies[i].skin.txtr == NULL)
+                {
+                    print_error("Error\nEnemy Texture Path Missing.\n");
+                    mind_free_all(EXIT_FAILURE);
+                }
+            }
+        }
+        if (pd->enemies[i].skin.img == NULL)
+        {
+            pd->enemies[i].skin.img = mlx_texture_to_image(pd->mlx, pd->enemies[i].skin.txtr);
+            if (pd->enemies[i].skin.img == NULL)
+                mind_free_all(EXIT_FAILURE);
+        }
+        i++;
+    }
+}
+
 /* Role: initialize all wall textures (NO, SO, WE, EA).
  * Keep this call after mlx_init(pd->mlx) so PD->mlx is valid.
  */
@@ -89,6 +139,7 @@ void init_textures(t_parsed_data *pd)
 	load_one_texture(pd, &pd->txtr_so);
 	load_one_texture(pd, &pd->txtr_we);
 	load_one_texture(pd, &pd->txtr_ea);
+    init_enemy_textures(pd);
 }
 
 /* Role: free textures and images on shutdown.

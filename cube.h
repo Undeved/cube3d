@@ -58,10 +58,11 @@
 # define STRAFE_SPEED 0.095
 # define ROT_SPEED 0.12
 # define NUDGE_FROM_WALL 0.5
-# define MOUSE_SENSITIVITY 0.0006
+# define MOUSE_SENSITIVITY 0.00088
 # define PI 3.14159
-
-// Camera
+# define PITCH_SPEED 60
+# define MAX_PITCH  (HEIGHT / 2)
+# define MIN_PITCH  (-HEIGHT / 2)
 # define SCALER 0.3
 # define FOV 60
 
@@ -117,6 +118,8 @@
 # define VIGNETTE "textures/ui/in_game/vignette.png"
 # define GUN_IDLE "textures/ui/in_game/gun/gun_idle.png"
 # define GUN_AIM "textures/ui/in_game/gun/gun_aim.png"
+
+# define SKIN_WALKER "textures/enemy_textures/skin_walker.png"
 
 # define GUN_X 767
 # define GUN_Y 432
@@ -206,9 +209,9 @@ typedef struct s_player
     t_bpos  bpos;
     t_bdir  bdir;
     char    dir;
-    t_bpos  offset;
     t_bpos  new_pos;
     t_plane camera_plane;
+    double  pitch;
 }   t_player;
 
 typedef struct s_minimap
@@ -407,6 +410,7 @@ void    init_game_ui(t_parsed_data *pd);
 
 // Enemies Logic
 void    get_enemies(t_cube *cube);
+void    draw_enemies(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
@@ -498,8 +502,8 @@ typedef struct s_texture_data
 // ----------------------------------------------------------------------------------------
 
 // Raycast Light engine
-uint32_t    prepare_wall_color(t_parsed_data *pd, t_column_data *col, t_pos map);
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
+
 
 # define CEILING 0xB5AB6BFF
 # define FLOOR 0x876D46FF
