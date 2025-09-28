@@ -283,7 +283,9 @@ typedef enum e_enemy_type
 // Enemy object
 typedef struct s_enemy
 {
-    t_pos          pos;
+    t_pos          pos; // int pos
+    // convert int pos to double for smoother movement later
+    t_bpos          b_pos;
     t_bdir          dir;
     t_enemy_type    type;
     t_raw_img       skin;

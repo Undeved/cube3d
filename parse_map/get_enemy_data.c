@@ -100,10 +100,7 @@ void    get_enemies(t_cube *cube)
         while (cube->pd.map_grid[y][x])
         {
             if (is_enemy(cube->pd.map_grid[y][x]))
-            {
-                printf("enemy found pos x %d, y %d\n", x, y);
                 scrap_enemy_data(x, y, cube->pd.map_grid[y][x], &cube->pd.enemies[enemy_index++]);
-            }
             x++;
         }
         y++;
