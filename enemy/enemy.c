@@ -246,7 +246,7 @@ static void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int ho
 
 	calculate_draw_bounds(curr, horizon, &draw_start_y, &draw_end_y,
 		&draw_start_x, &draw_end_x);
-	color = get_enemy_color(curr->enemy->type, curr->distance, curr->visible);
+	// color = get_enemy_color(curr->enemy->type, curr->distance, curr->visible);
 	draw_enemy_sprite(pd, curr, draw_start_y, draw_end_y,
 		draw_start_x, draw_end_x, color);
 }
