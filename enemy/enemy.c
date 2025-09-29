@@ -304,7 +304,10 @@ static int	calculate_new_direction(int current_dir_index)
 	int	turn_direction;
 	int	new_dir_index;
 
-	turn_direction = (rand() % 2) ? 1 : -1;
+	if (rand() % 2 == 0)
+		turn_direction = -1;
+	else
+		turn_direction = 1;
 	new_dir_index = (current_dir_index + turn_direction + 4) % 4;
 	return (new_dir_index);
 }
