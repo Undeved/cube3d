@@ -60,9 +60,9 @@
 # define NUDGE_FROM_WALL 0.5
 # define MOUSE_SENSITIVITY 0.00088
 # define PI 3.14159
-# define PITCH_SPEED 60
-# define MAX_PITCH  (HEIGHT / 2)
-# define MIN_PITCH  (-HEIGHT / 2)
+# define PITCH_SPEED 30
+# define MAX_PITCH  (HEIGHT / 2) - 330
+# define MIN_PITCH  (-HEIGHT / 2) + 490
 # define SCALER 0.3
 # define FOV 60
 

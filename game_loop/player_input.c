@@ -119,6 +119,7 @@ static void update_vignette(mlx_key_data_t keydata, t_parsed_data *pd)
 
 static void player_pitch(t_parsed_data *pd)
 {
+    (void)pd;
     if (pd->keys.pressed[MLX_KEY_UP] || pd->mouse.y < (HEIGHT / 2))
     {
         pd->player.pitch += PITCH_SPEED;

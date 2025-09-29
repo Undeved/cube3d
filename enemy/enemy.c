@@ -220,15 +220,31 @@ void    draw_enemies(t_parsed_data *pd)
         stripe = draw_start_x;
         while (stripe < draw_end_x)
         {
+            // relative x inside the sprite
+            int tex_x = (int)( (stripe - draw_start_x) * curr->enemy->skin.img->width / curr->sprite_width );
+
             int y = draw_start_y;
             while (y < draw_end_y)
             {
-                mlx_put_pixel(pd->screen, stripe, y, color);
+                // relative y inside the sprite
+                int tex_y = (int)( (y - draw_start_y) * curr->enemy->skin.img->height / curr->sprite_height );
+
+                unsigned char *p = (unsigned char *)curr->enemy->skin.img->pixels;
+                int idx = (tex_y * curr->enemy->skin.img->width + tex_x) * 4;
+                unsigned int r = p[idx + 0];
+                unsigned int g = p[idx + 1];
+                unsigned int b = p[idx + 2];
+                unsigned int a = p[idx + 3];
+
+                uint32_t color = (r << 24) | (g << 16) | (b << 8) | a;
+                if (a != 0)
+                    mlx_put_pixel(pd->screen, stripe, y, shade_color(color, curr->distance, 0.04));
+
                 y++;
             }
             stripe++;
         }
-        
+
         i++;
     }
 }
