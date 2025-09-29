@@ -1,5 +1,5 @@
 #include "../cube.h"
-void    update_enemies(t_parsed_data *pd);
+
 void    game_render(void *param)
 {
     t_parsed_data   *pd;

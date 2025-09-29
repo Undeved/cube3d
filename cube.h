@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/09/29 17:57:18 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/09/29 20:37:56 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,18 @@ typedef struct s_enemy
     double          patrol_speed;    // Speed when patrolling
 }   t_enemy;
 
+// Structure to hold enemy drawing data for sorting
+typedef struct s_enemy_draw_data
+{
+    t_enemy     *enemy;
+    double      distance;
+    bool        visible;
+    t_bpos      transform;
+    int         sprite_screen_x;
+    int         sprite_height;
+    int         sprite_width;
+}   t_enemy_draw_data;
+
 typedef struct s_pd
 {
     // parsed data
@@ -518,6 +530,7 @@ typedef struct s_texture_data
 
 // Raycast Light engine
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
+void    update_enemies(t_parsed_data *pd);
 
 
 # define CEILING 0xB5AB6BFF

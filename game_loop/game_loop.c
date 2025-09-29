@@ -167,11 +167,10 @@ void free_textures(t_parsed_data *pd)
 	if (pd->txtr_ea.txtr)
 		mlx_delete_texture(pd->txtr_ea.txtr);
 }
-#include <time.h>
+
 void game_loop(t_parsed_data *pd)
 {
     init_precise_data(pd);
-    srand((unsigned int)time(NULL));
     pd->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
