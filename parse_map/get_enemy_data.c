@@ -7,18 +7,33 @@ static bool is_enemy(char c)
     return (false);
 }
 
+
 static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
 {
-    // skin walker
-    curr_enemy->dir.x = 0;
-    curr_enemy->dir.y = 1; // defaut direction.
-    curr_enemy->b_pos.x = (double)x + 0.5; // Center in the cell
+    double  directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    int     dir_index;
+    
+    // Convert int position to double for smoother movement
+    curr_enemy->b_pos.x = (double)x + 0.5;
     curr_enemy->b_pos.y = (double)y + 0.5;
-    curr_enemy->skin.img = NULL;
-    curr_enemy->skin.txtr = NULL;
+    curr_enemy->patrol_origin = curr_enemy->b_pos; // Store original position
+    
+    // Set random initial direction
+    dir_index = rand() % 4;
+    curr_enemy->dir.x = directions[dir_index][0];
+    curr_enemy->dir.y = directions[dir_index][1];
+    
+    // Initialize state and speeds based on type
+    curr_enemy->state = ENEMY_PATROL;
+    
     if (c == 'X')
     {
         curr_enemy->type = FT_SKIN_WALKER;
+        curr_enemy->patrol_speed = 0.01;
+        curr_enemy->chase_speed = 0.1;
+        curr_enemy->pos.x = x;
+        curr_enemy->pos.y = y;
+        curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
         curr_enemy->damage = 5;
         curr_enemy->health = 10;
@@ -26,6 +41,11 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     else if (c == 'Z')
     {
         curr_enemy->type = MEMORY_LEAK;
+        curr_enemy->patrol_speed = 0.02;
+        curr_enemy->chase_speed = 0.04;
+        curr_enemy->pos.x = x;
+        curr_enemy->pos.y = y;
+        curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
         curr_enemy->damage = 8;
         curr_enemy->health = 20;
@@ -33,12 +53,16 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     else if (c == 'Y')
     {
         curr_enemy->type = SEGV;
+        curr_enemy->patrol_speed = 0.015;
+        curr_enemy->chase_speed = 0.035;
+        curr_enemy->pos.x = x;
+        curr_enemy->pos.y = y;
+        curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
         curr_enemy->damage = 10;
         curr_enemy->health = 30;
     }
 }
-
 static uint8_t count_enemies(char **map_grid)
 {
     int     y;

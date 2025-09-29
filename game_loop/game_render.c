@@ -1,5 +1,5 @@
 #include "../cube.h"
-
+void    update_enemies(t_parsed_data *pd);
 void    game_render(void *param)
 {
     t_parsed_data   *pd;
@@ -10,6 +10,7 @@ void    game_render(void *param)
     if (!pd->level.game_started)
         return ;
     update_player_data(pd);
+    update_enemies(pd);
     raycast_system(pd);
     raycast_render(pd);
     render_radar(pd);

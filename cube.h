@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/08/27 22:44:00 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:57:18 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,11 +283,22 @@ typedef enum e_enemy_type
     SEGV,
 }   t_enemy_type;
 
-// Enemy object
+#define CHASE_DISTANCE 4.0      // Distance at which enemy starts chasing
+#define LOSE_DISTANCE 15.0      // Distance at which enemy gives up chase
+#define ATTACK_DISTANCE 1.5     // Distance at which enemy can attack
+
+// Enhanced enemy states
+typedef enum e_enemy_state
+{
+    ENEMY_PATROL,
+    ENEMY_CHASE,
+    ENEMY_ATTACK,
+    ENEMY_RETURN
+}   t_enemy_state;
+
 typedef struct s_enemy
 {
-    t_pos          pos; // int pos
-    // convert int pos to double for smoother movement later
+    t_pos          pos;
     t_bpos          b_pos;
     t_bdir          dir;
     t_enemy_type    type;
@@ -295,6 +306,10 @@ typedef struct s_enemy
     int             health;
     int             damage;
     bool            dead;
+    t_enemy_state   state;           // Current behavior state
+    t_bpos          patrol_origin;   // Original position to return to
+    double          chase_speed;     // Speed when chasing
+    double          patrol_speed;    // Speed when patrolling
 }   t_enemy;
 
 typedef struct s_pd
