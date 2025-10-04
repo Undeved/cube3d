@@ -614,6 +614,8 @@ static void	handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
 	{
 		enemy->state = ENEMY_ATTACK;
 		printf("Enemy %d is attacking!\n", i);
+		pd->player.health -= enemy->damage;
+		printf("Player health: %d\n", pd->player.health);
 	}
 	else
 	{

@@ -147,6 +147,7 @@ void    update_player_data(t_parsed_data *pd)
     pd->mouse.y = m_y;
     player_rotation(pd);
     player_pitch(pd);
+    update_health_ui(pd);
 }
 
 void    handle_player_input(mlx_key_data_t keydata, void *param)

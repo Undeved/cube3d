@@ -45,6 +45,8 @@ static void init_precise_data(t_parsed_data *pd)
     pd->level.game_started = false;
     pd->mouse_clicked = false;
     pd->player.pitch = 0;
+    pd->player.health = PLAYER_HEALTH;
+    pd->game_ui.health.img = NULL;
     precise_direction(pd);
     init_key_flags(pd);
 }
@@ -81,6 +83,8 @@ static void load_one_texture(t_parsed_data *pd, t_texture *t)
 	t->already_extracted = true;
 }
 
+// this loads as many enemy textures as enemies spawned,
+// can make it spawn only the 3 txtrs and assign them to the image buffers.
 void init_enemy_textures(t_parsed_data *pd)
 {
     int i;

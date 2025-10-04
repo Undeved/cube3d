@@ -66,6 +66,10 @@
 # define SCALER 0.3
 # define FOV 60
 
+// player stats
+# define PLAYER_HEALTH 100
+
+
 # define COLLISION 0.1
 
 # define KEYS_NUMBER 350
@@ -203,6 +207,10 @@ typedef struct s_plane
     t_bdir  dir;
 }   t_plane;
 
+typedef struct s_gun
+{
+}   t_gun;
+
 typedef struct s_player
 {
     t_pos   pos;
@@ -212,6 +220,8 @@ typedef struct s_player
     t_bpos  new_pos;
     t_plane camera_plane;
     double  pitch;
+    int     health;
+    t_gun   gun;
 }   t_player;
 
 typedef struct s_minimap
@@ -270,6 +280,8 @@ typedef struct s_game_ui
     t_raw_img           vignette;
     t_raw_img           gun;
     t_raw_img           gun_aim;
+    t_raw_img           character;
+    t_raw_img           health;
 }   t_game_ui;
 
 
@@ -394,6 +406,7 @@ bool    validate_floor_roof(char *str);
 bool    validate_floor_roof(char *str);
 bool    is_num(char *str);
 int     ft_atoi(const char *str);
+char	*ft_itoa(int n);
 void     extarct_floor_roof(char *str, t_cube *cube);
 char    **trim_newlines(char **old_argv);
 bool valid_grid_chars(char *str, int *player_count, bool map_grid);
@@ -410,6 +423,7 @@ void    game_render(void *param);
 void    draw_minimap(t_parsed_data *pd);
 void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
+void    update_health_ui(t_parsed_data *pd);
 
 // Raycast
 void	raycast_system(t_parsed_data *pd);

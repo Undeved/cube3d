@@ -12,16 +12,25 @@ static void rotate_point(double *x, double *y, double angle)
 // draw enemies pixels if within range of x and y
 static bool enemy_icon(double x, double y, t_parsed_data *pd)
 {
-    for (int i = 0; i < pd->enemy_count; i++)
+    int i;
+    double ex;
+    double ey;
+
+    i = 0;
+    while (i < pd->enemy_count)
     {
         if (pd->enemies[i].dead)
+        {
+            i++;
             continue;
-        double ex = pd->enemies[i].b_pos.x;
-        double ey = pd->enemies[i].b_pos.y;
+        }
+        ex = pd->enemies[i].b_pos.x;
+        ey = pd->enemies[i].b_pos.y;
         if (fabs(ex - x) < 0.5 && fabs(ey - y) < 0.5)
-            return true;
+            return (true);
+        i++;
     }
-    return false;
+    return (false);
 }
 
 static void draw_minimap_grid(t_parsed_data *pd)

@@ -35,8 +35,8 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 5;
-        curr_enemy->health = 10;
+        curr_enemy->damage = 20;
+        curr_enemy->health = 30;
     }
     else if (c == 'Z')
     {
@@ -47,8 +47,8 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 8;
-        curr_enemy->health = 20;
+        curr_enemy->damage = 15;
+        curr_enemy->health = 35;
     }
     else if (c == 'Y')
     {
@@ -59,8 +59,8 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 10;
-        curr_enemy->health = 30;
+        curr_enemy->damage = 45;
+        curr_enemy->health = 50;
     }
 }
 static uint8_t count_enemies(char **map_grid)
