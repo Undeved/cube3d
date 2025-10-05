@@ -213,7 +213,7 @@ static void	draw_enemy_pixel(t_parsed_data *pd, t_enemy_draw_data *curr,
 		| (p[idx + 2] << 8) | p[idx + 3];
 	if (p[idx + 3] != 0)
 		mlx_put_pixel(pd->screen, stripe, y,
-			shade_color(pixel_color, curr->distance, 0.04));
+			shade_color(pixel_color, curr->distance, 0.15));
 }
 
 static void	draw_enemy_sprite(t_parsed_data *pd, t_enemy_draw_data *curr,

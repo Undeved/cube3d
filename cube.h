@@ -207,8 +207,34 @@ typedef struct s_plane
     t_bdir  dir;
 }   t_plane;
 
+typedef struct s_raw_img
+{
+    mlx_texture_t       *txtr;
+    mlx_image_t     *img;
+}   t_raw_img;
+
+typedef struct s_button
+{
+    mlx_texture_t       *txtr;
+    mlx_image_t         *img;
+    bool            hoverd;
+}   t_button;
+
+typedef struct ui_anim
+{
+    t_raw_img   *frames;
+    int         frame_count;
+}   t_ui_anim;
+
 typedef struct s_gun
 {
+    t_raw_img   idle;
+    t_raw_img   aim;
+    t_ui_anim   shoot;
+    t_ui_anim   reload;
+    bool        aiming;
+    int         ammo;
+
 }   t_gun;
 
 typedef struct s_player
@@ -234,19 +260,6 @@ typedef struct s_keys
 {
     bool    pressed[KEYS_NUMBER];
 }   t_keys;
-
-typedef struct s_raw_img
-{
-    mlx_texture_t       *txtr;
-    mlx_image_t     *img;
-}   t_raw_img;
-
-typedef struct s_button
-{
-    mlx_texture_t       *txtr;
-    mlx_image_t         *img;
-    bool            hoverd;
-}   t_button;
 
 typedef struct s_main_menu
 {

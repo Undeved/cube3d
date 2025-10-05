@@ -83,6 +83,26 @@ static void load_one_texture(t_parsed_data *pd, t_texture *t)
 	t->already_extracted = true;
 }
 
+// free enemy textures after converting them to images
+static void free_enemy_textures(t_parsed_data *pd)
+{
+    int i;
+
+    if (pd->enemy_count == 0 || pd->enemies == NULL)
+        return ;
+    i = 0;
+    while (i < pd->enemy_count)
+    {
+        if (pd->enemies[i].skin.txtr)
+        {
+            mlx_delete_texture(pd->enemies[i].skin.txtr);
+            pd->enemies[i].skin.txtr = NULL;
+        }
+        i++;
+    }
+}
+
+
 // this loads as many enemy textures as enemies spawned,
 // can make it spawn only the 3 txtrs and assign them to the image buffers.
 void init_enemy_textures(t_parsed_data *pd)
@@ -132,6 +152,7 @@ void init_enemy_textures(t_parsed_data *pd)
         }
         i++;
     }
+    free_enemy_textures(pd); // free the textures after converting them to images
 }
 
 /* Role: initialize all wall textures (NO, SO, WE, EA).
@@ -172,12 +193,28 @@ void free_textures(t_parsed_data *pd)
 		mlx_delete_texture(pd->txtr_ea.txtr);
 }
 
+static void init_enemy_textures_to_null(t_parsed_data *pd)
+{
+    int i;
+
+    if (pd->enemy_count == 0 || pd->enemies == NULL)
+        return ;
+    i = 0;
+    while (i < pd->enemy_count)
+    {
+        pd->enemies[i].skin.txtr = NULL;
+        pd->enemies[i].skin.img = NULL;
+        i++;
+    }
+}
+
 void game_loop(t_parsed_data *pd)
 {
-    init_precise_data(pd);
+    init_enemy_textures_to_null(pd);
     pd->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
+    init_precise_data(pd);
     init_textures(pd);
     init_gameplay_screen(pd);
     init_mini_map(pd);
