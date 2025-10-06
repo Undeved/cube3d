@@ -119,16 +119,35 @@
 # define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
-# define VIGNETTE "textures/ui/in_game/vignette.png"
+# define VIGNETTE "textures/ui/in_game/vignette_3.png"
+
+// Gun textures
 # define GUN_IDLE "textures/ui/in_game/gun/gun_idle.png"
 # define GUN_AIM "textures/ui/in_game/gun/gun_aim.png"
 
-# define SKIN_WALKER "textures/enemy_textures/skin_walker.png"
+// Gun shoot anim
+# define GUN_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_1.png"
+# define GUN_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_3.png"
+# define GUN_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_2.png"
+# define GUN_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_4.png"
+# define GUN_SHOOT_FRMS 4
+
+// Gun reload anim
+# define GUN_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_1.png"
+# define GUN_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_2.png"
+# define GUN_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_3.png"
+# define GUN_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_4.png"
+# define GUN_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_5.png"
+# define GUN_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
+# define GUN_RELOAD_FRMS 6
+
+# define SKIN_WALKER "textures/enemy_textures/animation_enemy/x/skin_walker.png"
 
 # define GUN_X 767
 # define GUN_Y 432
 # define GUN_AIM_X 383
 # define GUN_AIM_Y 431
+# define AMMO 30
 
 # define MAX_ENEMIES 10
 
@@ -222,9 +241,16 @@ typedef struct s_button
 
 typedef struct ui_anim
 {
-    t_raw_img   *frames;
-    int         frame_count;
-}   t_ui_anim;
+	t_raw_img   *frames;
+	int         frame_count;
+
+	// animation state
+	int         current;
+	bool        active;
+	long        last_frame_time;
+	int         frame_delay; // ms per frame
+}	t_ui_anim;
+
 
 typedef struct s_gun
 {
@@ -234,7 +260,6 @@ typedef struct s_gun
     t_ui_anim   reload;
     bool        aiming;
     int         ammo;
-
 }   t_gun;
 
 typedef struct s_player
@@ -311,7 +336,13 @@ typedef enum e_enemy_type
 #define CHASE_DISTANCE 4.0      // Distance at which enemy starts chasing
 #define LOSE_DISTANCE 15.0      // Distance at which enemy gives up chase
 #define ATTACK_DISTANCE 1.5     // Distance at which enemy can attack
-
+#define ENEMY_ANIM_RATE 8   // ticks per frame (increase = slower animation)
+#define SKIN_WALKER_W1 "textures/enemy_textures/animation_enemy/x/Demon-Walk1.png"
+#define SKIN_WALKER_W2 "textures/enemy_textures/animation_enemy/x/Demon-Walk2.png"
+#define SKIN_WALKER_W3 "textures/enemy_textures/animation_enemy/x/Demon-Walk3.png"
+#define SKIN_WALKER_A1 "textures/enemy_textures/animation_enemy/x/Demon-ATT1.png"
+#define SKIN_WALKER_A2 "textures/enemy_textures/animation_enemy/x/Demon-ATT2.png"
+#define SKIN_WALKER_A3 "textures/enemy_textures/animation_enemy/x/Demon-ATT3.png"
 // Enhanced enemy states
 typedef enum e_enemy_state
 {
@@ -335,6 +366,18 @@ typedef struct s_enemy
     t_bpos          patrol_origin;   // Original position to return to
     double          chase_speed;     // Speed when chasing
     double          patrol_speed;    // Speed when patrolling
+    t_raw_img       walk1;
+    t_raw_img       walk2;
+    t_raw_img       walk3;
+    t_raw_img       attack1;        // Add attack animation frames
+    t_raw_img       attack2;
+    t_raw_img       attack3;
+    mlx_image_t     *anim_img;    // current image used when drawing (points to one of the imgs)
+    int             anim_frame;   // 0..2
+    int             anim_counter;
+    int             attack_cooldown;
+    bool            is_attacking;  // Track if currently in attack animation
+    int             attack_anim_counter; // Separate counter for attack animation
 }   t_enemy;
 
 // Structure to hold enemy drawing data for sorting
@@ -461,6 +504,9 @@ void    render_radar(t_parsed_data *pd);
 void    render_player_icon(t_parsed_data *pd);
 int     sqr(int x);
 void    init_game_ui(t_parsed_data *pd);
+void	update_ui_anim(t_ui_anim *anim);
+void	render_gun(t_parsed_data *pd);
+void    trigger_reload_anim(t_parsed_data *pd);
 
 // Enemies Logic
 void    get_enemies(t_cube *cube);

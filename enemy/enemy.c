@@ -42,49 +42,6 @@ static bool	has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end)
 	return (check_line_path(pd, start, step, max_dist));
 }
 
-static uint32_t	get_base_color(t_enemy_type type)
-{
-	uint32_t	base_color;
-
-	if (type == FT_SKIN_WALKER)
-		base_color = 0xFF0000FF;
-	else if (type == MEMORY_LEAK)
-		base_color = 0x00FF00FF;
-	else if (type == SEGV)
-		base_color = 0x0000FFFF;
-	else
-		base_color = 0xFFFFFFFF;
-	return (base_color);
-}
-
-static uint32_t	get_darkened_color(uint32_t base_color, double distance)
-{
-	double		darken_factor;
-	uint32_t	r;
-	uint32_t	g;
-	uint32_t	b;
-
-	darken_factor = 1.0 - ((distance - 8.0) / 16.0);
-	if (darken_factor < 0.3)
-		darken_factor = 0.3;
-	r = ((base_color >> 24) & 0xFF) * darken_factor;
-	g = ((base_color >> 16) & 0xFF) * darken_factor;
-	b = ((base_color >> 8) & 0xFF) * darken_factor;
-	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
-}
-
-static uint32_t	get_enemy_color(t_enemy_type type, double distance, bool visible)
-{
-	uint32_t	base_color;
-
-	base_color = get_base_color(type);
-	if (!visible)
-		return (0x00000000);
-	if (distance > 8.0)
-		return (get_darkened_color(base_color, distance));
-	return (base_color);
-}
-
 // Simple bubble sort for enemies by distance (farthest first)
 static void sort_enemies_by_distance(t_enemy_draw_data *draw_data, int count)
 {
@@ -177,79 +134,103 @@ static int	collect_visible_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_da
 	return (draw_count);
 }
 
-static void	calculate_draw_bounds(t_enemy_draw_data *curr, int horizon,
-		int *draw_start_y, int *draw_end_y, int *draw_start_x, int *draw_end_x)
+
+static void calculate_draw_bounds(t_enemy_draw_data *curr, int horizon,
+        int *draw_start_y, int *draw_end_y, int *draw_start_x, int *draw_end_x,
+        int *orig_draw_start_x, int *orig_draw_start_y)
 {
-	*draw_start_y = -curr->sprite_height / 2 + horizon;
-	if (*draw_start_y < 0)
-		*draw_start_y = 0;
-	*draw_end_y = curr->sprite_height / 2 + horizon;
-	if (*draw_end_y >= HEIGHT)
-		*draw_end_y = HEIGHT - 1;
-	*draw_start_x = -curr->sprite_width / 2 + curr->sprite_screen_x;
-	if (*draw_start_x < 0)
-		*draw_start_x = 0;
-	*draw_end_x = curr->sprite_width / 2 + curr->sprite_screen_x;
-	if (*draw_end_x >= WIDTH)
-		*draw_end_x = WIDTH - 1;
+    /* original (un-clamped) starts */
+    *orig_draw_start_y = -curr->sprite_height / 2 + horizon;
+    *orig_draw_start_x = -curr->sprite_width  / 2 + curr->sprite_screen_x;
+
+    /* clamp Y */
+    *draw_start_y = *orig_draw_start_y;
+    if (*draw_start_y < 0)
+        *draw_start_y = 0;
+    *draw_end_y = curr->sprite_height / 2 + horizon;
+    if (*draw_end_y >= HEIGHT)
+        *draw_end_y = HEIGHT - 1;
+
+    /* clamp X (IMPORTANT: don't set to sprite_width — clamp to 0) */
+    *draw_start_x = *orig_draw_start_x;
+    if (*draw_start_x < 0)
+        *draw_start_x = 0;
+    *draw_end_x = curr->sprite_width / 2 + curr->sprite_screen_x;
+    if (*draw_end_x >= WIDTH)
+        *draw_end_x = WIDTH - 1;
+}
+static void draw_enemy_pixel(t_parsed_data *pd, t_enemy_draw_data *curr,
+        int stripe, int y, int orig_draw_start_x, int orig_draw_start_y)
+{
+    int             tex_x;
+    int             tex_y;
+    unsigned char   *p;
+    int             idx;
+    uint32_t        pixel_color;
+    mlx_image_t     *frame_img;
+
+    frame_img = curr->enemy->anim_img;
+    if (frame_img == NULL)
+        return ;
+
+    if (curr->sprite_width == 0 || curr->sprite_height == 0)
+        return;
+
+    /* fractional mapping; keep integer math as before */
+    tex_x = (int)((stripe - orig_draw_start_x) * (double)frame_img->width  / (double)curr->sprite_width);
+    tex_y = (int)((y      - orig_draw_start_y) * (double)frame_img->height / (double)curr->sprite_height);
+
+    /* safety: ensure tex coords inside texture */
+    if (tex_x < 0 || tex_x >= frame_img->width || tex_y < 0 || tex_y >= frame_img->height)
+        return;
+
+    p = (unsigned char *)frame_img->pixels;
+    idx = (tex_y * frame_img->width + tex_x) * 4;
+    pixel_color = (p[idx + 0] << 24) | (p[idx + 1] << 16)
+        | (p[idx + 2] << 8) | p[idx + 3];
+    if (p[idx + 3] != 0)
+        mlx_put_pixel(pd->screen, stripe, y,
+            shade_color(pixel_color, curr->distance, 0.15));
 }
 
-static void	draw_enemy_pixel(t_parsed_data *pd, t_enemy_draw_data *curr,
-		int stripe, int y, int draw_start_x, int draw_start_y)
+static void draw_enemy_sprite(t_parsed_data *pd, t_enemy_draw_data *curr,
+        int draw_start_y, int draw_end_y, int draw_start_x, int draw_end_x,
+        int orig_draw_start_x, int orig_draw_start_y, uint32_t color)
 {
-	int				tex_x;
-	int				tex_y;
-	unsigned char	*p;
-	int				idx;
-	uint32_t		pixel_color;
+    int stripe;
+    int y;
 
-	tex_x = (int)((stripe - draw_start_x) * curr->enemy->skin.img->width
-			/ curr->sprite_width);
-	tex_y = (int)((y - draw_start_y) * curr->enemy->skin.img->height
-			/ curr->sprite_height);
-	p = (unsigned char *)curr->enemy->skin.img->pixels;
-	idx = (tex_y * curr->enemy->skin.img->width + tex_x) * 4;
-	pixel_color = (p[idx + 0] << 24) | (p[idx + 1] << 16)
-		| (p[idx + 2] << 8) | p[idx + 3];
-	if (p[idx + 3] != 0)
-		mlx_put_pixel(pd->screen, stripe, y,
-			shade_color(pixel_color, curr->distance, 0.15));
+    stripe = draw_start_x;
+    while (stripe < draw_end_x)
+    {
+        y = draw_start_y;
+        while (y < draw_end_y)
+        {
+            draw_enemy_pixel(pd, curr, stripe, y, orig_draw_start_x, orig_draw_start_y);
+            y++;
+        }
+        stripe++;
+    }
 }
 
-static void	draw_enemy_sprite(t_parsed_data *pd, t_enemy_draw_data *curr,
-		int draw_start_y, int draw_end_y, int draw_start_x, int draw_end_x,
-		uint32_t color)
+static void draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon)
 {
-	int	stripe;
-	int	y;
+    int draw_start_y;
+    int draw_end_y;
+    int draw_start_x;
+    int draw_end_x;
+    int orig_draw_start_x;
+    int orig_draw_start_y;
+    uint32_t color;
 
-	stripe = draw_start_x;
-	while (stripe < draw_end_x)
-	{
-		y = draw_start_y;
-		while (y < draw_end_y)
-		{
-			draw_enemy_pixel(pd, curr, stripe, y, draw_start_x, draw_start_y);
-			y++;
-		}
-		stripe++;
-	}
+    calculate_draw_bounds(curr, horizon, &draw_start_y, &draw_end_y,
+        &draw_start_x, &draw_end_x, &orig_draw_start_x, &orig_draw_start_y);
+    // color = get_enemy_color(curr->enemy->type, curr->distance, curr->visible);
+    draw_enemy_sprite(pd, curr, draw_start_y, draw_end_y,
+        draw_start_x, draw_end_x, orig_draw_start_x, orig_draw_start_y, color);
 }
 
-static void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon)
-{
-	int			draw_start_y;
-	int			draw_end_y;
-	int			draw_start_x;
-	int			draw_end_x;
-	uint32_t	color;
 
-	calculate_draw_bounds(curr, horizon, &draw_start_y, &draw_end_y,
-		&draw_start_x, &draw_end_x);
-	// color = get_enemy_color(curr->enemy->type, curr->distance, curr->visible);
-	draw_enemy_sprite(pd, curr, draw_start_y, draw_end_y,
-		draw_start_x, draw_end_x, color);
-}
 
 static void	draw_sorted_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_data,
 		int draw_count)
@@ -528,32 +509,6 @@ static void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
 	try_alternative_directions(enemy, pd, direction, speed);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd)
 {
 	double	dx;
@@ -638,6 +593,31 @@ static void	handle_attack_state(t_parsed_data *pd, t_enemy *enemy, int i,
 			enemy->state = ENEMY_RETURN;
 			printf("Enemy %d lost player after attack!\n", i);
 		}
+		enemy->attack_cooldown = 0;
+		enemy->is_attacking = false; // Stop attack animation
+	}
+	else
+	{
+		// Enemy is still in attack range - handle repeated attacks
+		if (enemy->attack_cooldown <= 0)
+		{
+			// Start attack animation
+			enemy->is_attacking = true;
+			enemy->anim_frame = 0; // Start from first attack frame
+			enemy->attack_anim_counter = 0;
+			
+			// Perform attack
+			pd->player.health -= enemy->damage;
+			printf("Enemy %d is attacking! Player health: %d\n", i, pd->player.health);
+			
+			// Set cooldown
+			enemy->attack_cooldown = 20;
+		}
+		else
+		{
+			// Decrement cooldown
+			enemy->attack_cooldown--;
+		}
 	}
 }
 
@@ -662,6 +642,7 @@ static void	handle_enemy_state(t_parsed_data *pd, t_enemy *enemy, int i,
 	else if (enemy->state == ENEMY_RETURN)
 		handle_return_state(pd, enemy, i);
 }
+
 static void	update_single_enemy(t_parsed_data *pd, int i)
 {
 	t_enemy		*enemy;
@@ -674,8 +655,59 @@ static void	update_single_enemy(t_parsed_data *pd, int i)
 	distance = calculate_distance_to_player(enemy, pd);
 	visible = has_line_of_sight(pd, enemy->b_pos, pd->player.bpos);
 	handle_enemy_state(pd, enemy, i, distance, visible);
-}
 
+    /* Handle different animation states */
+    if (enemy->state == ENEMY_ATTACK && enemy->is_attacking)
+    {
+        // Attack animation - faster animation for attacks
+        enemy->attack_anim_counter++;
+        if (enemy->attack_anim_counter >= ENEMY_ANIM_RATE / 2) // Attack anim is faster
+        {
+            enemy->attack_anim_counter = 0;
+            enemy->anim_frame = (enemy->anim_frame + 1) % 3;
+            
+            // Play attack animation frames
+            if (enemy->anim_frame == 0)
+                enemy->anim_img = enemy->attack1.img;
+            else if (enemy->anim_frame == 1)
+                enemy->anim_img = enemy->attack2.img;
+            else
+            {
+                enemy->anim_img = enemy->attack3.img;
+                // On the last frame, check if we should stop attacking
+                if (enemy->attack_cooldown <= 0)
+                {
+                    enemy->is_attacking = false;
+                }
+            }
+        }
+    }
+    else if (enemy->state == ENEMY_PATROL || enemy->state == ENEMY_CHASE)
+    {
+        /* walking animation */
+        enemy->anim_counter++;
+        if (enemy->anim_counter >= ENEMY_ANIM_RATE)
+        {
+            enemy->anim_counter = 0;
+            enemy->anim_frame = (enemy->anim_frame + 1) % 3;
+            if (enemy->anim_frame == 0)
+                enemy->anim_img = enemy->walk1.img;
+            else if (enemy->anim_frame == 1)
+                enemy->anim_img = enemy->walk2.img;
+            else
+                enemy->anim_img = enemy->walk3.img;
+        }
+    }
+    else
+    {
+        /* not walking or attacking: show base skin image */
+        enemy->anim_img = enemy->skin.img;
+        enemy->anim_frame = 0;
+        enemy->anim_counter = 0;
+        enemy->is_attacking = false;
+        enemy->attack_anim_counter = 0;
+    }
+}
 
 void	update_enemies(t_parsed_data *pd)
 {

@@ -35,7 +35,7 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 20;
+        curr_enemy->damage = 10;
         curr_enemy->health = 30;
     }
     else if (c == 'Z')
@@ -59,7 +59,7 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 45;
+        curr_enemy->damage = 42;
         curr_enemy->health = 50;
     }
 }

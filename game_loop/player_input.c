@@ -134,6 +134,19 @@ static void player_pitch(t_parsed_data *pd)
     }
 }
 
+static void reload_gun(t_parsed_data *pd)
+{
+    if (pd->keys.pressed[MLX_KEY_R] && pd->player.gun.ammo < AMMO && !pd->player.gun.reload.active)
+    {
+        pd->player.gun.reload.active = true;
+        pd->player.gun.shoot.active = false;
+        pd->player.gun.aiming = false;
+        pd->player.gun.ammo = AMMO;
+        printf("Reloading... Ammo refilled to %d\n", pd->player.gun.ammo);
+        trigger_reload_anim(pd);
+    }
+}
+
 void    update_player_data(t_parsed_data *pd)
 {
     int32_t m_x;
@@ -141,6 +154,12 @@ void    update_player_data(t_parsed_data *pd)
 
     m_x = 0;
     m_y = 0;
+    if (pd->player.health <= 0)
+    {
+        pd->player.health = 0;
+        printf("You died! Game Over!\n");
+        mind_free_all(EXIT_SUCCESS);
+    }
     player_movement(pd);
     mlx_get_mouse_pos(pd->mlx, &m_x, &m_y); // get mouse pos to update rot.
     pd->mouse.x = m_x;
@@ -148,6 +167,7 @@ void    update_player_data(t_parsed_data *pd)
     player_rotation(pd);
     player_pitch(pd);
     update_health_ui(pd);
+    reload_gun(pd);
 }
 
 void    handle_player_input(mlx_key_data_t keydata, void *param)

@@ -9,10 +9,13 @@ void    game_render(void *param)
     characters_menu(pd);
     if (!pd->level.game_started)
         return ;
+    update_ui_anim(&pd->player.gun.shoot);
+    update_ui_anim(&pd->player.gun.reload);
     update_player_data(pd);
     update_enemies(pd);
     raycast_system(pd);
     raycast_render(pd);
+    render_gun(pd);
     render_radar(pd);
     // draw_minimap(pd);
 }
