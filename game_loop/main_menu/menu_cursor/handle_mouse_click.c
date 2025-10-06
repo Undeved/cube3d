@@ -100,6 +100,7 @@ static void game_mouse_input(mouse_key_t button, action_t action, modifier_key_t
         {
             trigger_shoot_anim(pd);
             printf("Bang! Ammo left: %d\n", pd->player.gun.ammo);
+            pd->player.is_shooting = true;
             return ;
         }
     }
@@ -107,6 +108,8 @@ static void game_mouse_input(mouse_key_t button, action_t action, modifier_key_t
     {
         if (button == MLX_MOUSE_BUTTON_RIGHT)
             pd->player.gun.aiming = false;
+        else if (button == MLX_MOUSE_BUTTON_LEFT)
+            pd->player.is_shooting = false;
     }
     
 }

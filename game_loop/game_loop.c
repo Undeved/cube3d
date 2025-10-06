@@ -48,6 +48,8 @@ static void init_precise_data(t_parsed_data *pd)
     pd->player.health = PLAYER_HEALTH;
     pd->game_ui.health.img = NULL;
     pd->player.gun.ammo = AMMO;
+    pd->player.gun.damage = DAMAGE;
+    pd->player.is_shooting = false;
     precise_direction(pd);
     init_key_flags(pd);
 }

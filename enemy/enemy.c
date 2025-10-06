@@ -250,13 +250,50 @@ static void	draw_sorted_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_data,
 void	draw_enemies(t_parsed_data *pd)
 {
 	int					draw_count;
-	t_enemy_draw_data	draw_data[MAX_ENEMIES];
+    t_enemy_draw_data	draw_data[MAX_ENEMIES];
+    int					i;
+    t_enemy_draw_data	*target_enemy;
+    double				center_tolerance = WIDTH * 0.05; // 5% of screen width tolerance
+    double				closest_distance = 1e9;
 
 	if (!pd->enemies || pd->enemy_count == 0)
 		return ;
 	draw_count = collect_visible_enemies(pd, draw_data);
 	if (draw_count > 1)
 		sort_enemies_by_distance(draw_data, draw_count);
+	if (pd->player.is_shooting)
+    {
+        target_enemy = NULL;
+        i = 0;
+        while (i < draw_count)
+        {
+            double diff = fabs(draw_data[i].sprite_screen_x - WIDTH / 2);
+
+            if (diff < center_tolerance && draw_data[i].distance < closest_distance)
+            {
+                closest_distance = draw_data[i].distance;
+                target_enemy = &draw_data[i];
+            }
+            i++;
+        }
+        if (target_enemy)
+        {
+            target_enemy->enemy->health -= pd->player.gun.damage;
+            if (target_enemy->enemy->health <= 0)
+            {
+                target_enemy->enemy->dead = true;
+                printf("Enemy killed by player!\n");
+            }
+            else
+            {
+                printf("Enemy hit! Health: %d\n", target_enemy->enemy->health);
+            }
+        }
+
+        // Reset shooting flag so it only registers once per shot
+        pd->player.is_shooting = false;
+    }
+
 	draw_sorted_enemies(pd, draw_data, draw_count);
 }
 

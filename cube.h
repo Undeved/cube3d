@@ -148,8 +148,9 @@
 # define GUN_AIM_X 383
 # define GUN_AIM_Y 431
 # define AMMO 30
+# define DAMAGE 10
 
-# define MAX_ENEMIES 10
+# define MAX_ENEMIES 5
 
 
 // Garbage collector struct.
@@ -260,6 +261,7 @@ typedef struct s_gun
     t_ui_anim   reload;
     bool        aiming;
     int         ammo;
+    int         damage;
 }   t_gun;
 
 typedef struct s_player
@@ -273,6 +275,7 @@ typedef struct s_player
     double  pitch;
     int     health;
     t_gun   gun;
+    bool    is_shooting;
 }   t_player;
 
 typedef struct s_minimap
