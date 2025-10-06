@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/09/29 20:37:56 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/06 22:42:36 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@
 # define GUN_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
 # define GUN_RELOAD_FRMS 6
 
-# define SKIN_WALKER "textures/enemy_textures/animation_enemy/x/skin_walker.png"
+# define SKIN_WALKER "textures/enemy_textures/animation_enemy/x/Himp-IDLE.png"
 
 # define GUN_X 767
 # define GUN_Y 432
@@ -340,12 +340,12 @@ typedef enum e_enemy_type
 #define LOSE_DISTANCE 15.0      // Distance at which enemy gives up chase
 #define ATTACK_DISTANCE 1.5     // Distance at which enemy can attack
 #define ENEMY_ANIM_RATE 8   // ticks per frame (increase = slower animation)
-#define SKIN_WALKER_W1 "textures/enemy_textures/animation_enemy/x/Demon-Walk1.png"
-#define SKIN_WALKER_W2 "textures/enemy_textures/animation_enemy/x/Demon-Walk2.png"
-#define SKIN_WALKER_W3 "textures/enemy_textures/animation_enemy/x/Demon-Walk3.png"
-#define SKIN_WALKER_A1 "textures/enemy_textures/animation_enemy/x/Demon-ATT1.png"
-#define SKIN_WALKER_A2 "textures/enemy_textures/animation_enemy/x/Demon-ATT2.png"
-#define SKIN_WALKER_A3 "textures/enemy_textures/animation_enemy/x/Demon-ATT3.png"
+#define SKIN_WALKER_W1 "textures/enemy_textures/animation_enemy/x/Himp-Walk1.png"
+#define SKIN_WALKER_W2 "textures/enemy_textures/animation_enemy/x/Himp-Walk2.png"
+#define SKIN_WALKER_W3 "textures/enemy_textures/animation_enemy/x/Himp-Walk3.png"
+#define SKIN_WALKER_A1 "textures/enemy_textures/animation_enemy/x/HIMP-ATT1.png"
+#define SKIN_WALKER_A2 "textures/enemy_textures/animation_enemy/x/HIMP-ATT2.png"
+#define SKIN_WALKER_A3 "textures/enemy_textures/animation_enemy/x/HIMP-ATT3.png"
 // Enhanced enemy states
 typedef enum e_enemy_state
 {

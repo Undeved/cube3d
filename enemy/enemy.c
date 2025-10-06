@@ -281,6 +281,7 @@ void	draw_enemies(t_parsed_data *pd)
             target_enemy->enemy->health -= pd->player.gun.damage;
             if (target_enemy->enemy->health <= 0)
             {
+				// animation
                 target_enemy->enemy->dead = true;
                 printf("Enemy killed by player!\n");
             }
