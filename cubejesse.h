@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubejesse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 05:56:10 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/11 05:56:13 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/11 12:34:47 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define PLAYER_ICON 0xB0F01BFF
 # define WALL_ICON 0x2D4225FF
 # define FLOOR_ICON 0x4F6845FF
+# define DOOR_ICON 0xE3BB51FF
+# define OPEN_DOOR_ICON 0xAC56E3FF
 
 
 // Minimap colors
@@ -119,27 +121,68 @@
 # define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
-# define VIGNETTE "textures/ui/in_game/vignette_3.png"
+# define VIGNETTE "textures/ui/in_game/vignette.png"
+# define GAME_OVER "textures/ui/in_game/game_over.png"
 
-// Gun textures
-# define GUN_IDLE "textures/ui/in_game/gun/gun_idle.png"
-# define GUN_AIM "textures/ui/in_game/gun/gun_aim.png"
+// Gun textures -----------------------------------------------------------
+# define GUN_JESSE_IDLE "textures/ui/in_game/gun/gun_idle.png"
+# define GUN_JESSE_AIM "textures/ui/in_game/gun/gun_aim.png"
 
 // Gun shoot anim
-# define GUN_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_4.png"
+# define GUN_JESSE_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_1.png"
+# define GUN_JESSE_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_2.png"
+# define GUN_JESSE_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_3.png"
+# define GUN_JESSE_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_4.png"
 # define GUN_SHOOT_FRMS 4
 
 // Gun reload anim
-# define GUN_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_1.png"
-# define GUN_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_2.png"
-# define GUN_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_3.png"
-# define GUN_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_4.png"
-# define GUN_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_5.png"
-# define GUN_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
+# define GUN_JESSE_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_1.png"
+# define GUN_JESSE_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_2.png"
+# define GUN_JESSE_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_3.png"
+# define GUN_JESSE_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_4.png"
+# define GUN_JESSE_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_5.png"
+# define GUN_JESSE_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
 # define GUN_RELOAD_FRMS 6
+
+// Chorus gun textures
+# define GUN_CHORUS_IDLE "textures/ui/in_game/gun_chorus/gun_idle.png"
+# define GUN_CHORUS_AIM "textures/ui/in_game/gun_chorus/gun_aim.png"
+# define GUN_CHORUS_SHOOT_1 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_1.png"
+# define GUN_CHORUS_SHOOT_2 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_2.png"
+# define GUN_CHORUS_SHOOT_3 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_3.png"
+# define GUN_CHORUS_SHOOT_4 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_4.png"
+# define GUN_CHORUS_RELOAD_1 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_1.png"
+# define GUN_CHORUS_RELOAD_2 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_2.png"
+# define GUN_CHORUS_RELOAD_3 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_3.png"
+# define GUN_CHORUS_RELOAD_4 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_4.png"          
+# define GUN_CHORUS_RELOAD_5 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_5.png"
+# define GUN_CHORUS_RELOAD_6 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_6.png"
+// Oussmac gun textures
+# define GUN_OUSSMAC_IDLE "textures/ui/in_game/gun_oussmac/gun_idle.png"
+# define GUN_OUSSMAC_AIM "textures/ui/in_game/gun_oussmac/gun_aim.png"
+# define GUN_OUSSMAC_SHOOT_1 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_1.png"
+# define GUN_OUSSMAC_SHOOT_2 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_2.png"
+# define GUN_OUSSMAC_SHOOT_3 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_3.png"
+# define GUN_OUSSMAC_SHOOT_4 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_4.png"
+# define GUN_OUSSMAC_RELOAD_1 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_1.png"
+# define GUN_OUSSMAC_RELOAD_2 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_2.png"
+# define GUN_OUSSMAC_RELOAD_3 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_3.png"
+# define GUN_OUSSMAC_RELOAD_4 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_4.png"          
+# define GUN_OUSSMAC_RELOAD_5 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_5.png"
+# define GUN_OUSSMAC_RELOAD_6 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_6.png"
+
+// Health_UI textures
+# define HEALTH_BAR "textures/ui/in_game/health/health_bar.png"
+// health backgrounds
+# define HP_JESSE "textures/ui/in_game/health/jesse_health_bar.png"
+# define HP_CHORUS "textures/ui/in_game/health/chorus_health_bar.png"
+# define HP_OUSSMAC "textures/ui/in_game/health/oussmac_health_bar.png"
+
+# define HBAR_X 40
+# define HBAR_Y 1018
+# define HBAR_BG_X 0
+# define HBAR_BG_Y 468
+
 
 # define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/Himp-IDLE.png"
 # define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk1.png"
@@ -254,6 +297,13 @@ typedef struct ui_anim
 	int         frame_delay; // ms per frame
 }	t_ui_anim;
 
+typedef enum e_gun_type
+{
+    JESSE_SLINGER,
+    CHORUS_MP42,
+    OUSSMAC_37MM
+}   gun_type;
+
 
 typedef struct s_gun
 {
@@ -264,6 +314,7 @@ typedef struct s_gun
     bool        aiming;
     int         ammo;
     int         damage;
+    gun_type      type;
 }   t_gun;
 
 typedef struct s_player
@@ -278,6 +329,8 @@ typedef struct s_player
     int     health;
     t_gun   gun;
     bool    is_shooting;
+    t_character character;
+    bool    is_dead;
 }   t_player;
 
 typedef struct s_minimap
@@ -323,8 +376,9 @@ typedef struct s_game_ui
     t_raw_img           vignette;
     t_raw_img           gun;
     t_raw_img           gun_aim;
-    t_raw_img           character;
     t_raw_img           health;
+    t_raw_img           health_bg;
+    t_raw_img           game_over;
 }   t_game_ui;
 
 
@@ -513,6 +567,7 @@ void    draw_minimap(t_parsed_data *pd);
 void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
+void    interact_with_door(t_parsed_data *pd);
 
 // Raycast
 void	raycast_system(t_parsed_data *pd);
@@ -540,6 +595,51 @@ void    init_game_ui(t_parsed_data *pd);
 void	update_ui_anim(t_ui_anim *anim);
 void	render_gun(t_parsed_data *pd);
 void    trigger_reload_anim(t_parsed_data *pd);
+void    setup_character(t_parsed_data *pd);
+void    setup_health_ui(t_parsed_data *pd);
+
+typedef struct s_draw_bounds
+{
+	int draw_start_y;
+    int draw_end_y;
+    int draw_start_x;
+    int draw_end_x;
+    int orig_draw_start_x;
+    int orig_draw_start_y;
+}   t_draw_bounds;
+
+typedef struct s_draw_context
+{
+    t_parsed_data        *pd;
+    t_enemy_draw_data    *curr;
+    t_draw_bounds        *b;
+}   t_draw_context;
+
+/* Texture sample result returned by value so we avoid out-args */
+typedef struct s_tex_sample
+{
+	uint32_t color;
+    unsigned char alpha;
+    int ok;
+}   t_tex_sample;
+
+
+/* small helper result to avoid many out-args */
+typedef struct s_enemy_calc
+{
+	t_bpos rel_pos;
+	t_bpos transform;
+	double distance;
+}   t_enemy_calc;
+
+typedef struct s_enemy_ctx
+{
+	t_parsed_data   *pd;
+	t_enemy         *enemy;
+	int             index;
+	double          distance;
+	bool            visible;
+}   t_enemy_ctx;
 
 // Enemies Logic
 void    get_enemies(t_cube *cube);
@@ -547,7 +647,42 @@ void    draw_enemies(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
+/* From enemy_line_of_sight.c */
+bool	has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end);
 
+/* From enemy_visibility.c */
+int		collect_and_sort_enemies_small(t_parsed_data *pd, t_enemy_draw_data *draw_data);
+
+/* From enemy_drawing.c */
+void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon);
+t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty);
+
+/* From enemy_combat.c */
+void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
+void	update_all_death_animations(t_parsed_data *pd);
+void	update_death_animation(t_enemy *enemy);
+
+/* From enemy_movement.c */
+void	change_enemy_direction(t_enemy *enemy);
+void	calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
+bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
+
+/* From enemy_ai.c */
+void	set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
+bool	return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
+
+/* From enemy_pathfinding.c */
+void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
+double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
+void	perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
+void	handle_patrol_state(t_enemy_ctx *ctx);
+
+/* From enemy_states.c */
+void	handle_enemy_state(t_enemy_ctx *ctx);
+void	update_attack_animation(t_enemy *enemy);
+
+/* From enemy_animation.c */
+void	update_walk_animation(t_enemy *enemy);
 //--------------------------------------------------------------------------------------
 
 
@@ -673,4 +808,5 @@ void    update_enemies(t_parsed_data *pd);
 
 
 ///////////////////////////////////////////////////////////////////////////
+
 #endif
