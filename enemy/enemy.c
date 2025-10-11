@@ -107,7 +107,6 @@ static void	store_enemy_data(t_parsed_data *pd, int i, t_bpos *rel_pos,
 	draw_data->sprite_height = abs((int)(HEIGHT / transform.y));
 	draw_data->sprite_width = abs((int)(HEIGHT / transform.y));
 }
-
 static int	collect_visible_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_data)
 {
 	int		i;
@@ -119,11 +118,14 @@ static int	collect_visible_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_da
 	i = 0;
 	while (i < pd->enemy_count && draw_count < MAX_ENEMIES)
 	{
-		if (pd->enemies[i].dead)
+		// Skip enemies that are completely dead (not in dying animation)
+		if (pd->enemies[i].dead && !pd->enemies[i].is_dying)
 		{
 			i++;
 			continue ;
 		}
+		
+		// For dying enemies, use normal visibility check
 		if (process_enemy_visibility(pd, i, &rel_pos, &inv_det))
 		{
 			store_enemy_data(pd, i, &rel_pos, inv_det, &draw_data[draw_count]);
@@ -133,7 +135,6 @@ static int	collect_visible_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_da
 	}
 	return (draw_count);
 }
-
 
 static void calculate_draw_bounds(t_enemy_draw_data *curr, int horizon,
         int *draw_start_y, int *draw_end_y, int *draw_start_x, int *draw_end_x,
@@ -186,11 +187,26 @@ static void draw_enemy_pixel(t_parsed_data *pd, t_enemy_draw_data *curr,
 
     p = (unsigned char *)frame_img->pixels;
     idx = (tex_y * frame_img->width + tex_x) * 4;
+
+    /* transparent => skip */
+    if (p[idx + 3] == 0)
+        return;
+
+    /* if enemy is highlighted, draw pure white (preserve alpha) */
+    if (curr->enemy->is_highlighted)
+    {
+        /* white with full alpha */
+        mlx_put_pixel(pd->screen, stripe, y, 0xFFFFFFFF);
+        return;
+    }
+
+    /* normal path: read pixel color and shade it by distance */
     pixel_color = (p[idx + 0] << 24) | (p[idx + 1] << 16)
         | (p[idx + 2] << 8) | p[idx + 3];
-    if (p[idx + 3] != 0)
-        mlx_put_pixel(pd->screen, stripe, y,
-            shade_color(pixel_color, curr->distance, 0.15));
+
+    mlx_put_pixel(pd->screen, stripe, y,
+        shade_color(pixel_color, curr->distance, 0.15));
+
 }
 
 static void draw_enemy_sprite(t_parsed_data *pd, t_enemy_draw_data *curr,
@@ -230,8 +246,6 @@ static void draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int ho
         draw_start_x, draw_end_x, orig_draw_start_x, orig_draw_start_y, color);
 }
 
-
-
 static void	draw_sorted_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_data,
 		int draw_count)
 {
@@ -247,27 +261,67 @@ static void	draw_sorted_enemies(t_parsed_data *pd, t_enemy_draw_data *draw_data,
 	}
 }
 
+static void update_death_animation(t_enemy *enemy)
+{
+    enemy->is_highlighted = false;
+    enemy->highlight_timer = 0;
+    enemy->death_anim_counter++;
+    
+    // Control the speed of death animation frames
+    if (enemy->death_anim_counter >= 15) // Adjust this value for faster/slower animation
+    {
+        enemy->death_anim_counter = 0;
+        
+        // Only advance frames if we haven't completed the animation sequence
+        if (enemy->death_anim_frame < 2) // We have 3 frames (0, 1, 2)
+        {
+            enemy->death_anim_frame++;
+            
+            // Update to the next death animation frame
+            if (enemy->death_anim_frame == 1)
+                enemy->anim_img = enemy->death2.img;
+            else if (enemy->death_anim_frame == 2)
+                enemy->anim_img = enemy->death2.img; // Fixed: was death2.img
+        }
+    }
+    
+    // Once we reach the final frame, start counting down the timer EVERY FRAME
+    if (enemy->death_anim_frame >= 2)
+    {
+        enemy->death_timer--;
+    }
+    
+    // Check if it's time to completely remove the enemy
+    if (enemy->death_timer <= 0)
+    {
+        enemy->is_dying = false;
+        enemy->dead = true; // Make sure dead is set to true
+        printf("Enemy body disappeared.\n");
+    }
+}
 void	draw_enemies(t_parsed_data *pd)
 {
 	int					draw_count;
     t_enemy_draw_data	draw_data[MAX_ENEMIES];
     int					i;
     t_enemy_draw_data	*target_enemy;
-    double				center_tolerance = WIDTH * 0.05; // 5% of screen width tolerance
+    double				center_tolerance = WIDTH * 0.05;
     double				closest_distance = 1e9;
 
 	if (!pd->enemies || pd->enemy_count == 0)
 		return ;
+	
 	draw_count = collect_visible_enemies(pd, draw_data);
 	if (draw_count > 1)
 		sort_enemies_by_distance(draw_data, draw_count);
+	
 	if (pd->player.is_shooting)
     {
         target_enemy = NULL;
         i = 0;
         while (i < draw_count)
         {
-            double diff = fabs(draw_data[i].sprite_screen_x - WIDTH / 2);
+            double diff = abs(draw_data[i].sprite_screen_x - WIDTH / 2);
 
             if (diff < center_tolerance && draw_data[i].distance < closest_distance)
             {
@@ -276,23 +330,42 @@ void	draw_enemies(t_parsed_data *pd)
             }
             i++;
         }
-        if (target_enemy)
-        {
-            target_enemy->enemy->health -= pd->player.gun.damage;
-            if (target_enemy->enemy->health <= 0)
-            {
-				// animation
-                target_enemy->enemy->dead = true;
-                printf("Enemy killed by player!\n");
-            }
-            else
-            {
-                printf("Enemy hit! Health: %d\n", target_enemy->enemy->health);
-            }
-        }
-
-        // Reset shooting flag so it only registers once per shot
+		if (target_enemy && !target_enemy->enemy->is_dying && !target_enemy->enemy->dead) // Added !dead check
+		{
+			target_enemy->enemy->health -= pd->player.gun.damage;
+			target_enemy->enemy->is_highlighted = true;
+			target_enemy->enemy->highlight_timer = HIGHLIGHT_FRAMES;
+			if (target_enemy->enemy->health <= 0)
+				{
+					// Start death animation
+					target_enemy->enemy->is_dying = true;
+					target_enemy->enemy->dead = true;
+					target_enemy->enemy->death_anim_frame = 0;
+					target_enemy->enemy->death_anim_counter = 0;
+					target_enemy->enemy->death_timer = DEATH_ANIMATION_DURATION;
+					target_enemy->enemy->anim_img = target_enemy->enemy->death1.img;
+					target_enemy->enemy->is_highlighted = false;
+					target_enemy->enemy->highlight_timer = 0;
+					printf("Enemy killed! Death animation started.\n");
+				}
+			else
+				{
+					target_enemy->enemy->state = ENEMY_CHASE;
+					printf("Enemy hit! Health: %d\n", target_enemy->enemy->health);
+				}
+		}
         pd->player.is_shooting = false;
+    }
+
+    // Update death animations for all enemies
+    i = 0;
+    while (i < pd->enemy_count)
+    {
+        if (pd->enemies[i].is_dying) // Removed the !dead check - dying enemies are dead
+        {
+            update_death_animation(&pd->enemies[i]);
+        }
+        i++;
     }
 
 	draw_sorted_enemies(pd, draw_data, draw_count);
@@ -671,6 +744,8 @@ static void	handle_return_state(t_parsed_data *pd, t_enemy *enemy, int i)
 static void	handle_enemy_state(t_parsed_data *pd, t_enemy *enemy, int i,
 		double distance, bool visible)
 {
+	if (enemy->is_dying)
+		return ;
 	if (enemy->state == ENEMY_PATROL)
 		handle_patrol_state(pd, enemy, i, distance, visible);
 	else if (enemy->state == ENEMY_CHASE)
@@ -688,12 +763,20 @@ static void	update_single_enemy(t_parsed_data *pd, int i)
 	bool		visible;
 
 	enemy = &pd->enemies[i];
-	if (enemy->dead)
+	if (enemy->dead || enemy->is_dying)
 		return ;
 	distance = calculate_distance_to_player(enemy, pd);
 	visible = has_line_of_sight(pd, enemy->b_pos, pd->player.bpos);
 	handle_enemy_state(pd, enemy, i, distance, visible);
-
+	if (enemy->is_highlighted)
+    {
+        enemy->highlight_timer--;
+        if (enemy->highlight_timer <= 0)
+        {
+            enemy->is_highlighted = false;
+            enemy->highlight_timer = 0;
+        }
+    }
     /* Handle different animation states */
     if (enemy->state == ENEMY_ATTACK && enemy->is_attacking)
     {
@@ -732,7 +815,6 @@ static void	update_single_enemy(t_parsed_data *pd, int i)
                 enemy->anim_img = enemy->walk1.img;
             else if (enemy->anim_frame == 1)
                 enemy->anim_img = enemy->walk2.img;
-            else
                 enemy->anim_img = enemy->walk3.img;
         }
     }

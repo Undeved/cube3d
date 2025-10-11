@@ -29,38 +29,38 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     if (c == 'X')
     {
         curr_enemy->type = FT_SKIN_WALKER;
-        curr_enemy->patrol_speed = 0.01;
-        curr_enemy->chase_speed = 0.1;
+        curr_enemy->patrol_speed = SKIN_WALKER_PATROL_SPEED;
+        curr_enemy->chase_speed = SKIN_WALKER_CHASE_SPEED;
         curr_enemy->pos.x = x;
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 10;
-        curr_enemy->health = 30;
+        curr_enemy->damage = SKIN_WALKER_DAMAGE;
+        curr_enemy->health = SKIN_WALKER_HEALTH;
     }
     else if (c == 'Z')
     {
         curr_enemy->type = MEMORY_LEAK;
-        curr_enemy->patrol_speed = 0.02;
-        curr_enemy->chase_speed = 0.04;
+        curr_enemy->patrol_speed = MEMORY_LEAK_PATROL_SPEED;
+        curr_enemy->chase_speed = MEMORY_LEAK_CHASE_SPEED;
         curr_enemy->pos.x = x;
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 15;
-        curr_enemy->health = 35;
+        curr_enemy->damage = MEMORY_LEAK_DAMAGE;
+        curr_enemy->health = MEMORY_LEAK_HEALTH;
     }
     else if (c == 'Y')
     {
         curr_enemy->type = SEGV;
-        curr_enemy->patrol_speed = 0.015;
-        curr_enemy->chase_speed = 0.035;
+        curr_enemy->patrol_speed = SEGV_PATROL_SPEED;
+        curr_enemy->chase_speed = SEGV_CHASE_SPEED;
         curr_enemy->pos.x = x;
         curr_enemy->pos.y = y;
         curr_enemy->skin.img = NULL;
         curr_enemy->dead = false;
-        curr_enemy->damage = 42;
-        curr_enemy->health = 50;
+        curr_enemy->damage = SEGV_DAMAGE;
+        curr_enemy->health = SEGV_HEALTH;
     }
 }
 static uint8_t count_enemies(char **map_grid)
