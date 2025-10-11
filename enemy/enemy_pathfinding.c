@@ -1,6 +1,34 @@
 #include "../cube.h"
 
-void try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
+// void try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
+//         t_bpos direction, double speed)
+// {
+//     t_bpos  alternatives[8];
+//     t_bpos  new_pos;
+//     int     map_x;
+//     int     map_y;
+//     int     i;
+
+//     set_alternative_directions(alternatives, direction);
+//     i = 0;
+//     while (i < 8)
+//     {
+//         new_pos.x = enemy->b_pos.x + alternatives[i].x * speed;
+//         new_pos.y = enemy->b_pos.y + alternatives[i].y * speed;
+//         map_x = (int)new_pos.x;
+//         map_y = (int)new_pos.y;
+//         if (is_valid_move_position(pd, map_x, map_y))
+//         {
+//             enemy->b_pos = new_pos;
+//             enemy->dir.x = alternatives[i].x;
+//             enemy->dir.y = alternatives[i].y;
+//             return ;
+//         }
+//         i++;
+//     }
+// }
+/* try alternatives and return true if a valid move was found */
+bool try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
         t_bpos direction, double speed)
 {
     t_bpos  alternatives[8];
@@ -22,12 +50,35 @@ void try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
             enemy->b_pos = new_pos;
             enemy->dir.x = alternatives[i].x;
             enemy->dir.y = alternatives[i].y;
-            return ;
+            return (true);
         }
         i++;
     }
+    return (false);
 }
 
+// void smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
+//         t_parsed_data *pd)
+// {
+//     t_bpos  direction;
+//     t_bpos  new_pos;
+//     int     map_x;
+//     int     map_y;
+
+//     calculate_direction_to_player(enemy, player_pos, &direction);
+//     new_pos.x = enemy->b_pos.x + direction.x * speed;
+//     new_pos.y = enemy->b_pos.y + direction.y * speed;
+//     map_x = (int)new_pos.x;
+//     map_y = (int)new_pos.y;
+//     if (is_valid_move_position(pd, map_x, map_y))
+//     {
+//         enemy->b_pos = new_pos;
+//         enemy->dir.x = direction.x;
+//         enemy->dir.y = direction.y;
+//         return ;
+//     }
+//     try_alternative_directions(enemy, pd, direction, speed);
+// }
 void smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
         t_parsed_data *pd)
 {
@@ -35,6 +86,7 @@ void smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
     t_bpos  new_pos;
     int     map_x;
     int     map_y;
+    bool    moved;
 
     calculate_direction_to_player(enemy, player_pos, &direction);
     new_pos.x = enemy->b_pos.x + direction.x * speed;
@@ -48,7 +100,15 @@ void smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
         enemy->dir.y = direction.y;
         return ;
     }
-    try_alternative_directions(enemy, pd, direction, speed);
+
+    /* try alternatives; if none succeed, give up and return to patrol */
+    moved = try_alternative_directions(enemy, pd, direction, speed);
+    if (!moved)
+    {
+        enemy->state = ENEMY_RETURN;
+        /* optional debug */
+        // printf("Enemy blocked by door/wall - returning to patrol\n");
+    }
 }
 
 double calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd)
@@ -73,14 +133,11 @@ double calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd)
     new_pos.y = enemy->b_pos.y + enemy->dir.y * enemy->patrol_speed;
     map_x = (int)new_pos.x;
     map_y = (int)new_pos.y;
-    if (map_y >= 0 && map_y < pd->level.max_y
-        && map_x >= 0 && map_x < pd->level.max_x
-        && pd->map_grid[map_y][map_x] == '0')
-    {
-        enemy->b_pos = new_pos;
-    }
+    if (is_valid_move_position(pd, map_x, map_y))
+    enemy->b_pos = new_pos;
     else
         change_enemy_direction(enemy);
+
 }
 
 

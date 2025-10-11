@@ -76,18 +76,35 @@ void calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos,
         direction->y /= length;
     }
 }
-
+/* returns true if the map cell at (map_x,map_y) is walkable for enemies/players */
 bool is_valid_move_position(t_parsed_data *pd, int map_x, int map_y)
 {
-    if (map_y < 0)
+    char tile;
+
+    if (!pd)
         return (false);
-    if (map_y >= pd->level.max_y)
+    if (map_y < 0 || map_y >= pd->level.max_y
+     || map_x < 0 || map_x >= pd->level.max_x)
         return (false);
-    if (map_x < 0)
-        return (false);
-    if (map_x >= pd->level.max_x)
-        return (false);
-    if (pd->map_grid[map_y][map_x] != '0')
-        return (false);
-    return (true);
+
+    tile = pd->map_grid[map_y][map_x];
+    /* walkable if empty floor '0' or open door 'O' */
+    if (tile == '0' || tile == 'O')
+        return (true);
+
+    return (false);
 }
+// bool is_valid_move_position(t_parsed_data *pd, int map_x, int map_y)
+// {
+//     if (map_y < 0)
+//         return (false);
+//     if (map_y >= pd->level.max_y)
+//         return (false);
+//     if (map_x < 0)
+//         return (false);
+//     if (map_x >= pd->level.max_x)
+//         return (false);
+//     if (pd->map_grid[map_y][map_x] != '0')
+//         return (false);
+//     return (true);
+// }

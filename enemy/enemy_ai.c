@@ -47,6 +47,7 @@ void calculate_direction_to_origin(t_enemy *enemy, t_bpos *direction)
     }
 }
 
+
 bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
 {
     double  distance_to_origin;
@@ -63,9 +64,7 @@ bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
     new_pos.y = enemy->b_pos.y + direction.y * enemy->patrol_speed;
     map_x = (int)new_pos.x;
     map_y = (int)new_pos.y;
-    if (map_y >= 0 && map_y < pd->level.max_y
-        && map_x >= 0 && map_x < pd->level.max_x
-        && pd->map_grid[map_y][map_x] == '0')
+   if (is_valid_move_position(pd, map_x, map_y))
     {
         enemy->b_pos = new_pos;
         enemy->dir.x = direction.x;
@@ -73,6 +72,7 @@ bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
     }
     else
         change_enemy_direction(enemy);
+
     return (false);
 }
 
