@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube.h                                             :+:      :+:    :+:   */
+/*   cubejesse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/11 05:59:03 by oimzilen         ###   ########.fr       */
+/*   Created: 2025/10/11 05:56:10 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/10/11 05:56:13 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@
 # define PLAYER_ICON 0xB0F01BFF
 # define WALL_ICON 0x2D4225FF
 # define FLOOR_ICON 0x4F6845FF
-# define DOOR_ICON 0xE3BB51FF
-# define OPEN_DOOR_ICON 0xAC56E3FF
 
 
 // Minimap colors
@@ -121,68 +119,27 @@
 # define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
-# define VIGNETTE "textures/ui/in_game/vignette.png"
-# define GAME_OVER "textures/ui/in_game/game_over.png"
+# define VIGNETTE "textures/ui/in_game/vignette_3.png"
 
-// Gun textures -----------------------------------------------------------
-# define GUN_JESSE_IDLE "textures/ui/in_game/gun/gun_idle.png"
-# define GUN_JESSE_AIM "textures/ui/in_game/gun/gun_aim.png"
+// Gun textures
+# define GUN_IDLE "textures/ui/in_game/gun/gun_idle.png"
+# define GUN_AIM "textures/ui/in_game/gun/gun_aim.png"
 
 // Gun shoot anim
-# define GUN_JESSE_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_JESSE_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_JESSE_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_JESSE_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_4.png"
+# define GUN_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_1.png"
+# define GUN_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_3.png"
+# define GUN_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_2.png"
+# define GUN_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_4.png"
 # define GUN_SHOOT_FRMS 4
 
 // Gun reload anim
-# define GUN_JESSE_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_1.png"
-# define GUN_JESSE_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_2.png"
-# define GUN_JESSE_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_3.png"
-# define GUN_JESSE_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_4.png"
-# define GUN_JESSE_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_5.png"
-# define GUN_JESSE_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
+# define GUN_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_1.png"
+# define GUN_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_2.png"
+# define GUN_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_3.png"
+# define GUN_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_4.png"
+# define GUN_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_5.png"
+# define GUN_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
 # define GUN_RELOAD_FRMS 6
-
-// Chorus gun textures
-# define GUN_CHORUS_IDLE "textures/ui/in_game/gun_chorus/gun_idle.png"
-# define GUN_CHORUS_AIM "textures/ui/in_game/gun_chorus/gun_aim.png"
-# define GUN_CHORUS_SHOOT_1 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_CHORUS_SHOOT_2 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_CHORUS_SHOOT_3 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_CHORUS_SHOOT_4 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_4.png"
-# define GUN_CHORUS_RELOAD_1 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_1.png"
-# define GUN_CHORUS_RELOAD_2 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_2.png"
-# define GUN_CHORUS_RELOAD_3 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_3.png"
-# define GUN_CHORUS_RELOAD_4 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_4.png"          
-# define GUN_CHORUS_RELOAD_5 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_5.png"
-# define GUN_CHORUS_RELOAD_6 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_6.png"
-// Oussmac gun textures
-# define GUN_OUSSMAC_IDLE "textures/ui/in_game/gun_oussmac/gun_idle.png"
-# define GUN_OUSSMAC_AIM "textures/ui/in_game/gun_oussmac/gun_aim.png"
-# define GUN_OUSSMAC_SHOOT_1 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_OUSSMAC_SHOOT_2 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_OUSSMAC_SHOOT_3 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_OUSSMAC_SHOOT_4 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_4.png"
-# define GUN_OUSSMAC_RELOAD_1 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_1.png"
-# define GUN_OUSSMAC_RELOAD_2 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_2.png"
-# define GUN_OUSSMAC_RELOAD_3 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_3.png"
-# define GUN_OUSSMAC_RELOAD_4 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_4.png"          
-# define GUN_OUSSMAC_RELOAD_5 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_5.png"
-# define GUN_OUSSMAC_RELOAD_6 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_6.png"
-
-// Health_UI textures
-# define HEALTH_BAR "textures/ui/in_game/health/health_bar.png"
-// health backgrounds
-# define HP_JESSE "textures/ui/in_game/health/jesse_health_bar.png"
-# define HP_CHORUS "textures/ui/in_game/health/chorus_health_bar.png"
-# define HP_OUSSMAC "textures/ui/in_game/health/oussmac_health_bar.png"
-
-# define HBAR_X 40
-# define HBAR_Y 1018
-# define HBAR_BG_X 0
-# define HBAR_BG_Y 468
-
 
 # define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/Himp-IDLE.png"
 # define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk1.png"
@@ -297,13 +254,6 @@ typedef struct ui_anim
 	int         frame_delay; // ms per frame
 }	t_ui_anim;
 
-typedef enum e_gun_type
-{
-    JESSE_SLINGER,
-    CHORUS_MP42,
-    OUSSMAC_37MM
-}   gun_type;
-
 
 typedef struct s_gun
 {
@@ -314,7 +264,6 @@ typedef struct s_gun
     bool        aiming;
     int         ammo;
     int         damage;
-    gun_type      type;
 }   t_gun;
 
 typedef struct s_player
@@ -329,8 +278,6 @@ typedef struct s_player
     int     health;
     t_gun   gun;
     bool    is_shooting;
-    t_character character;
-    bool    is_dead;
 }   t_player;
 
 typedef struct s_minimap
@@ -376,9 +323,8 @@ typedef struct s_game_ui
     t_raw_img           vignette;
     t_raw_img           gun;
     t_raw_img           gun_aim;
+    t_raw_img           character;
     t_raw_img           health;
-    t_raw_img           health_bg;
-    t_raw_img           game_over;
 }   t_game_ui;
 
 
@@ -567,7 +513,6 @@ void    draw_minimap(t_parsed_data *pd);
 void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
-void    interact_with_door(t_parsed_data *pd);
 
 // Raycast
 void	raycast_system(t_parsed_data *pd);
@@ -595,8 +540,6 @@ void    init_game_ui(t_parsed_data *pd);
 void	update_ui_anim(t_ui_anim *anim);
 void	render_gun(t_parsed_data *pd);
 void    trigger_reload_anim(t_parsed_data *pd);
-void    setup_character(t_parsed_data *pd);
-void    setup_health_ui(t_parsed_data *pd);
 
 // Enemies Logic
 void    get_enemies(t_cube *cube);
@@ -730,5 +673,4 @@ void    update_enemies(t_parsed_data *pd);
 
 
 ///////////////////////////////////////////////////////////////////////////
-
 #endif

@@ -23,7 +23,8 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/raycast/shading.c game_loop/radar_map/render_radar.c \
 	game_loop/radar_map/init_radar.c game_loop/radar_map/render_player_icon.c \
 	game_loop/game_ui/init_game_ui.c parse_map/get_enemy_data.c enemy/enemy.c \
-	game_loop/game_ui/ft_itoa.c
+	game_loop/game_ui/ft_itoa.c game_loop/game_ui/setup_character.c \
+	game_loop/game_ui/setup_health_ui.c game_loop/raycast/door_interaction.c
 
 OBJ=$(SRC:.c=.o)
 

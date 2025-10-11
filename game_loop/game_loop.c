@@ -134,6 +134,16 @@ static void free_enemy_textures(t_parsed_data *pd)
             mlx_delete_texture(pd->enemies[i].attack3.txtr);
             pd->enemies[i].attack3.txtr = NULL;
         }
+         if (pd->enemies[i].death1.txtr)
+        {
+            mlx_delete_texture(pd->enemies[i].death1.txtr);
+            pd->enemies[i].death1.txtr = NULL;
+        }
+        if (pd->enemies[i].death2.txtr)
+        {
+            mlx_delete_texture(pd->enemies[i].death2.txtr);
+            pd->enemies[i].death2.txtr = NULL;
+        }
         i++;
     }
 }
@@ -147,6 +157,8 @@ void init_enemy_textures(t_parsed_data *pd)
     const char *attack1_path;
     const char *attack2_path;
     const char *attack3_path;
+    const char *death1_path;
+    const char *death2_path;
 
     if (pd->enemy_count == 0 || pd->enemies == NULL)
         return ;
@@ -157,7 +169,7 @@ void init_enemy_textures(t_parsed_data *pd)
         {
             if (pd->enemies[i].type == FT_SKIN_WALKER)
             {
-                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER);
+                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER_DFL);
                 if (pd->enemies[i].skin.txtr == NULL)
                 {
                     print_error("Error\nEnemy Texture Path Missing.\n");
@@ -166,7 +178,7 @@ void init_enemy_textures(t_parsed_data *pd)
             }
             else if (pd->enemies[i].type == MEMORY_LEAK)
             {
-                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER); // change later
+                pd->enemies[i].skin.txtr = mlx_load_png(MEMORY_LEAK_DFL);
                 if (pd->enemies[i].skin.txtr == NULL)
                 {
                     print_error("Error\nEnemy Texture Path Missing.\n");
@@ -175,7 +187,7 @@ void init_enemy_textures(t_parsed_data *pd)
             }
             else if (pd->enemies[i].type == SEGV)
             {
-                pd->enemies[i].skin.txtr = mlx_load_png(SKIN_WALKER); // change later
+                pd->enemies[i].skin.txtr = mlx_load_png(SEGV_DFL); // change later
                 if (pd->enemies[i].skin.txtr == NULL)
                 {
                     print_error("Error\nEnemy Texture Path Missing.\n");
@@ -199,19 +211,31 @@ void init_enemy_textures(t_parsed_data *pd)
             attack1_path = SKIN_WALKER_A1;
             attack2_path = SKIN_WALKER_A2;
             attack3_path = SKIN_WALKER_A3;
+            death1_path = SKIN_WALKER_D1;
+            death2_path = SKIN_WALKER_D2;
         }
-        // else if (pd->enemies[i].type == MEMORY_LEAK)
-        // {
-        //     walk1_path = MEMORY_LEAK_W1;
-        //     walk2_path = MEMORY_LEAK_W2;
-        //     walk3_path = MEMORY_LEAK_W3;
-        // }
-        // else /* SEGV or fallback */
-        // {
-        //     walk1_path = SEGV_W1;
-        //     walk2_path = SEGV_W2;
-        //     walk3_path = SEGV_W3;
-        // }
+        else if (pd->enemies[i].type == MEMORY_LEAK)
+        {
+            walk1_path = MEMORY_LEAK_W1;
+            walk2_path = MEMORY_LEAK_W2;
+            walk3_path = MEMORY_LEAK_W3;
+            attack1_path = MEMORY_LEAK_A1;
+            attack2_path = MEMORY_LEAK_A2;
+            attack3_path = MEMORY_LEAK_A3;
+            death1_path = MEMORY_LEAK_D1;
+            death2_path = MEMORY_LEAK_D2;
+        }
+        else /* SEGV or fallback */
+        {
+            walk1_path = SEGV_W1;
+            walk2_path = SEGV_W2;
+            walk3_path = SEGV_W3;
+            attack1_path = SEGV_A1;
+            attack2_path = SEGV_A2;
+            attack3_path = SEGV_A3;
+            death1_path = SEGV_D1;
+            death2_path = SEGV_D2;
+        }
 
         /* --- load walk1 texture -> image --- */
         if (pd->enemies[i].walk1.txtr == NULL)
@@ -310,14 +334,48 @@ void init_enemy_textures(t_parsed_data *pd)
             if (pd->enemies[i].attack3.img == NULL)
                 mind_free_all(EXIT_FAILURE);
         }
-
+         if (pd->enemies[i].death1.txtr == NULL)
+        {
+            pd->enemies[i].death1.txtr = mlx_load_png(death1_path);
+            if (pd->enemies[i].death1.txtr == NULL)
+            {
+                print_error("Error\nEnemy death1 Texture Path Missing.\n");
+                mind_free_all(EXIT_FAILURE);
+            }
+        }
+        if (pd->enemies[i].death1.img == NULL)
+        {
+            pd->enemies[i].death1.img = mlx_texture_to_image(pd->mlx, pd->enemies[i].death1.txtr);
+            if (pd->enemies[i].death1.img == NULL)
+                mind_free_all(EXIT_FAILURE);
+        }
+        if (pd->enemies[i].death2.txtr == NULL)
+        {
+            pd->enemies[i].death2.txtr = mlx_load_png(death2_path);
+            if (pd->enemies[i].death2.txtr == NULL)
+            {
+                print_error("Error\nEnemy death2 Texture Path Missing.\n");
+                mind_free_all(EXIT_FAILURE);
+            }
+        }
+        if (pd->enemies[i].death2.img == NULL)
+        {
+            pd->enemies[i].death2.img = mlx_texture_to_image(pd->mlx, pd->enemies[i].death2.txtr);
+            if (pd->enemies[i].death2.img == NULL)
+                mind_free_all(EXIT_FAILURE);
+        }
         /* --- set default animation image and counters (immediately after loading frames) --- */
         pd->enemies[i].anim_img = pd->enemies[i].skin.img; /* start with base skin until walking */
         pd->enemies[i].anim_frame = 0;
         pd->enemies[i].anim_counter = 0;
         pd->enemies[i].is_attacking = false;
         pd->enemies[i].attack_anim_counter = 0;
-
+        pd->enemies[i].is_dying = false;
+        pd->enemies[i].death_anim_frame = 0;
+        pd->enemies[i].death_anim_counter = 0;
+        pd->enemies[i].death_timer = 0;
+        pd->enemies[i].is_highlighted = false;
+        pd->enemies[i].highlight_timer = 0;
         i++;
     }
     free_enemy_textures(pd); // free the textures after converting them to images
@@ -359,6 +417,7 @@ void free_textures(t_parsed_data *pd)
 		mlx_delete_image(pd->mlx, pd->txtr_ea.img);
 	if (pd->txtr_ea.txtr)
 		mlx_delete_texture(pd->txtr_ea.txtr);
+    
 }
 
 static void init_enemy_textures_to_null(t_parsed_data *pd)
@@ -393,6 +452,15 @@ static void init_enemy_textures_to_null(t_parsed_data *pd)
         pd->enemies[i].anim_counter = 0;
         pd->enemies[i].is_attacking = false;
         pd->enemies[i].attack_anim_counter = 0;
+        pd->enemies[i].death1.txtr = NULL;
+        pd->enemies[i].death1.img = NULL;
+        pd->enemies[i].death2.txtr = NULL;
+        pd->enemies[i].death2.img = NULL;
+        pd->enemies[i].is_dying = false;
+        pd->enemies[i].death_anim_counter = 0;
+        pd->enemies[i].death_anim_frame = 0;
+        pd->enemies[i].death_timer = 0; 
+
         i++;
     }
 }
@@ -410,7 +478,7 @@ void game_loop(t_parsed_data *pd)
     init_mini_map(pd);
     init_main_menu(pd);
     init_characters_menu(pd);
-    init_game_ui(pd);
+    // init_game_ui(pd);
     mlx_key_hook(pd->mlx, handle_player_input, pd);
     mlx_cursor_hook(pd->mlx, handle_mouse_input, pd);
     mlx_mouse_hook(pd->mlx, handle_mouse_click, pd);

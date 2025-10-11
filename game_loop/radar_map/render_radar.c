@@ -84,6 +84,10 @@ static void draw_minimap_grid(t_parsed_data *pd)
                         mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
                     else if (cell == '0')
                         mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(FLOOR_ICON, pixel_dist, 0.015));
+                    else if (cell == 'D')
+                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(DOOR_ICON, pixel_dist, 0.015));
+                    else if (cell == 'O')
+                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(OPEN_DOOR_ICON, pixel_dist, 0.015));
                     if (enemy_icon(pd->player.bpos.x + w.x, pd->player.bpos.y + w.y, pd))
                         mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(0xFF0000FF, pixel_dist, 0.015));
                 }

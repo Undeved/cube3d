@@ -1,15 +1,25 @@
 #include "../cube.h"
+#include <sys/time.h>
 
 static bool is_collision(char **map_grid, double x, double y)
 {
-    if (map_grid[(int)y][(int)x] == '1')
+    // check for wall collision with a small margin
+    if (map_grid[(int)y][(int)x] == '1' || map_grid[(int)y][(int)x] == 'D')
         return (true);
+    // horizontal collision
     if (map_grid[(int)y][(int)(x + COLLISION)] == '1'
         || map_grid[(int)y][(int)(x - COLLISION)] == '1')
         return (true);
+    if (map_grid[(int)y][(int)(x + COLLISION)] == 'D'
+        || map_grid[(int)y][(int)(x - COLLISION)] == 'D')
+        return (true);
+    // vertical collision
     if (map_grid[(int)(y + COLLISION)][(int)x] == '1' 
         || map_grid[(int)(y - COLLISION)][(int)x] == '1')
-        return (true); 
+        return (true);
+    if (map_grid[(int)(y + COLLISION)][(int)x] == 'D' 
+        || map_grid[(int)(y - COLLISION)][(int)x] == 'D')
+        return (true);
     return (false);
 }
 
@@ -147,6 +157,30 @@ static void reload_gun(t_parsed_data *pd)
     }
 }
 
+// cooldown using gettimeofday letting game to run a bit more then exiting here
+// use static variable and let game run multiple times before exiting
+static bool cool_down(long usec)
+{
+    static struct timeval start = {0};
+    static bool running = false;
+
+    if (!running)
+    {
+        gettimeofday(&start, NULL);
+        running = true;
+        return false;
+    }
+    struct timeval current;
+    gettimeofday(&current, NULL);
+    long elapsed = (current.tv_sec - start.tv_sec) * 1000000L + (current.tv_usec - start.tv_usec);
+    if (elapsed >= usec)
+    {
+        running = false;
+        return true;
+    }
+    return false;
+}
+
 void    update_player_data(t_parsed_data *pd)
 {
     int32_t m_x;
@@ -154,11 +188,17 @@ void    update_player_data(t_parsed_data *pd)
 
     m_x = 0;
     m_y = 0;
-    if (pd->player.health <= 0)
+    if (pd->player.health <= 0) // wait one second before exiting
     {
-        pd->player.health = 0;
-        printf("You died! Game Over!\n");
-        mind_free_all(EXIT_SUCCESS);
+        // enable game over screen here
+        pd->game_ui.game_over.img->enabled = true;
+        pd->player.is_dead = true;
+        if (cool_down(1000000))
+        {
+            pd->player.health = 0;
+            printf("You died! Game Over!\n");
+            mind_free_all(EXIT_SUCCESS);
+        }
     }
     player_movement(pd);
     mlx_get_mouse_pos(pd->mlx, &m_x, &m_y); // get mouse pos to update rot.
@@ -166,6 +206,7 @@ void    update_player_data(t_parsed_data *pd)
     pd->mouse.y = m_y;
     player_rotation(pd);
     player_pitch(pd);
+    interact_with_door(pd);
     update_health_ui(pd);
     reload_gun(pd);
 }

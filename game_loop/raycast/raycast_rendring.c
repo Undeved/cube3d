@@ -187,7 +187,7 @@ static bool is_wall_hit(t_parsed_data *pd, t_pos map)
 		return (false);
 	if (map.x < 0 || !pd->map_grid[map.y][map.x])
 		return (false);
-	return (pd->map_grid[map.y][map.x] != '0');
+	return (pd->map_grid[map.y][map.x] != '0' && pd->map_grid[map.y][map.x] != 'O');
 }
 
 static void perform_dda(t_parsed_data *pd, t_dda_data *data)
