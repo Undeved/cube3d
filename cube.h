@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/11 12:40:49 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/11 15:26:29 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
 # define VIGNETTE "textures/ui/in_game/vignette.png"
 # define GAME_OVER "textures/ui/in_game/game_over.png"
+
+// door texture
+# define DOOR_TEXTURE "textures/wall_textures/door.png"
 
 // Gun textures -----------------------------------------------------------
 # define GUN_JESSE_IDLE "textures/ui/in_game/gun/gun_idle.png"
@@ -506,6 +509,7 @@ typedef struct s_pd
     t_pos           mouse;
     t_enemy         *enemies;
     uint8_t         enemy_count;
+    t_raw_img       door_txt;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -742,6 +746,7 @@ typedef struct s_column_data
     t_bpos           player_pos;
     t_bpos           pos;
     int        side;
+    t_pos        map;
 }    t_column_data;
 
 typedef struct s_ray_data

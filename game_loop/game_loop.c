@@ -148,6 +148,7 @@ static void free_enemy_textures(t_parsed_data *pd)
     }
 }
 
+
 void init_enemy_textures(t_parsed_data *pd)
 {
     int i;
@@ -465,6 +466,19 @@ static void init_enemy_textures_to_null(t_parsed_data *pd)
     }
 }
 
+static void init_door_texture(t_parsed_data *pd)
+{
+    pd->door_txt.txtr = mlx_load_png(DOOR_TEXTURE);
+    if (pd->door_txt.txtr == NULL)
+    {
+        print_error("Error\nDoor Texture Path Missing.\n");
+        mind_free_all(EXIT_FAILURE);
+    }
+    pd->door_txt.img = mlx_texture_to_image(pd->mlx, pd->door_txt.txtr);
+    if (pd->door_txt.img == NULL)
+        mind_free_all(EXIT_FAILURE);
+}
+
 
 void game_loop(t_parsed_data *pd)
 {
@@ -473,6 +487,7 @@ void game_loop(t_parsed_data *pd)
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
     init_precise_data(pd);
+    init_door_texture(pd);
     init_textures(pd);
     init_gameplay_screen(pd);
     init_mini_map(pd);

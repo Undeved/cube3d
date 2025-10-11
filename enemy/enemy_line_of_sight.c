@@ -24,7 +24,7 @@ bool check_line_path(t_parsed_data *pd, t_bpos start, t_bpos step,
             return (false);
         if (map_x < 0 || map_x >= pd->level.max_x)
             return (false);
-        if (pd->map_grid[map_y][map_x] == '1')
+        if (pd->map_grid[map_y][map_x] == '1' || pd->map_grid[map_y][map_x] == 'D')
             return (false);
     }
     return (true);
@@ -43,52 +43,4 @@ bool has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end)
     step.y = delta.y / (max_dist * 4.0);
     return (check_line_path(pd, start, step, max_dist));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* collect visible enemies and sort them (unchanged small helper) */
-
-
-/* apply damage and start death animation if health <= 0 */
-
-
-
-
-/* ---------- Remaining AI & update functions unchanged (signatures <=4) ---------- */
-
-
-
-
-
-
-
-
-
-
-
-
 

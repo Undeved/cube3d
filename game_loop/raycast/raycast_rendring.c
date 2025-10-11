@@ -268,17 +268,133 @@ static void draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
 		y++;
 	}
 }
+static mlx_texture_t *get_door_texture(t_parsed_data *pd)
+{
+    if (!pd)
+        return (NULL);
+    return pd->door_txt.txtr;
+}
+
+static void draw_door_column(t_parsed_data *pd, int x, t_line_data *line,
+                             double perp_dist, int side, t_bdir ray_dir,
+                             t_bpos pos, char tile_char)
+{
+    mlx_texture_t *tx;
+    double         wall_x;
+    int            tex_x;
+    int            tex_y;
+    int            y;
+    int            tex_h;
+    int            tex_w;
+    double         step;
+    double         tex_pos;
+    int            screen_h;
+
+    (void)pos; /* we keep signature compatible with draw_textured_column */
+
+    tx = get_door_texture(pd);
+    if (!tx || !tx->pixels)
+    {
+        /* fallback visible color (green) to spot missing texture */
+        draw_wall(pd, x, line, 0x0000FF00);
+        return;
+    }
+
+    tex_w = (int)tx->width;
+    tex_h = (int)tx->height;
+    screen_h = pd->screen->height;
+
+    /* compute fractional hit coordinate similar to walls */
+    if (side == 0)
+        wall_x = pos.y + perp_dist * ray_dir.y;
+    else
+        wall_x = pos.x + perp_dist * ray_dir.x;
+    wall_x -= floor(wall_x);
+
+    tex_x = (int)(wall_x * (double)tex_w);
+    if (tex_x < 0) tex_x = 0;
+    if (tex_x >= tex_w) tex_x = tex_w - 1;
+
+    if (side == 0 && ray_dir.x > 0.0)
+        tex_x = tex_w - tex_x - 1;
+    if (side == 1 && ray_dir.y < 0.0)
+        tex_x = tex_w - tex_x - 1;
+
+    step = (double)tex_h / (double)line->height;
+    tex_pos = ((double)line->draw_start
+               - ((double)screen_h / 2.0 + (double)pd->player.pitch)
+               + (double)line->height / 2.0) * step;
+
+    y = line->draw_start;
+    while (y <= line->draw_end)
+    {
+        tex_y = (int)tex_pos;
+        if (tex_y < 0) tex_y = 0;
+        if (tex_y >= tex_h) tex_y = tex_h - 1;
+
+        {
+            unsigned char *p = (unsigned char *)tx->pixels;
+            int idx = (tex_y * tx->width + tex_x) * 4;
+            unsigned int r = p[idx + 0];
+            unsigned int g = p[idx + 1];
+            unsigned int b = p[idx + 2];
+            uint32_t sample = (r << 24) | (g << 16) | (b << 8) | 0xFF;
+
+            if (side == 1)
+                sample = darken_color(sample);
+
+            /* 'O' = open door: slightly brighter / less falloff */
+            if (tile_char == 'O')
+                mlx_put_pixel(pd->screen, x, y,
+                              shade_color(sample, perp_dist, WALLS_FALLOF * 0.65));
+            else /* 'D' closed door: same as walls */
+                mlx_put_pixel(pd->screen, x, y,
+                              shade_color(sample, perp_dist, WALLS_FALLOF));
+        }
+
+        tex_pos += step;
+        y++;
+    }
+}
 
 static void draw_column(t_parsed_data *pd, t_column_data *col)
 {
-	t_line_data line;
+    t_line_data line;
+    char tile = '0';
 
-	calc_line_params(col->h, col->perp_dist, &line, pd);
-	draw_ceiling(pd, col->x, line.draw_start, col->h / 2);
-	draw_textured_column(pd, col->x, &line, col->perp_dist, col->side,
-						 col->ray_dir, col->player_pos);
-	draw_floor(pd, col->x, line.draw_end, col->h / 2);
+    calc_line_params(col->h, col->perp_dist, &line, pd);
+
+    /* draw ceiling first */
+    draw_ceiling(pd, col->x, line.draw_start, col->h / 2);
+
+    /* determine tile char safely (bounds-check) */
+    if (col->map.y >= 0 && col->map.y < /* map height, if you have it */ \
+         /* if you have a map height variable use it here; otherwise test pointer */ 99999)
+    {
+        if (pd->map_grid[col->map.y] && col->map.x >= 0)
+            tile = pd->map_grid[col->map.y][col->map.x];
+    }
+    else
+    {
+        /* fallback: try to be safe */
+        if (pd->map_grid[col->map.y] && pd->map_grid[col->map.y][col->map.x])
+            tile = pd->map_grid[col->map.y][col->map.x];
+    }
+
+    /* If tile == 'D' (closed door) render using door texture.
+       (If you want to render 'O' as well, include it here.)
+    */
+    if (tile == 'D')
+        draw_door_column(pd, col->x, &line, col->perp_dist, col->side,
+                         col->ray_dir, col->player_pos, tile);
+    else
+        draw_textured_column(pd, col->x, &line, col->perp_dist, col->side,
+                             col->ray_dir, col->player_pos);
+
+    /* finally draw floor */
+    draw_floor(pd, col->x, line.draw_end, col->h / 2);
 }
+
 
 static void set_ray_dir(t_ray_dir_data *data)
 {
@@ -330,7 +446,9 @@ static void init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray,
 	col_data->side = ray->side;
 	col_data->ray_dir = ray->ray_dir;
 	col_data->player_pos = ray->player_pos;
+	col_data->map = ray->map; 
 }
+
 
 static void cast_single_ray(t_parsed_data *pd, int x)
 {
