@@ -100,7 +100,10 @@ static void game_mouse_input(mouse_key_t button, action_t action, modifier_key_t
         {
             trigger_shoot_anim(pd);
             printf("Bang! Ammo left: %d\n", pd->player.gun.ammo);
-            pd->player.is_shooting = true;
+            if (pd->player.gun.ammo > 0)
+                pd->player.is_shooting = true;
+            else
+                pd->player.is_shooting = false;
             return ;
         }
     }

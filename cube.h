@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/11 05:59:03 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/11 12:40:49 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 // Mini map
 # define MAX_MAP 500
-# define MINI_MAP_SIZE 400
+# define MINI_MAP_SIZE 300
 # define MINI_MAP_Y 20
 # define MINI_MAP_X (WIDTH - MINI_MAP_SIZE - MINI_MAP_Y)
 # define PIXEL_BLOCK 18
@@ -178,10 +178,10 @@
 # define HP_CHORUS "textures/ui/in_game/health/chorus_health_bar.png"
 # define HP_OUSSMAC "textures/ui/in_game/health/oussmac_health_bar.png"
 
-# define HBAR_X 40
-# define HBAR_Y 1018
-# define HBAR_BG_X 0
-# define HBAR_BG_Y 468
+# define HBAR_X 1625
+# define HBAR_Y 342
+# define HBAR_BG_X 1592
+# define HBAR_BG_Y 298
 
 
 # define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/Himp-IDLE.png"
@@ -195,7 +195,7 @@
 # define AMMO 30
 # define DAMAGE 10
 
-# define MAX_ENEMIES 5
+# define MAX_ENEMIES 20
 
 
 // Garbage collector struct.
@@ -598,12 +598,92 @@ void    trigger_reload_anim(t_parsed_data *pd);
 void    setup_character(t_parsed_data *pd);
 void    setup_health_ui(t_parsed_data *pd);
 
+typedef struct s_draw_bounds
+{
+	int draw_start_y;
+    int draw_end_y;
+    int draw_start_x;
+    int draw_end_x;
+    int orig_draw_start_x;
+    int orig_draw_start_y;
+}   t_draw_bounds;
+
+typedef struct s_draw_context
+{
+    t_parsed_data        *pd;
+    t_enemy_draw_data    *curr;
+    t_draw_bounds        *b;
+}   t_draw_context;
+
+/* Texture sample result returned by value so we avoid out-args */
+typedef struct s_tex_sample
+{
+	uint32_t color;
+    unsigned char alpha;
+    int ok;
+}   t_tex_sample;
+
+
+/* small helper result to avoid many out-args */
+typedef struct s_enemy_calc
+{
+	t_bpos rel_pos;
+	t_bpos transform;
+	double distance;
+}   t_enemy_calc;
+
+typedef struct s_enemy_ctx
+{
+	t_parsed_data   *pd;
+	t_enemy         *enemy;
+	int             index;
+	double          distance;
+	bool            visible;
+}   t_enemy_ctx;
+
 // Enemies Logic
 void    get_enemies(t_cube *cube);
 void    draw_enemies(t_parsed_data *pd);
 
 // helpers test
 void    print_argv(char **argv);
+
+/* From enemy_line_of_sight.c */
+bool	has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end);
+
+/* From enemy_visibility.c */
+int		collect_and_sort_enemies_small(t_parsed_data *pd, t_enemy_draw_data *draw_data);
+
+/* From enemy_drawing.c */
+void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon);
+t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty);
+
+/* From enemy_combat.c */
+void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
+void	update_all_death_animations(t_parsed_data *pd);
+void	update_death_animation(t_enemy *enemy);
+
+/* From enemy_movement.c */
+void	change_enemy_direction(t_enemy *enemy);
+void	calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
+bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
+
+/* From enemy_ai.c */
+void	set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
+bool	return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
+
+/* From enemy_pathfinding.c */
+void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
+double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
+void	perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
+void	handle_patrol_state(t_enemy_ctx *ctx);
+
+/* From enemy_states.c */
+void	handle_enemy_state(t_enemy_ctx *ctx);
+void	update_attack_animation(t_enemy *enemy);
+
+/* From enemy_animation.c */
+void	update_walk_animation(t_enemy *enemy);
 
 //--------------------------------------------------------------------------------------
 
@@ -709,24 +789,24 @@ void    update_enemies(t_parsed_data *pd);
 
 
 // enemy  health macros
-# define SKIN_WALKER_HEALTH 49
+# define SKIN_WALKER_HEALTH 42
 # define MEMORY_LEAK_HEALTH 70
 # define SEGV_HEALTH 101
 
 // enemy damage macros
-# define SKIN_WALKER_DAMAGE 20
-# define MEMORY_LEAK_DAMAGE 33
-# define SEGV_DAMAGE 42
+# define SKIN_WALKER_DAMAGE 15
+# define MEMORY_LEAK_DAMAGE 20
+# define SEGV_DAMAGE 37
 
 // enemy patrol macros 
 # define SKIN_WALKER_PATROL_SPEED 0.1
 # define MEMORY_LEAK_PATROL_SPEED 0.2
-# define SEGV_PATROL_SPEED 0.5
+# define SEGV_PATROL_SPEED 0.25
 
 // enemy chase macros
 # define SKIN_WALKER_CHASE_SPEED 0.2
-# define MEMORY_LEAK_CHASE_SPEED 0.4
-# define SEGV_CHASE_SPEED 0.65
+# define MEMORY_LEAK_CHASE_SPEED 0.3
+# define SEGV_CHASE_SPEED 0.35
 
 
 ///////////////////////////////////////////////////////////////////////////

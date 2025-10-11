@@ -11,7 +11,8 @@
         "utility": "c",
         "variant": "c",
         "cube.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "stdbool.h": "c"
     },
     "cmake.sourceDirectory": "/home/oimzilen/Desktop/cube3d/MLX42"
 }
