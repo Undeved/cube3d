@@ -123,6 +123,14 @@ void    get_enemies(t_cube *cube)
                 scrap_enemy_data(x, y, cube->pd.map_grid[y][x], &cube->pd.enemies[enemy_index++]);
                 cube->pd.map_grid[y][x] = '0';
             }
+            else if (is_door(cube->pd.map_grid[y][x]))
+            {
+                if (!validate_door(&cube->pd, x, y))
+                {
+                    print_error("Error\nInvalid Door Placement.\n");
+                    mind_free_all(EXIT_FAILURE);
+                }
+            }
             x++;
         }
         y++;

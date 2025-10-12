@@ -19,5 +19,6 @@ void    init_game_ui(t_parsed_data *pd)
     pd->player.is_dead = false;
     mlx_delete_texture(pd->game_ui.game_over.txtr);
     pd->game_ui.game_over.txtr = NULL;
+    pd->game_ui.vignette.img->enabled = false; // disable it for now
     // maybe delete vignette texture as well if not deleted elsewhere
 }

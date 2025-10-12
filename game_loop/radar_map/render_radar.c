@@ -50,6 +50,7 @@ static void draw_minimap_grid(t_parsed_data *pd)
 
     // devided to pi / 2 to rotate cuz it wasnt rotated correctly.
     double angle = atan2(-pd->player.bdir.y, pd->player.bdir.x) - (PI / 2);
+    // double angle = 0; // for normal map without rotation.
     // angle of player direction (so minimap rotates with player)
 
     pixel.y = 0;
