@@ -1,4 +1,4 @@
-#include "../../cube.h"
+#include "../cube.h"
 
 static void camera_plane(t_parsed_data *pd)
 {

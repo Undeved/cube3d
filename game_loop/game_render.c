@@ -13,7 +13,7 @@ void    game_render(void *param)
     update_ui_anim(&pd->player.gun.reload);
     update_player_data(pd);
     update_enemies(pd);
-    raycast_system(pd);
+    update_raycast_data(pd);
     raycast_render(pd);
     render_gun(pd);
     render_radar(pd);

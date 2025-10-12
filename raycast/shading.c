@@ -1,4 +1,5 @@
-#include "../../cube.h"
+#include "../cube.h"
+
 uint32_t shade_color(uint32_t base_col, double dist, double magnitude)
 {
     double shade;

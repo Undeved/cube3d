@@ -1,4 +1,4 @@
-#include "../../cube.h"
+#include "../cube.h"
 
 void interact_with_door(t_parsed_data *pd)
 {

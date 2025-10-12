@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/12 10:54:14 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/12 13:49:27 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -603,96 +603,6 @@ void    trigger_reload_anim(t_parsed_data *pd);
 void    setup_character(t_parsed_data *pd);
 void    setup_health_ui(t_parsed_data *pd);
 
-typedef struct s_draw_bounds
-{
-	int draw_start_y;
-    int draw_end_y;
-    int draw_start_x;
-    int draw_end_x;
-    int orig_draw_start_x;
-    int orig_draw_start_y;
-}   t_draw_bounds;
-
-typedef struct s_draw_context
-{
-    t_parsed_data        *pd;
-    t_enemy_draw_data    *curr;
-    t_draw_bounds        *b;
-}   t_draw_context;
-
-/* Texture sample result returned by value so we avoid out-args */
-typedef struct s_tex_sample
-{
-	uint32_t color;
-    unsigned char alpha;
-    int ok;
-}   t_tex_sample;
-
-
-/* small helper result to avoid many out-args */
-typedef struct s_enemy_calc
-{
-	t_bpos rel_pos;
-	t_bpos transform;
-	double distance;
-}   t_enemy_calc;
-
-typedef struct s_enemy_ctx
-{
-	t_parsed_data   *pd;
-	t_enemy         *enemy;
-	int             index;
-	double          distance;
-	bool            visible;
-}   t_enemy_ctx;
-
-// Enemies Logic
-void    get_enemies(t_cube *cube);
-void    draw_enemies(t_parsed_data *pd);
-
-// helpers test
-void    print_argv(char **argv);
-
-/* From enemy_line_of_sight.c */
-bool	has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end);
-
-/* From enemy_visibility.c */
-int		collect_and_sort_enemies_small(t_parsed_data *pd, t_enemy_draw_data *draw_data);
-
-/* From enemy_drawing.c */
-void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon);
-t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty);
-
-/* From enemy_combat.c */
-void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
-void	update_all_death_animations(t_parsed_data *pd);
-void	update_death_animation(t_enemy *enemy);
-
-/* From enemy_movement.c */
-void	change_enemy_direction(t_enemy *enemy);
-void	calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
-bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
-
-/* From enemy_ai.c */
-void	set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
-bool	return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
-
-/* From enemy_pathfinding.c */
-void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
-double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
-void	perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
-void	handle_patrol_state(t_enemy_ctx *ctx);
-
-/* From enemy_states.c */
-void	handle_enemy_state(t_enemy_ctx *ctx);
-void	update_attack_animation(t_enemy *enemy);
-
-/* From enemy_animation.c */
-void	update_walk_animation(t_enemy *enemy);
-
-//--------------------------------------------------------------------------------------
-
-
 typedef struct s_ray_dir_data
 {
     t_player    *pl;
@@ -774,7 +684,190 @@ typedef struct s_texture_data
 	double		tex_pos;
 }	t_texture_data;
 
+typedef struct s_draw_bounds
+{
+	int draw_start_y;
+    int draw_end_y;
+    int draw_start_x;
+    int draw_end_x;
+    int orig_draw_start_x;
+    int orig_draw_start_y;
+}   t_draw_bounds;
 
+typedef struct s_draw_context
+{
+    t_parsed_data        *pd;
+    t_enemy_draw_data    *curr;
+    t_draw_bounds        *b;
+}   t_draw_context;
+
+/* Texture sample result returned by value so we avoid out-args */
+typedef struct s_tex_sample
+{
+	uint32_t color;
+    unsigned char alpha;
+    int ok;
+}   t_tex_sample;
+
+
+/* small helper result to avoid many out-args */
+typedef struct s_enemy_calc
+{
+	t_bpos rel_pos;
+	t_bpos transform;
+	double distance;
+}   t_enemy_calc;
+
+typedef struct s_enemy_ctx
+{
+	t_parsed_data   *pd;
+	t_enemy         *enemy;
+	int             index;
+	double          distance;
+	bool            visible;
+}   t_enemy_ctx;
+
+typedef struct s_door_column
+{
+	t_parsed_data	*pd;
+	int				x;
+	t_line_data		*line;
+	double			perp_dist;
+	int				side;
+	t_bdir			ray_dir;
+	t_bpos			pos;
+	char			tile_char;
+	mlx_texture_t	*tx;
+	int				tex_w;
+	int				tex_h;
+	int				screen_h;
+	double			wall_x;
+	int				tex_x;
+	double			step;
+	double			tex_pos;
+}	t_door_column;
+
+
+typedef struct s_texture_column
+{
+	t_parsed_data	*pd;
+	int				x;
+	t_line_data		*line;
+	double			perp_dist;
+	int				side;
+	t_bdir			ray_dir;
+	t_bpos			pos;
+	mlx_texture_t	*tx;
+	int				tex_w;
+	int				tex_h;
+	int				screen_h;
+	double			wall_x;
+	int				tex_x;
+	double			step;
+	double			tex_pos;
+}	t_texture_column;
+
+
+// Enemies Logic
+void    get_enemies(t_cube *cube);
+void    draw_enemies(t_parsed_data *pd);
+
+// helpers test
+void    print_argv(char **argv);
+
+/* From enemy_line_of_sight.c */
+bool	has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end);
+
+/* From enemy_visibility.c */
+int		collect_and_sort_enemies_small(t_parsed_data *pd, t_enemy_draw_data *draw_data);
+
+/* From enemy_drawing.c */
+void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon);
+t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty);
+
+/* From enemy_combat.c */
+void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
+void	update_all_death_animations(t_parsed_data *pd);
+void	update_death_animation(t_enemy *enemy);
+
+/* From enemy_movement.c */
+void	change_enemy_direction(t_enemy *enemy);
+void	calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
+bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
+
+/* From enemy_ai.c */
+void	set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
+bool	return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
+
+/* From enemy_pathfinding.c */
+void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
+double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
+void	perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
+void	handle_patrol_state(t_enemy_ctx *ctx);
+
+/* From enemy_states.c */
+void	handle_enemy_state(t_enemy_ctx *ctx);
+void	update_attack_animation(t_enemy *enemy);
+
+/* From enemy_animation.c */
+void	update_walk_animation(t_enemy *enemy);
+
+
+//--------------------------------------------------------------------------------------
+
+
+
+/* wall_drawing.h */
+void		draw_wall(t_parsed_data *pd, int x, t_line_data *line, uint32_t wall_col);
+mlx_texture_t	*get_wall_texture(t_parsed_data *pd, int side, t_bdir ray_dir);
+uint32_t	darken_color(uint32_t c);
+void		draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon);
+void		draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon);
+
+/* texture_rendering.h */
+void		init_texture_column(t_texture_column *tc);
+void		setup_texture_stepping(t_texture_column *tc);
+uint32_t	get_pixel_color(t_texture_column *tc, int tex_y);
+void		draw_texture_pixels(t_texture_column *tc);
+void		draw_textured_column(t_parsed_data *pd, t_column_data *col, t_line_data *line);
+
+/* door_rendering.h */
+mlx_texture_t	*get_door_texture(t_parsed_data *pd);
+void		init_door_column(t_door_column *dc);
+void		setup_door_stepping(t_door_column *dc);
+uint32_t	get_door_pixel_color(t_door_column *dc, int tex_y);
+void		draw_door_pixels(t_door_column *dc);
+void		draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line);
+
+/* dda_calculations.h */
+void		compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist);
+void		set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data);
+void		set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data);
+void		init_step_and_sidedist(t_bpos player, t_step_data *data);
+void		update_x_side(t_dda_data *data);
+void		update_y_side(t_dda_data *data);
+
+/* ray_utils.h */
+bool		is_wall_hit(t_parsed_data *pd, t_pos map);
+void		perform_dda(t_parsed_data *pd, t_dda_data *data);
+double		calc_x_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir);
+double		calc_y_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir);
+double		compute_perp_wall_dist(t_perp_data *data);
+
+/* line_calculations.h */
+void		calc_line_params(int h, double perp_dist, t_line_data *line, t_parsed_data *pd);
+void		draw_column(t_parsed_data *pd, t_column_data *col);
+
+/* ray_casting.h */
+void		set_ray_dir(t_ray_dir_data *data);
+void		init_ray_data(t_ray_data *ray, t_player *pl, int x, int w);
+void		init_dda_data(t_parsed_data *pd, t_ray_data *ray, t_dda_data *dda_data);
+void		init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray, t_perp_data *perp_data, t_column_data *col_data);
+void		cast_single_ray(t_parsed_data *pd, int x);
+void		raycast_render(t_parsed_data *pd);
+
+/* External from enemies */
+void		draw_enemies(t_parsed_data *pd);
 // ----------------------------------------------------------------------------------------
 
 // Raycast Light engine
