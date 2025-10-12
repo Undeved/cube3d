@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/11 15:26:29 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/12 10:54:14 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -563,6 +563,8 @@ void    get_level_data(t_cube *cube);
 void    get_player_pos(char **map_grid, int *x, int *y, char *dir);
 void    flood_fill(char **grid, t_pos pos, t_pos max);
 char    **grid_dup(char **grid);
+bool    is_door(char c);
+bool    validate_door(t_parsed_data *pd, int x, int y);
 
 // Game loop.
 void    game_loop(t_parsed_data *pd);
@@ -574,7 +576,6 @@ void    update_health_ui(t_parsed_data *pd);
 void    interact_with_door(t_parsed_data *pd);
 
 // Raycast
-void	raycast_system(t_parsed_data *pd);
 void    update_raycast_data(t_parsed_data *pd);
 void    raycast_render(t_parsed_data *pd);
 
