@@ -25,7 +25,6 @@ void update_death_animation(t_enemy *enemy)
         enemy->dead = true;
     }
 }
-
 t_enemy_draw_data *find_shot_target(t_enemy_draw_data *draw_data,
         int draw_count, double center_tolerance)
 {
@@ -39,8 +38,18 @@ t_enemy_draw_data *find_shot_target(t_enemy_draw_data *draw_data,
     while (i < draw_count)
     {
         double diff;
+        if (draw_data[i].enemy->is_dying)
+        {
+            i++;
+            continue;
+        }
+        if (draw_data[i].enemy->dead && !draw_data[i].enemy->is_dying)
+        {
+            i++;
+            continue;
+        }
 
-        diff = abs(draw_data[i].sprite_screen_x - WIDTH / 2);
+        diff = fabs((double)draw_data[i].sprite_screen_x - (double)WIDTH / 2.0);
         if (diff < center_tolerance && draw_data[i].distance < closest_distance)
         {
             closest_distance = draw_data[i].distance;
@@ -59,7 +68,7 @@ void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
     if (enemy->health <= 0)
     {
         enemy->is_dying = true;
-        enemy->dead = true;
+        enemy->dead = false;
         enemy->death_anim_frame = 0;
         enemy->death_anim_counter = 0;
         enemy->death_timer = DEATH_ANIMATION_DURATION;
