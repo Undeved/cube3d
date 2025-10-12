@@ -23,7 +23,6 @@ void update_death_animation(t_enemy *enemy)
     {
         enemy->is_dying = false;
         enemy->dead = true;
-        printf("Enemy body disappeared.\n");
     }
 }
 
@@ -67,13 +66,9 @@ void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
         enemy->anim_img = enemy->death1.img;
         enemy->is_highlighted = false;
         enemy->highlight_timer = 0;
-        printf("Enemy killed! Death animation started.\n");
     }
     else
-    {
         enemy->state = ENEMY_CHASE;
-        printf("Enemy hit! Health: %d\n", enemy->health);
-    }
 }
 
 void handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data,
