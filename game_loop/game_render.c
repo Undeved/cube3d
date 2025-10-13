@@ -15,7 +15,9 @@ void    game_render(void *param)
     update_enemies(pd);
     update_raycast_data(pd);
     raycast_render(pd);
+    draw_medkits(pd);
     render_gun(pd);
     render_radar(pd);
+    check_medkit_pickup(pd);
     // draw_minimap(pd);
 }

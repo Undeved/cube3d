@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/12 13:49:27 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:02:15 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,17 @@ typedef struct s_gun
     gun_type      type;
 }   t_gun;
 
+
+typedef struct s_med_kit
+{
+    t_raw_img   img;
+    t_bpos       pos;
+    bool        picked;
+    int         hp_trmat_oussmac;
+    float       size_scale; 
+    float       vertical_offset;
+}   t_med_kit;
+
 typedef struct s_player
 {
     t_pos   pos;
@@ -510,6 +521,9 @@ typedef struct s_pd
     t_enemy         *enemies;
     uint8_t         enemy_count;
     t_raw_img       door_txt;
+    t_med_kit       *medkits;        // Add this
+    int             medkit_count;     // Add this
+    int             max_medkits;  
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -767,8 +781,10 @@ typedef struct s_texture_column
 	double			tex_pos;
 }	t_texture_column;
 
+void spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
+void check_medkit_pickup(t_parsed_data *pd);
+void draw_medkits(t_parsed_data *pd);
 
-// Enemies Logic
 void    get_enemies(t_cube *cube);
 void    draw_enemies(t_parsed_data *pd);
 
@@ -788,7 +804,8 @@ t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty);
 /* From enemy_combat.c */
 void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
 void	update_all_death_animations(t_parsed_data *pd);
-void	update_death_animation(t_enemy *enemy);
+// void	update_death_animation(t_enemy *enemy);
+void update_death_animation(t_parsed_data *pd, t_enemy *enemy);
 
 /* From enemy_movement.c */
 void	change_enemy_direction(t_enemy *enemy);

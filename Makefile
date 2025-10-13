@@ -30,7 +30,7 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	enemy/enemy_movement.c enemy/enemy_drawing.c enemy/enemy_combat.c \
 	raycast/texture_rendering.c raycast/wall_drawing.c raycast/ray_utils.c\
 	raycast/ray_casting.c raycast/line_calculations.c raycast/door_rendering.c\
-	raycast/dda_calculations.c parse_map/validate_doors.c
+	raycast/dda_calculations.c parse_map/validate_doors.c raycast/med_kit.c 
 
 OBJ=$(SRC:.c=.o)
 

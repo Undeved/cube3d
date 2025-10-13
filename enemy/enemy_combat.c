@@ -1,10 +1,11 @@
 #include "../cube.h"
 
-void update_death_animation(t_enemy *enemy)
+void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
 {
     enemy->is_highlighted = false;
     enemy->highlight_timer = 0;
     enemy->death_anim_counter++;
+    
     if (enemy->death_anim_counter >= 15)
     {
         enemy->death_anim_counter = 0;
@@ -17,14 +18,17 @@ void update_death_animation(t_enemy *enemy)
                 enemy->anim_img = enemy->death2.img;
         }
     }
+    
     if (enemy->death_anim_frame >= 2)
         enemy->death_timer--;
-    if (enemy->death_timer <= 0)
+    if (enemy->death_timer <= 0 && !enemy->dead)
     {
+        spawn_medkit(pd, enemy->b_pos, enemy->type);
         enemy->is_dying = false;
         enemy->dead = true;
     }
 }
+
 t_enemy_draw_data *find_shot_target(t_enemy_draw_data *draw_data,
         int draw_count, double center_tolerance)
 {
@@ -106,7 +110,7 @@ void update_all_death_animations(t_parsed_data *pd)
     while (i < pd->enemy_count)
     {
         if (pd->enemies[i].is_dying)
-            update_death_animation(&pd->enemies[i]);
+            update_death_animation(pd, &pd->enemies[i]);
         i++;
     }
 }

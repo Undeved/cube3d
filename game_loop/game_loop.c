@@ -53,6 +53,31 @@ static void init_precise_data(t_parsed_data *pd)
     precise_direction(pd);
     init_key_flags(pd);
 }
+static void init_medkits(t_parsed_data *pd)
+{
+    int i;
+
+    pd->max_medkits = 20;
+    pd->medkits = allocate_gc(malloc(sizeof(t_med_kit) * pd->max_medkits));
+    pd->medkit_count = 0;
+
+
+    // Load medkit texture for all medkits
+    for (i = 0; i < pd->max_medkits; i++)
+    {
+        pd->medkits[i].img.txtr = mlx_load_png("textures/enemy_textures/med_kit.png"); // Add your path
+        if (pd->medkits[i].img.txtr == NULL)
+            ui_error();
+        pd->medkits[i].img.img = mlx_texture_to_image(pd->mlx, pd->medkits[i].img.txtr);
+        if (pd->medkits[i].img.img == NULL)
+        {
+            printf("DEBUG: FAILED to convert medkit texture to image (index %d)\n", i);
+            mind_free_all(EXIT_FAILURE);
+        }
+        mlx_delete_texture(pd->medkits[i].img.txtr);
+    }
+
+}
 
 static void init_mini_map(t_parsed_data *pd)
 {
@@ -418,6 +443,15 @@ void free_textures(t_parsed_data *pd)
 		mlx_delete_image(pd->mlx, pd->txtr_ea.img);
 	if (pd->txtr_ea.txtr)
 		mlx_delete_texture(pd->txtr_ea.txtr);
+    if (pd->medkits)
+    {
+        if (pd->medkits[0].img.img)
+            mlx_delete_image(pd->mlx, pd->medkits[0].img.img);
+        if (pd->medkits[0].img.txtr)
+            mlx_delete_texture(pd->medkits[0].img.txtr);
+        free(pd->medkits);
+        pd->medkits = NULL;
+    }
     
 }
 
@@ -484,6 +518,7 @@ void game_loop(t_parsed_data *pd)
 {
     init_enemy_textures_to_null(pd);
     pd->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
+    init_medkits(pd);
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
     init_precise_data(pd);

@@ -40,11 +40,15 @@ bool validate_door(t_parsed_data *pd, int x, int y)
     if (x <= 0 || x >= pd->level.max_x || y <= 0 || y >= pd->level.max_y)
         return (false);
     if (pd->map_grid[y][x + 1] == '1' || pd->map_grid[y][x - 1] == '1')
+    {
         if (pd->map_grid[y + 1][x] != '0' && pd->map_grid[y - 1][x] != '0')
             return (false);
+    }
     else if (pd->map_grid[y + 1][x] == '1' || pd->map_grid[y - 1][x] == '1')
+    {
         if (pd->map_grid[y][x + 1] != '0' && pd->map_grid[y][x - 1] != '0')
             return (false);
+    }
     if (!only_two_clear_sides(pd, x, y))
         return (false);
 
