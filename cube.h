@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/13 13:02:15 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:47:40 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -781,6 +781,30 @@ typedef struct s_texture_column
 	double			tex_pos;
 }	t_texture_column;
 
+typedef struct
+{
+    t_med_kit *medkit;
+    double distance;
+    t_bpos transform;
+    int sprite_screen_x;
+    int sprite_height;
+    int sprite_width;
+    
+    int v_offset_pixels;
+    int draw_start_x;
+    int draw_end_x;
+    int draw_start_y;
+    int draw_end_y;
+
+    int stripe;
+    int y;
+
+    int tex_x;
+    int tex_y;
+    t_tex_sample tmp_sample;
+} t_medkit_draw_data;
+
+void draw_medkits(t_parsed_data *pd);
 void spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
 void check_medkit_pickup(t_parsed_data *pd);
 void draw_medkits(t_parsed_data *pd);
