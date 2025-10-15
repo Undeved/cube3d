@@ -15,17 +15,12 @@ static bool within_circle_radious(int diff_x, int diff_y, int radious, int borde
 }
 
 // (x - c_x)^2 + (y - c_y)^2 == r^2
-static void draw_circle_frame(t_parsed_data *pd)
+static void draw_circle_frame(t_parsed_data *pd, t_pos   center, int radious)
 {
     t_pos   pixel;
     t_pos   diff;
-    t_pos   center;
-    int     radious;
     int     pixel_dist;
 
-    center.x = MINI_MAP_SIZE / 2;
-    center.y = MINI_MAP_SIZE  / 2;
-    radious = MINI_MAP_SIZE / 2 - RADIOUS_MARGIN;
     pixel.y = 0;
     while (pixel.y < MINI_MAP_SIZE )
     {
@@ -47,5 +42,11 @@ static void draw_circle_frame(t_parsed_data *pd)
 
 void    init_radar(t_parsed_data *pd)
 {
-    draw_circle_frame(pd);
+    t_pos   center;
+    int     radious;
+
+    center.x = MINI_MAP_SIZE / 2;
+    center.y = MINI_MAP_SIZE  / 2;
+    radious = MINI_MAP_SIZE / 2 - RADIOUS_MARGIN;
+    draw_circle_frame(pd, center, radious);
 }

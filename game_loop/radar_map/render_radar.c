@@ -33,74 +33,70 @@ static bool enemy_icon(double x, double y, t_parsed_data *pd)
     return (false);
 }
 
-static void draw_minimap_grid(t_parsed_data *pd)
+static void	draw_valid_map_cell(t_parsed_data *pd, t_pos pixel, char cell, int pixel_dist)
 {
-    t_pos center;
-    int radius;
-    t_pos pixel;
-    t_pos diff;
-    t_bpos  w;
-    t_pos   map;
-    char    cell;
-    int     pixel_dist; // for shading.
-
-    center.x = MINI_MAP_SIZE / 2;
-    center.y = MINI_MAP_SIZE / 2;
-    radius = MINI_MAP_SIZE / 2 - RADIOUS_MARGIN;
-
-    // devided to pi / 2 to rotate cuz it wasnt rotated correctly.
-    double angle = atan2(-pd->player.bdir.y, pd->player.bdir.x) - (PI / 2);
-    // double angle = 0; // for normal map without rotation.
-    // angle of player direction (so minimap rotates with player)
-
-    pixel.y = 0;
-    while (pixel.y < MINI_MAP_SIZE)
-    {
-        pixel.x = 0;
-        while (pixel.x < MINI_MAP_SIZE)
-        {
-            diff.x = pixel.x - center.x;
-            diff.y = pixel.y - center.y;
-            pixel_dist = sqrt(sqr(diff.x) + sqr(diff.y));
-            // only draw inside the minimap circle
-            if (sqr(diff.x) + sqr(diff.y) <= sqr(radius - BORDER_WIDTH))
-            {
-                // scale pixel distance into "world units"
-                double scale = 0.1; // tuning factor: how many pixels per tile
-                w.x = diff.x * scale;
-                w.y = diff.y * scale;
-
-                // rotate relative to player dir
-                rotate_point(&w.x, &w.y, -angle);
-
-                // translate relative to player world position
-                map.x = (int)(pd->player.bpos.x + w.x);
-                map.y = (int)(pd->player.bpos.y + w.y);
-
-                if (map.x >= 0 && map.x < pd->level.max_x &&
-                    map.y >= 0 && map.y < pd->level.max_y)
-                {
-                    cell = pd->map_grid[map.y][map.x];
-                    if (cell == '1' || cell == ' ')
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
-                    else if (cell == '0')
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(FLOOR_ICON, pixel_dist, 0.015));
-                    else if (cell == 'D')
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(DOOR_ICON, pixel_dist, 0.015));
-                    else if (cell == 'O')
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(OPEN_DOOR_ICON, pixel_dist, 0.015));
-                    if (enemy_icon(pd->player.bpos.x + w.x, pd->player.bpos.y + w.y, pd))
-                        mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(0xFF0000FF, pixel_dist, 0.015));
-                }
-                else
-                    mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
-            }
-            pixel.x++;
-        }
-        pixel.y++;
-    }
+	if (cell == '1' || cell == ' ')
+		mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
+	else if (cell == '0')
+		mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(FLOOR_ICON, pixel_dist, 0.015));
+	else if (cell == 'D')
+		mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(DOOR_ICON, pixel_dist, 0.015));
+	else if (cell == 'O')
+		mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(OPEN_DOOR_ICON, pixel_dist, 0.015));
 }
 
+static void	draw_minimap_pixel(t_parsed_data *pd, t_pos pixel, t_pos center, double angle)
+{
+	t_pos	diff;
+	t_bpos	w;
+	t_pos	map;
+	char	cell;
+	int		pixel_dist;
+
+	diff.x = pixel.x - center.x;
+	diff.y = pixel.y - center.y;
+	pixel_dist = sqrt(sqr(diff.x) + sqr(diff.y));
+	if (sqr(diff.x) + sqr(diff.y) <= sqr(MINI_MAP_SIZE / 2 - RADIOUS_MARGIN - BORDER_WIDTH))
+	{
+		w.x = diff.x * 0.1;
+		w.y = diff.y * 0.1;
+		rotate_point(&w.x, &w.y, -angle);
+		map.x = (int)(pd->player.bpos.x + w.x);
+		map.y = (int)(pd->player.bpos.y + w.y);
+		if (map.x >= 0 && map.x < pd->level.max_x && map.y >= 0
+			&& map.y < pd->level.max_y)
+		{
+			cell = pd->map_grid[map.y][map.x];
+			draw_valid_map_cell(pd, pixel, cell, pixel_dist);
+			if (enemy_icon(pd->player.bpos.x + w.x, pd->player.bpos.y + w.y, pd))
+				mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(0xFF0000FF, pixel_dist, 0.015));
+		}
+		else
+			mlx_put_pixel(pd->minimap.img, pixel.x, pixel.y, shade_color(WALL_ICON, pixel_dist, 0.015));
+	}
+}
+
+static void	draw_minimap_grid(t_parsed_data *pd)
+{
+	t_pos	center;
+	t_pos	pixel;
+	double	angle;
+
+	center.x = MINI_MAP_SIZE / 2;
+	center.y = MINI_MAP_SIZE / 2;
+	angle = atan2(-pd->player.bdir.y, pd->player.bdir.x) - (PI / 2);
+	pixel.y = 0;
+	while (pixel.y < MINI_MAP_SIZE)
+	{
+		pixel.x = 0;
+		while (pixel.x < MINI_MAP_SIZE)
+		{
+			draw_minimap_pixel(pd, pixel, center, angle);
+			pixel.x++;
+		}
+		pixel.y++;
+	}
+}
 
 void    render_radar(t_parsed_data *pd)
 {

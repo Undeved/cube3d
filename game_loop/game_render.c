@@ -19,5 +19,4 @@ void    game_render(void *param)
     render_gun(pd);
     render_radar(pd);
     check_medkit_pickup(pd);
-    // draw_minimap(pd);
 }

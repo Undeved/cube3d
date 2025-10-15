@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:30:53 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/08/27 22:36:33 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:59:16 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
-    print_parsed_data(&cube.pd);
+    // print_parsed_data(&cube.pd);
     game_loop(&cube.pd);
     // print_argv(cube.pd.map_file);
 

@@ -2,42 +2,12 @@
 
 #include <sys/time.h>
 
-static long	current_time_ms(void)
+long	current_time_ms(void)
 {
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
-}
-
-static void	trigger_shoot_anim(t_parsed_data *pd)
-{
-	t_gun *gun = &pd->player.gun;
-	t_ui_anim *anim = &gun->shoot;
-
-	if (gun->ammo <= 0)
-	{
-		printf("Click! No ammo left!\n");
-		return;
-	}
-
-	gun->ammo--;
-
-	anim->active = true;
-	anim->current = 0;
-	anim->last_frame_time = current_time_ms();
-	anim->frame_delay = 50; // 50 ms between frames (adjust as needed)
-}
-
-void trigger_reload_anim(t_parsed_data *pd)
-{
-    t_gun *gun = &pd->player.gun;
-    t_ui_anim *anim = &gun->reload;
-
-    anim->active = true;
-    anim->current = 0;
-    anim->last_frame_time = current_time_ms();
-    anim->frame_delay = 50;
 }
 
 // update the animation frame based on time
@@ -71,10 +41,14 @@ void	render_gun(t_parsed_data *pd)
     pd->game_ui.gun_aim.img->enabled = false;
     i = 0;
     while (i < pd->player.gun.shoot.frame_count)
+    {
         pd->player.gun.shoot.frames[i++].img->enabled = false;
+    }
     i = 0;
     while (i < pd->player.gun.reload.frame_count)
+    {
         pd->player.gun.reload.frames[i++].img->enabled = false;
+    }
 	if (gun->shoot.active)
 		pd->player.gun.shoot.frames[pd->player.gun.shoot.current].img->enabled = true;
     else if (gun->reload.active)
@@ -83,38 +57,6 @@ void	render_gun(t_parsed_data *pd)
 		pd->game_ui.gun_aim.img->enabled = true;
 	else
 		pd->game_ui.gun.img->enabled = true;
-}
-
-
-static void game_mouse_input(mouse_key_t button, action_t action, modifier_key_t mods, t_parsed_data *pd)
-{
-    
-    if (pd->ui_index != 2)
-        return ;
-    (void)mods;
-    if (action == MLX_PRESS || action == MLX_REPEAT)
-    {
-        if (button == MLX_MOUSE_BUTTON_RIGHT)
-            pd->player.gun.aiming = true;
-        else if (button == MLX_MOUSE_BUTTON_LEFT)
-        {
-            trigger_shoot_anim(pd);
-            printf("Bang! Ammo left: %d\n", pd->player.gun.ammo);
-            if (pd->player.gun.ammo > 0)
-                pd->player.is_shooting = true;
-            else
-                pd->player.is_shooting = false;
-            return ;
-        }
-    }
-    else
-    {
-        if (button == MLX_MOUSE_BUTTON_RIGHT)
-            pd->player.gun.aiming = false;
-        else if (button == MLX_MOUSE_BUTTON_LEFT)
-            pd->player.is_shooting = false;
-    }
-    
 }
 
 void handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void* param)

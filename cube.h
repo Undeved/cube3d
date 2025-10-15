@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/13 15:47:40 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:23:11 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <math.h>
+#include <sys/time.h> // for gettimeofday
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -436,6 +437,8 @@ typedef enum e_enemy_type
 #define SEGV_D2 "textures/enemy_textures/animation_enemy/z/Reaper-Death2.png"
 #define DEATH_ANIMATION_DURATION 61 // 3 seconds at 60FPS
 #define HIGHLIGHT_FRAMES 3
+
+# define MEDKIT "textures/enemy_textures/med_kit.png"
 // Enhanced enemy states
 typedef enum e_enemy_state
 {
@@ -522,6 +525,7 @@ typedef struct s_pd
     uint8_t         enemy_count;
     t_raw_img       door_txt;
     t_med_kit       *medkits;        // Add this
+    t_raw_img       medkit;
     int             medkit_count;     // Add this
     int             max_medkits;  
 }   t_parsed_data;
@@ -546,6 +550,8 @@ char	*ft_strdup(char *s1);
 // Garbage Collector.
 void	*allocate_gc(void *ptr);
 void	mind_free_all(int status);
+void    delete_all_textures(t_parsed_data *pd);
+void	set_pd(t_parsed_data *new_pd);
 
 // GNL
 char	*get_next_line(int fd);
@@ -567,7 +573,6 @@ bool    validate_floor_roof(char *str);
 bool    validate_floor_roof(char *str);
 bool    is_num(char *str);
 int     ft_atoi(const char *str);
-char	*ft_itoa(int n);
 void     extarct_floor_roof(char *str, t_cube *cube);
 char    **trim_newlines(char **old_argv);
 bool valid_grid_chars(char *str, int *player_count, bool map_grid);
@@ -581,6 +586,7 @@ bool    is_door(char c);
 bool    validate_door(t_parsed_data *pd, int x, int y);
 
 // Game loop.
+void    init_all_textures(t_parsed_data *pd);
 void    game_loop(t_parsed_data *pd);
 void    game_render(void *param);
 void    draw_minimap(t_parsed_data *pd);
@@ -588,6 +594,25 @@ void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
 void    interact_with_door(t_parsed_data *pd);
+
+// Player Input
+void    player_movement(t_parsed_data *pd);
+void    player_rotation(t_parsed_data *pd);
+void    game_mouse_input(mouse_key_t button, action_t action, modifier_key_t mods, t_parsed_data *pd);
+void    trigger_reload_anim(t_parsed_data *pd);
+long	current_time_ms(void);
+
+// Init For Gameloop
+void	init_enemy_textures(t_parsed_data *pd);
+void	init_animation_frames(t_parsed_data *pd, int i);
+void    free_enemy_textures(t_parsed_data *pd);
+void    init_precise_data(t_parsed_data *pd);
+void    init_medkits(t_parsed_data *pd);
+void    init_screen_and_map(t_parsed_data *pd);
+void    init_door_wall(t_parsed_data *pd);
+void    init_medkit_textures(t_parsed_data *pd);
+void    init_enemy_textures_to_null(t_parsed_data *pd);
+void    init_door_texture(t_parsed_data *pd);
 
 // Raycast
 void    update_raycast_data(t_parsed_data *pd);
@@ -613,7 +638,6 @@ int     sqr(int x);
 void    init_game_ui(t_parsed_data *pd);
 void	update_ui_anim(t_ui_anim *anim);
 void	render_gun(t_parsed_data *pd);
-void    trigger_reload_anim(t_parsed_data *pd);
 void    setup_character(t_parsed_data *pd);
 void    setup_health_ui(t_parsed_data *pd);
 

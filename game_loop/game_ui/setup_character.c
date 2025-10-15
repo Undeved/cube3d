@@ -194,16 +194,25 @@ static void delete_gun_textures(t_parsed_data *pd)
 
     // delete idle and aim textures
     if (pd->game_ui.gun.txtr)
+    {
         mlx_delete_texture(pd->game_ui.gun.txtr);
+        pd->game_ui.gun.txtr = NULL;
+    }
     if (pd->game_ui.gun_aim.txtr)
+    {
         mlx_delete_texture(pd->game_ui.gun_aim.txtr);
+        pd->game_ui.gun_aim.txtr = NULL;
+    }
     if (pd->player.gun.shoot.frames)
     {
         i = 0;
         while (i < pd->player.gun.shoot.frame_count)
         {
             if (pd->player.gun.shoot.frames[i].txtr)
+            {
                 mlx_delete_texture(pd->player.gun.shoot.frames[i].txtr);
+                pd->player.gun.shoot.frames[i].txtr = NULL;
+            }
             i++;
         }
     }
@@ -213,7 +222,10 @@ static void delete_gun_textures(t_parsed_data *pd)
         while (i < pd->player.gun.reload.frame_count)
         {
             if (pd->player.gun.reload.frames[i].txtr)
+            {
                 mlx_delete_texture(pd->player.gun.reload.frames[i].txtr);
+                pd->player.gun.reload.frames[i].txtr = NULL;
+            }
             i++;
         }
     }

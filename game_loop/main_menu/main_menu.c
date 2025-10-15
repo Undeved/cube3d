@@ -1,25 +1,5 @@
 #include "../../cube.h"
 
-// static void vertical_line(t_parsed_data *pd)
-// {
-//     int x;
-//     int y;
-
-//     y = 0;
-//     while (y < HEIGHT)
-//     {
-//         x = 0;
-//         while (x < WIDTH)
-//         {
-//             if (x == WIDTH / 2)
-//                 mlx_put_pixel(pd->menu.bg.img, x , y, 0x000000FF);
-//             x++;
-//         }
-        
-//         y++;
-//     }
-// }
-
 static void render_button_index(t_parsed_data *pd)
 {
     pd->menu.b_start.hoverd = false;
@@ -75,7 +55,5 @@ void    main_menu(t_parsed_data *pd)
 {
     if (pd->level.game_started || pd->ui_index != 0)
         return ;
-    // vertical_line(pd);
     update_button_state(pd);
-    // logic for menu
 }
