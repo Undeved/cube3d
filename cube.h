@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/15 16:23:11 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/16 03:00:36 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@
 # define CHORUS_BUTTON_HV "textures/ui/characters/chorus_hovered.png"
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
-# define VIGNETTE "textures/ui/in_game/vignette.png"
 # define GAME_OVER "textures/ui/in_game/game_over.png"
 
 // door texture
@@ -200,7 +199,6 @@
 # define DAMAGE 10
 
 # define MAX_ENEMIES 20
-
 
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.
@@ -330,6 +328,9 @@ typedef struct s_med_kit
     int         hp_trmat_oussmac;
     float       size_scale; 
     float       vertical_offset;
+    int sprite_width;
+    int sprite_height;
+    int stripe_count;
 }   t_med_kit;
 
 typedef struct s_player
@@ -388,7 +389,6 @@ typedef struct s_characters_ui
 
 typedef struct s_game_ui
 {
-    t_raw_img           vignette;
     t_raw_img           gun;
     t_raw_img           gun_aim;
     t_raw_img           health;
@@ -640,6 +640,10 @@ void	update_ui_anim(t_ui_anim *anim);
 void	render_gun(t_parsed_data *pd);
 void    setup_character(t_parsed_data *pd);
 void    setup_health_ui(t_parsed_data *pd);
+void    load_gun_shoot_anim(t_parsed_data *pd, t_character character);
+void    load_gun_reload_anim(t_parsed_data *pd, t_character character);
+void    delete_gun_textures(t_parsed_data *pd);
+void    update_health_ui(t_parsed_data *pd);
 
 typedef struct s_ray_dir_data
 {
@@ -938,6 +942,9 @@ void		draw_enemies(t_parsed_data *pd);
 // Raycast Light engine
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
 void    update_enemies(t_parsed_data *pd);
+void    spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
+void    check_medkit_pickup(t_parsed_data *pd);
+bool    medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *out);
 
 
 # define CEILING 0xB5AB6BFF

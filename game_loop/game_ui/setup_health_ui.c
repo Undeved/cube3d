@@ -1,5 +1,15 @@
 #include "../../cube.h"
 
+static void load_oussmac_health_background(t_parsed_data *pd)
+{
+    pd->game_ui.health_bg.txtr = mlx_load_png(HP_OUSSMAC);
+    if (!pd->game_ui.health_bg.txtr)
+        ui_error();
+    pd->game_ui.health_bg.img = mlx_texture_to_image(pd->mlx, pd->game_ui.health_bg.txtr);
+    if (!pd->game_ui.health_bg.img || mlx_image_to_window(pd->mlx, pd->game_ui.health_bg.img, HBAR_BG_X, HBAR_BG_Y) == -1)
+        mind_free_all(EXIT_FAILURE);
+}
+
 static void load_health_background(t_parsed_data *pd)
 {
     if (pd->player.character == JESSE)
@@ -21,14 +31,7 @@ static void load_health_background(t_parsed_data *pd)
             mind_free_all(EXIT_FAILURE);
     }
     else if (pd->player.character == OUSSMAC)
-    {
-        pd->game_ui.health_bg.txtr = mlx_load_png(HP_OUSSMAC);
-        if (!pd->game_ui.health_bg.txtr)
-            ui_error();
-        pd->game_ui.health_bg.img = mlx_texture_to_image(pd->mlx, pd->game_ui.health_bg.txtr);
-        if (!pd->game_ui.health_bg.img || mlx_image_to_window(pd->mlx, pd->game_ui.health_bg.img, HBAR_BG_X, HBAR_BG_Y) == -1)
-            mind_free_all(EXIT_FAILURE);
-    }
+        load_oussmac_health_background(pd);
 }
 
 static void delete_health_textures(t_parsed_data *pd)
@@ -45,7 +48,6 @@ static void delete_health_textures(t_parsed_data *pd)
     }
 }
 
-// new health ui setup function
 void setup_health_ui(t_parsed_data *pd)
 {
     load_health_background(pd);
@@ -55,6 +57,5 @@ void setup_health_ui(t_parsed_data *pd)
     pd->game_ui.health.img = mlx_texture_to_image(pd->mlx, pd->game_ui.health.txtr);
     if (!pd->game_ui.health.img || mlx_image_to_window(pd->mlx, pd->game_ui.health.img, HBAR_X, HBAR_Y) == -1)
         mind_free_all(EXIT_FAILURE);
-    // load background based on character
     delete_health_textures(pd);
 }

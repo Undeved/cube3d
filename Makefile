@@ -22,7 +22,7 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/main_menu/menu_cursor/handle_mouse_click.c game_loop/game_ui/game_ui.c \
 	raycast/shading.c game_loop/radar_map/render_radar.c \
 	game_loop/radar_map/init_radar.c game_loop/radar_map/render_player_icon.c \
-	game_loop/game_ui/init_game_ui.c parse_map/get_enemy_data.c  \
+	parse_map/get_enemy_data.c  \
 	game_loop/game_ui/setup_character.c \
 	game_loop/game_ui/setup_health_ui.c game_loop/player_input/door_interaction.c \
 	enemy/enemy_states.c enemy/enemy_line_of_sight.c enemy/enemy_pathfinding.c \
@@ -35,6 +35,8 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/initializer/init_game_enemy.c game_loop/initializer/init_game_enemy_animation.c \
 	game_loop/initializer/free_game_enemy.c game_loop/initializer/init_game.c \
 	game_loop/initializer/init_textures_enemy_to_null.c game_loop/player_input/player_mov_input.c \
+	game_loop/game_ui/setup_character_gun_shoot.c game_loop/game_ui/setup_character_gun_reload.c \
+	game_loop/game_ui/setup_character_delete.c game_loop/game_ui/game_ui_hp.c raycast/med_kit2.c
 
 OBJ=$(SRC:.c=.o)
 

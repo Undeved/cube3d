@@ -134,11 +134,6 @@ static void delete_characters_ui_textures(t_parsed_data *pd)
 
 static void delete_game_ui_textures(t_parsed_data *pd)
 {
-    if (pd->game_ui.vignette.img)
-        mlx_delete_image(pd->mlx, pd->game_ui.vignette.img);
-    if (pd->game_ui.vignette.txtr)
-        mlx_delete_texture(pd->game_ui.vignette.txtr);
-    
     if (pd->game_ui.gun.img)
         mlx_delete_image(pd->mlx, pd->game_ui.gun.img);
     if (pd->game_ui.gun.txtr)
