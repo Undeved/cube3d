@@ -27,3 +27,4 @@ void draw_enemies(t_parsed_data *pd)
     update_all_death_animations(pd);
     draw_sorted_enemies(pd, draw_data, draw_count);
 }
+

@@ -3,7 +3,6 @@
 void handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
         double distance)
 {
-    /* if closed door or other blocking object removed LOS, give up */
     if (!has_line_of_sight(pd, enemy->b_pos, pd->player.bpos))
     {
         enemy->state = ENEMY_RETURN;

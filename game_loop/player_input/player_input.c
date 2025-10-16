@@ -32,7 +32,7 @@ static void reload_gun(t_parsed_data *pd)
 
 // cooldown using gettimeofday letting game to run a bit more then exiting here
 // use static variable and let game run multiple times before exiting
-static bool cool_down(long usec)
+bool cool_down(long usec)
 {
     static struct timeval start = {0};
     static bool running = false;
@@ -69,6 +69,15 @@ void    update_player_data(t_parsed_data *pd)
         {
             pd->player.health = 0;
             printf("You died! Game Over!\n");
+            mind_free_all(EXIT_SUCCESS);
+        }
+    }
+    if (pd->player.has_won)
+    {
+        pd->game_ui.game_won.img->enabled = true;
+        if (cool_down(1000000))
+        {
+            print_comm("YOU WON BROO!\n");
             mind_free_all(EXIT_SUCCESS);
         }
     }

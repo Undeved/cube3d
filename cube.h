@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/16 22:00:50 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/16 23:20:19 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@
 # define OUSSMAC_BUTTON_HV "textures/ui/characters/oussmac_hovered.png"
 # define SELECTED_BUTTON "textures/ui/characters/selected.png"
 # define GAME_OVER "textures/ui/in_game/game_over.png"
+# define GAME_WON "textures/ui/in_game/game_won.png"
 
 // door texture
 # define DOOR_TEXTURE "textures/wall_textures/door.png"
@@ -347,6 +348,7 @@ typedef struct s_player
     bool    is_shooting;
     t_character character;
     bool    is_dead;
+    bool has_won; /* default false; set true in show_game_won_if_needed */
 }   t_player;
 
 typedef struct s_minimap
@@ -394,6 +396,7 @@ typedef struct s_game_ui
     t_raw_img           health;
     t_raw_img           health_bg;
     t_raw_img           game_over;
+    t_raw_img           game_won;
 }   t_game_ui;
 
 
@@ -528,6 +531,7 @@ typedef struct s_pd
     t_raw_img       medkit;
     int             medkit_count;     // Add this
     int             max_medkits;  
+    
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -594,6 +598,7 @@ void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
 void    interact_with_door(t_parsed_data *pd);
+bool    cool_down(long usec);
 
 // Player Input
 void    player_movement(t_parsed_data *pd);

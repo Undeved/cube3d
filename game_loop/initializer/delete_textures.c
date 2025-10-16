@@ -158,6 +158,11 @@ static void delete_game_ui_textures(t_parsed_data *pd)
         mlx_delete_image(pd->mlx, pd->game_ui.game_over.img);
     if (pd->game_ui.game_over.txtr)
         mlx_delete_texture(pd->game_ui.game_over.txtr);
+    if (pd->game_ui.game_won.img)
+        mlx_delete_image(pd->mlx, pd->game_ui.game_won.img);
+    if (pd->game_ui.game_won.txtr)
+        mlx_delete_texture(pd->game_ui.game_won.txtr);
+
 }
 
 static void delete_enemy_textures(t_parsed_data *pd)

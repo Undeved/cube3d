@@ -67,6 +67,8 @@ static void init_game_ui_textures(t_parsed_data *pd)
     pd->game_ui.health_bg.txtr = NULL;
     pd->game_ui.game_over.img = NULL;
     pd->game_ui.game_over.txtr = NULL;
+    pd->game_ui.game_won.img = NULL;
+    pd->game_ui.game_won.txtr = NULL;
 }
 
 void init_all_textures(t_parsed_data *pd)
