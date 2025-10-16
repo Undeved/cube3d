@@ -43,4 +43,3 @@ bool has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end)
     step.y = delta.y / (max_dist * 4.0);
     return (check_line_path(pd, start, step, max_dist));
 }
-

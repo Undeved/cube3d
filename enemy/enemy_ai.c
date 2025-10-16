@@ -47,7 +47,6 @@ void calculate_direction_to_origin(t_enemy *enemy, t_bpos *direction)
     }
 }
 
-
 bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
 {
     double  distance_to_origin;

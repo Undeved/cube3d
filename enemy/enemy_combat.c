@@ -29,39 +29,42 @@ void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
     }
 }
 
-t_enemy_draw_data *find_shot_target(t_enemy_draw_data *draw_data,
-        int draw_count, double center_tolerance)
+static int	is_valid_enemy(t_enemy_draw_data *data)
 {
-    int i;
-    double closest_distance;
-    t_enemy_draw_data *target_enemy;
+	if (data->enemy->is_dying)
+		return (0);
+	if (data->enemy->dead && !data->enemy->is_dying)
+		return (0);
+	return (1);
+}
 
-    target_enemy = NULL;
-    i = 0;
-    closest_distance = 1e9;
-    while (i < draw_count)
-    {
-        double diff;
-        if (draw_data[i].enemy->is_dying)
-        {
-            i++;
-            continue;
-        }
-        if (draw_data[i].enemy->dead && !draw_data[i].enemy->is_dying)
-        {
-            i++;
-            continue;
-        }
+t_enemy_draw_data	*find_shot_target(t_enemy_draw_data *draw_data,
+		int draw_count, double center_tolerance)
+{
+	int					i;
+	double				closest_distance;
+	double				diff;
+	t_enemy_draw_data	*target_enemy;
 
-        diff = fabs((double)draw_data[i].sprite_screen_x - (double)WIDTH / 2.0);
-        if (diff < center_tolerance && draw_data[i].distance < closest_distance)
-        {
-            closest_distance = draw_data[i].distance;
-            target_enemy = &draw_data[i];
-        }
-        i++;
-    }
-    return (target_enemy);
+	i = 0;
+	target_enemy = NULL;
+	closest_distance = 1e9;
+	while (i < draw_count)
+	{
+		if (!is_valid_enemy(&draw_data[i]))
+		{
+			i++;
+			continue ;
+		}
+		diff = fabs((double)draw_data[i].sprite_screen_x - (double)WIDTH / 2.0);
+		if (diff < center_tolerance && draw_data[i].distance < closest_distance)
+		{
+			closest_distance = draw_data[i].distance;
+			target_enemy = &draw_data[i];
+		}
+		i++;
+	}
+	return (target_enemy);
 }
 
 void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)

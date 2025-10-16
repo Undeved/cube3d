@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/15 16:23:11 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/16 19:48:59 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,9 +327,12 @@ typedef struct s_med_kit
     t_raw_img   img;
     t_bpos       pos;
     bool        picked;
-    int         hp_trmat_oussmac;
+    int         hp;
     float       size_scale; 
     float       vertical_offset;
+    int sprite_width;
+    int sprite_height;
+    int stripe_count;
 }   t_med_kit;
 
 typedef struct s_player
@@ -938,6 +941,9 @@ void		draw_enemies(t_parsed_data *pd);
 // Raycast Light engine
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
 void    update_enemies(t_parsed_data *pd);
+void	spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
+void	check_medkit_pickup(t_parsed_data *pd);
+bool medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *out);
 
 
 # define CEILING 0xB5AB6BFF

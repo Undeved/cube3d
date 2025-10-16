@@ -86,19 +86,12 @@ void	draw_door_pixels(t_door_column *dc)
 	}
 }
 
-void draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line)
+static char	get_column_tile_char(t_parsed_data *pd, t_column_data *col)
 {
-	t_door_column	dc;
-	char			tile_char = 'D';
+	char	tile_char;
 
-	dc.pd = pd;
-	dc.x = col->x;
-	dc.line = line;
-	dc.perp_dist = col->perp_dist;
-	dc.side = col->side;
-	dc.ray_dir = col->ray_dir;
-	dc.pos = col->player_pos;
-	if (col->map.y >= 0 && col->map.y <  99999)
+	tile_char = 'D';
+	if (col->map.y >= 0 && col->map.y < 99999)
 	{
 		if (pd->map_grid[col->map.y] && col->map.x >= 0)
 			tile_char = pd->map_grid[col->map.y][col->map.x];
@@ -108,11 +101,27 @@ void draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line)
 		if (pd->map_grid[col->map.y] && pd->map_grid[col->map.y][col->map.x])
 			tile_char = pd->map_grid[col->map.y][col->map.x];
 	}
-	dc.tile_char = tile_char;
+	return (tile_char);
+}
 
+void	draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line)
+{
+	t_door_column	dc;
+	char			tile_char;
+
+	dc.pd = pd;
+	dc.x = col->x;
+	dc.line = line;
+	dc.perp_dist = col->perp_dist;
+	dc.side = col->side;
+	dc.ray_dir = col->ray_dir;
+	dc.pos = col->player_pos;
+	tile_char = get_column_tile_char(pd, col);
+	dc.tile_char = tile_char;
 	init_door_column(&dc);
 	if (!dc.tx)
 		return ;
 	setup_door_stepping(&dc);
 	draw_door_pixels(&dc);
 }
+

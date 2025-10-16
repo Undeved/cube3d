@@ -3,13 +3,13 @@
 void	set_medkit_type_props(t_med_kit *medkit, t_enemy_type type)
 {
 	if (type == FT_SKIN_WALKER)
-		medkit->hp_trmat_oussmac = 20;
+		medkit->hp = 20;
 	else if (type == MEMORY_LEAK)
-		medkit->hp_trmat_oussmac = 30;
+		medkit->hp = 30;
 	else if (type == SEGV)
-		medkit->hp_trmat_oussmac = 40;
+		medkit->hp = 40;
 	else
-		medkit->hp_trmat_oussmac = 25;
+		medkit->hp = 25;
 	medkit->size_scale = 0.5f;
 	medkit->vertical_offset = 1.1f;
 }
@@ -39,7 +39,7 @@ int	process_medkit_pickup(t_parsed_data *pd, int i)
 	distance = sqrt(dx * dx + dy * dy);
 	if (distance < 0.8)
 	{
-		pd->player.health += pd->medkits[i].hp_trmat_oussmac;
+		pd->player.health += pd->medkits[i].hp;
 		if (pd->player.health > PLAYER_HEALTH)
 			pd->player.health = PLAYER_HEALTH;
 		pd->medkits[i].picked = true;

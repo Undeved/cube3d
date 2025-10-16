@@ -21,40 +21,41 @@ void handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
         smart_chase_player(enemy, pd->player.bpos, enemy->chase_speed, pd);
 }
 
-void handle_attack_state(t_parsed_data *pd, t_enemy *enemy, int i,
-        double distance)
+static void	perform_enemy_attack(t_parsed_data *pd, t_enemy *enemy)
 {
-    if (!has_line_of_sight(pd, enemy->b_pos, pd->player.bpos))
-    {
-        enemy->state = ENEMY_RETURN;
-        enemy->attack_cooldown = 0;
-        enemy->is_attacking = false;
-        return ;
-    }
+	if (enemy->attack_cooldown <= 0)
+	{
+		enemy->is_attacking = true;
+		enemy->anim_frame = 0;
+		enemy->attack_anim_counter = 0;
+		pd->player.health -= enemy->damage;
+		enemy->attack_cooldown = 20;
+	}
+	else
+		enemy->attack_cooldown--;
+}
 
-    if (distance > ATTACK_DISTANCE)
-    {
-        if (distance <= LOSE_DISTANCE)
-            enemy->state = ENEMY_CHASE;
-        else
-            enemy->state = ENEMY_RETURN;
-
-        enemy->attack_cooldown = 0;
-        enemy->is_attacking = false;
-    }
-    else
-    {
-        if (enemy->attack_cooldown <= 0)
-        {
-            enemy->is_attacking = true;
-            enemy->anim_frame = 0;
-            enemy->attack_anim_counter = 0;
-            pd->player.health -= enemy->damage;
-            enemy->attack_cooldown = 20;
-        }
-        else
-            enemy->attack_cooldown--;
-    }
+void	handle_attack_state(t_parsed_data *pd, t_enemy *enemy, int i,
+		double distance)
+{
+	if (!has_line_of_sight(pd, enemy->b_pos, pd->player.bpos))
+	{
+		enemy->state = ENEMY_RETURN;
+		enemy->attack_cooldown = 0;
+		enemy->is_attacking = false;
+		return ;
+	}
+	if (distance > ATTACK_DISTANCE)
+	{
+		if (distance <= LOSE_DISTANCE)
+			enemy->state = ENEMY_CHASE;
+		else
+			enemy->state = ENEMY_RETURN;
+		enemy->attack_cooldown = 0;
+		enemy->is_attacking = false;
+	}
+	else
+		perform_enemy_attack(pd, enemy);
 }
 
 void handle_return_state(t_parsed_data *pd, t_enemy *enemy, int i)
