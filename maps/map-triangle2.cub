@@ -1,0 +1,14 @@
+NO textures/wall_textures/wall.png
+SO textures/wall_textures/wall2.png
+WE textures/wall_textures/wall3.png
+EA textures/wall_textures/wall4.png
+
+F 220,111,119
+C 225,111,0
+
+          
+     11111  
+    100S001
+     10001
+      101
+       1
