@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/21 22:23:03 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/22 00:40:16 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -649,6 +649,7 @@ void    load_gun_shoot_anim(t_parsed_data *pd, t_character character);
 void    load_gun_reload_anim(t_parsed_data *pd, t_character character);
 void    delete_gun_textures(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
+int     ft_rand(void);
 
 typedef struct s_ray_dir_data
 {

@@ -7,6 +7,17 @@ static bool is_enemy(char c)
     return (false);
 }
 
+int	ft_rand(void)
+{
+	struct timeval	tv;
+	static unsigned long	random = 0;
+
+	gettimeofday(&tv, 0);
+	if (random == 0)
+		random = tv.tv_sec + tv.tv_usec;
+	random = (1103515245 * random + 12345) & 2147483647;
+	return ((int)(random % (2147483647 + 1)));
+}
 
 static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
 {
@@ -19,7 +30,7 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
     curr_enemy->patrol_origin = curr_enemy->b_pos; // Store original position
     
     // Set random initial direction
-    dir_index = rand() % 4;
+    dir_index = ft_rand() % 4;
     curr_enemy->dir.x = directions[dir_index][0];
     curr_enemy->dir.y = directions[dir_index][1];
     

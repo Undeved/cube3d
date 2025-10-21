@@ -25,7 +25,7 @@ int calculate_new_direction(int current_dir_index)
     int turn_direction;
     int new_dir_index;
 
-    if (rand() % 2 == 0)
+    if (ft_rand() % 2 == 0)
         turn_direction = -1;
     else
         turn_direction = 1;
