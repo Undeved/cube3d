@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/16 23:20:19 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/21 22:23:03 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,7 +438,7 @@ typedef enum e_enemy_type
 #define SEGV_A3 "textures/enemy_textures/animation_enemy/z/Reaper-ATT3.png"
 #define SEGV_D1 "textures/enemy_textures/animation_enemy/z/Reaper-Death1.png"
 #define SEGV_D2 "textures/enemy_textures/animation_enemy/z/Reaper-Death2.png"
-#define DEATH_ANIMATION_DURATION 61 // 3 seconds at 60FPS
+#define DEATH_ANIMATION_DURATION 20 // 3 seconds at 60FPS
 #define HIGHLIGHT_FRAMES 3
 
 # define MEDKIT "textures/enemy_textures/med_kit.png"
