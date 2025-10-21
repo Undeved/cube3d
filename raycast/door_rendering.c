@@ -28,6 +28,8 @@ void	init_door_column(t_door_column *dc)
 		dc->tex_x = 0;
 	if (dc->tex_x >= dc->tex_w)
 		dc->tex_x = dc->tex_w - 1;
+	dc->tex_x = dc->tex_w - dc->tex_x - 1;
+
 	if (dc->side == 0 && dc->ray_dir.x > 0.0)
 		dc->tex_x = dc->tex_w - dc->tex_x - 1;
 	if (dc->side == 1 && dc->ray_dir.y < 0.0)

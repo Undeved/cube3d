@@ -21,6 +21,7 @@ void	init_texture_column(t_texture_column *tc)
 		tc->tex_x = 0;
 	if (tc->tex_x >= tc->tex_w)
 		tc->tex_x = tc->tex_w - 1;
+	tc->tex_x = tc->tex_w - tc->tex_x - 1;
 	if (tc->side == 0 && tc->ray_dir.x > 0.0)
 		tc->tex_x = tc->tex_w - tc->tex_x - 1;
 	if (tc->side == 1 && tc->ray_dir.y < 0.0)
