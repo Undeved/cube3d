@@ -1,5 +1,8 @@
 #include "../cube.h"
 
+void	handle_patrol_state(t_enemy_ctx *ctx);
+
+
 void handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
         double distance)
 {

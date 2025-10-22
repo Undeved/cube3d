@@ -1,73 +1,94 @@
 #include "../cube.h"
 
-bool try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
-        t_bpos direction, double speed)
+static bool	is_diagonal_gap(t_parsed_data *pd, t_bpos from, t_bpos to)
 {
-    t_bpos  alternatives[8];
-    t_bpos  new_pos;
-    int     map_x;
-    int     map_y;
-    int     i;
+	int	from_x;
+	int	from_y;
+	int	to_x;
+	int	to_y;
 
-    set_alternative_directions(alternatives, direction);
-    i = 0;
-    while (i < 8)
-    {
-        new_pos.x = enemy->b_pos.x + alternatives[i].x * speed;
-        new_pos.y = enemy->b_pos.y + alternatives[i].y * speed;
-        map_x = (int)new_pos.x;
-        map_y = (int)new_pos.y;
-        if (is_valid_move_position(pd, map_x, map_y))
-        {
-            enemy->b_pos = new_pos;
-            enemy->dir.x = alternatives[i].x;
-            enemy->dir.y = alternatives[i].y;
-            return (true);
-        }
-        i++;
-    }
-    return (false);
+	from_x = (int)from.x;
+	from_y = (int)from.y;
+	to_x = (int)to.x;
+	to_y = (int)to.y;
+	if (from_x != to_x && from_y != to_y)
+	{
+		if (pd->map_grid[from_y][to_x] == '1' && pd->map_grid[to_y][from_x] == '1')
+			return (true);
+	}
+	return (false);
 }
 
-void smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
-        t_parsed_data *pd)
+bool	try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
+		t_bpos direction, double speed)
 {
-    t_bpos  direction;
-    t_bpos  new_pos;
-    int     map_x;
-    int     map_y;
-    bool    moved;
+	t_bpos	alternatives[8];
+	t_bpos	new_pos;
+	int		map_x;
+	int		map_y;
+	int		i;
 
-    calculate_direction_to_player(enemy, player_pos, &direction);
-    new_pos.x = enemy->b_pos.x + direction.x * speed;
-    new_pos.y = enemy->b_pos.y + direction.y * speed;
-    map_x = (int)new_pos.x;
-    map_y = (int)new_pos.y;
-    if (is_valid_move_position(pd, map_x, map_y))
-    {
-        enemy->b_pos = new_pos;
-        enemy->dir.x = direction.x;
-        enemy->dir.y = direction.y;
-        return ;
-    }
-    moved = try_alternative_directions(enemy, pd, direction, speed);
-    if (!moved)
-        enemy->state = ENEMY_RETURN;
+	set_alternative_directions(alternatives, direction);
+	i = 0;
+	while (i < 8)
+	{
+		new_pos.x = enemy->b_pos.x + alternatives[i].x * speed;
+		new_pos.y = enemy->b_pos.y + alternatives[i].y * speed;
+		map_x = (int)new_pos.x;
+		map_y = (int)new_pos.y;
+		if (is_valid_move_position(pd, map_x, map_y)
+			&& !is_diagonal_gap(pd, enemy->b_pos, new_pos))
+		{
+			enemy->b_pos = new_pos;
+			enemy->dir.x = alternatives[i].x;
+			enemy->dir.y = alternatives[i].y;
+			return (true);
+		}
+		i++;
+	}
+	return (false);
 }
 
-double calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd)
+void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
+		t_parsed_data *pd)
 {
-    double dx;
-    double dy;
-    double distance;
+	t_bpos	direction;
+	t_bpos	new_pos;
+	int		map_x;
+	int		map_y;
+	bool	moved;
 
-    dx = enemy->b_pos.x - pd->player.bpos.x;
-    dy = enemy->b_pos.y - pd->player.bpos.y;
-    distance = sqrt(dx * dx + dy * dy);
-    return (distance);
+	calculate_direction_to_player(enemy, player_pos, &direction);
+	new_pos.x = enemy->b_pos.x + direction.x * speed;
+	new_pos.y = enemy->b_pos.y + direction.y * speed;
+	map_x = (int)new_pos.x;
+	map_y = (int)new_pos.y;
+	if (is_valid_move_position(pd, map_x, map_y)
+		&& !is_diagonal_gap(pd, enemy->b_pos, new_pos))
+	{
+		enemy->b_pos = new_pos;
+		enemy->dir.x = direction.x;
+		enemy->dir.y = direction.y;
+		return ;
+	}
+	moved = try_alternative_directions(enemy, pd, direction, speed);
+	if (!moved)
+		enemy->state = ENEMY_RETURN;
 }
 
- void perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd)
+double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd)
+{
+	double	dx;
+	double	dy;
+	double	distance;
+
+	dx = enemy->b_pos.x - pd->player.bpos.x;
+	dy = enemy->b_pos.y - pd->player.bpos.y;
+	distance = sqrt(dx * dx + dy * dy);
+	return (distance);
+}
+
+void perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd)
 {
     t_bpos  new_pos;
     int     map_x;

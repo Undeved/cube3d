@@ -56,7 +56,7 @@ void change_enemy_direction(t_enemy *enemy)
     }
     else
     {
-        new_dir_index = rand() % 4;
+        new_dir_index = ft_rand() % 4;
         enemy->dir.x = directions[new_dir_index][0];
         enemy->dir.y = directions[new_dir_index][1];
     }
