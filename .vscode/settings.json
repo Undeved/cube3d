@@ -12,7 +12,9 @@
         "variant": "c",
         "cube.h": "c",
         "time.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "types.h": "c",
+        "struct_timeval.h": "c"
     },
     "cmake.sourceDirectory": "/home/oimzilen/Desktop/cube3d/MLX42"
 }

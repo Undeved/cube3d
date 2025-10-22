@@ -22,8 +22,6 @@ void init_door_wall(t_parsed_data *pd)
 
 void init_medkit_textures(t_parsed_data *pd)
 {
-    int i;
-
     pd->medkit.img = NULL;
     pd->medkit.txtr = NULL;
     pd->medkits = NULL;

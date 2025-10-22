@@ -266,7 +266,7 @@ static void delete_medkit_textures(t_parsed_data *pd)
 
     if (!pd->medkits)
         return ;
-        i = 0;
+    i = 0;
     while (i < MAX_ENEMIES)
     {
         if (pd->medkits[i].img.img)

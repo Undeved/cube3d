@@ -16,7 +16,7 @@ int	ft_rand(void)
 	if (random == 0)
 		random = tv.tv_sec + tv.tv_usec;
 	random = (1103515245 * random + 12345) & 2147483647;
-	return ((int)(random % (2147483647 + 1)));
+	return ((int)(random % (RAND_MAX )));
 }
 
 static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)

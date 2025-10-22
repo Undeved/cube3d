@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/22 00:40:16 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:23:49 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@
 # define MM_PLAYER_COLOR 0xBE0000FF
 
 // Player movement.
-# define SPEED 0.155;
-# define STRAFE_SPEED 0.095
-# define ROT_SPEED 0.12
+# define SPEED 0.085;
+# define STRAFE_SPEED 0.070
+# define ROT_SPEED 0.08
 # define NUDGE_FROM_WALL 0.5
 # define MOUSE_SENSITIVITY 0.00088
 # define PI 3.14159

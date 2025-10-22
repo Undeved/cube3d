@@ -2,8 +2,6 @@
 
 static void init_player_textures(t_parsed_data *pd)
 {
-    int i;
-
     // init gun textures
     pd->player.gun.idle.img = NULL;
     pd->player.gun.idle.txtr = NULL;

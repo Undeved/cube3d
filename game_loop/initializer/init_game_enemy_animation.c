@@ -42,6 +42,7 @@ static void	set_animation_paths(t_enemy *enemy, char **paths)
 
 static void	load_animation_frame(t_parsed_data *pd, int i, t_raw_img *frame, char *path)
 {
+	(void)i;
 	if (frame->txtr == NULL)
 	{
 		frame->txtr = mlx_load_png(path);

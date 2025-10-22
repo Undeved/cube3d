@@ -3,6 +3,7 @@
 void handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
         double distance)
 {
+	(void)i;
     if (!has_line_of_sight(pd, enemy->b_pos, pd->player.bpos))
     {
         enemy->state = ENEMY_RETURN;
@@ -37,6 +38,7 @@ static void	perform_enemy_attack(t_parsed_data *pd, t_enemy *enemy)
 void	handle_attack_state(t_parsed_data *pd, t_enemy *enemy, int i,
 		double distance)
 {
+	(void)i;
 	if (!has_line_of_sight(pd, enemy->b_pos, pd->player.bpos))
 	{
 		enemy->state = ENEMY_RETURN;
@@ -59,6 +61,7 @@ void	handle_attack_state(t_parsed_data *pd, t_enemy *enemy, int i,
 
 void handle_return_state(t_parsed_data *pd, t_enemy *enemy, int i)
 {
+	(void)i;
     if (return_to_patrol(enemy, pd))
         enemy->state = ENEMY_PATROL;
 }
