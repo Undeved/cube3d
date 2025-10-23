@@ -48,11 +48,15 @@ void draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
 {
     int             tex[2];
     t_tex_sample    sample;
+    bool            depth_ok;
 
     if (ctx->curr->enemy->anim_img == NULL)
         return;
     if (ctx->curr->sprite_width == 0 || ctx->curr->sprite_height == 0)
         return;
+    if (stripe < 0 || stripe >= ctx->pd->screen->width)
+        return;
+
     tex[0] = (int)((stripe - ctx->b->orig_draw_start_x)
              * (double)ctx->curr->enemy->anim_img->width
              / (double)ctx->curr->sprite_width);
@@ -64,6 +68,14 @@ void draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
         return;
     if (sample.alpha == 0)
         return;
+    if (ctx->pd->zbuffer)
+        depth_ok = (ctx->curr->transform.y < ctx->pd->zbuffer[stripe]);
+    else
+        depth_ok = true;
+
+    if (!depth_ok)
+        return;
+
     if (ctx->curr->enemy->is_highlighted)
     {
         mlx_put_pixel(ctx->pd->screen, stripe, y, 0xFFFFFFFF);
@@ -81,11 +93,14 @@ void draw_enemy_sprite(t_draw_context *ctx)
     stripe = ctx->b->draw_start_x;
     while (stripe < ctx->b->draw_end_x)
     {
-        y = ctx->b->draw_start_y;
-        while (y < ctx->b->draw_end_y)
+        if (stripe >= 0 && stripe < ctx->pd->screen->width)
         {
-            draw_enemy_pixel(ctx, stripe, y);
-            y++;
+            y = ctx->b->draw_start_y;
+            while (y < ctx->b->draw_end_y)
+            {
+                draw_enemy_pixel(ctx, stripe, y);
+                y++;
+            }
         }
         stripe++;
     }

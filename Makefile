@@ -1,5 +1,5 @@
 CC= cc
-SANITIZE= #-fsanitize=address -g3
+SANITIZE= -fsanitize=address -g3
 FLAGS= -Ofast -O3 #-Wall -Werror -Wextra 
 
 INCLUDES= -Iinclude -I$(HOME)/local/include

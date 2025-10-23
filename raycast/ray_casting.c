@@ -72,6 +72,7 @@ void cast_single_ray(t_parsed_data *pd, int x)
 	init_dda_data(pd, &ray, &dda_data);
 	perform_dda(pd, &dda_data);
 	init_perp_and_col_data(pd, x, &ray, &perp_data, &col_data);
+	pd->zbuffer[x] = col_data.perp_dist;
 	draw_column(pd, &col_data);
 }
 

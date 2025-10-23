@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/22 22:23:49 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/23 00:58:10 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -530,7 +530,8 @@ typedef struct s_pd
     t_med_kit       *medkits;        // Add this
     t_raw_img       medkit;
     int             medkit_count;     // Add this
-    int             max_medkits;  
+    int             max_medkits;
+    double          *zbuffer;  
     
 }   t_parsed_data;
 

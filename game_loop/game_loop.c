@@ -15,6 +15,9 @@ static void init_gameplay_screen(t_parsed_data *pd)
     if(!pd->screen || mlx_image_to_window(pd->mlx, pd->screen, 0, 0) == -1)
         mind_free_all(EXIT_FAILURE);
     pd->screen->enabled = false;
+    pd->zbuffer = allocate_gc(malloc(sizeof(double) * pd->screen->width));
+    if (!pd->zbuffer)
+        mind_free_all(EXIT_FAILURE);
 }
 static void load_one_texture(t_parsed_data *pd, t_texture *t)
 {
