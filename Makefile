@@ -36,7 +36,8 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/initializer/free_game_enemy.c game_loop/initializer/init_game.c \
 	game_loop/initializer/init_textures_enemy_to_null.c game_loop/player_input/player_mov_input.c \
 	game_loop/game_ui/setup_character_gun_shoot.c game_loop/game_ui/setup_character_gun_reload.c \
-	game_loop/game_ui/setup_character_delete.c game_loop/game_ui/game_ui_hp.c raycast/med_kit2.c
+	game_loop/game_ui/setup_character_delete.c game_loop/game_ui/game_ui_hp.c raycast/med_kit2.c \
+	score_system/get_user_data.c score_system/data_file.c \
 
 OBJ=$(SRC:.c=.o)
 

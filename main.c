@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:30:53 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/20 00:30:18 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:46:49 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,25 @@ int main(int argc, char **argv)
     evaluate_input(argc, argv);
     parse_map(argv[1], &cube);
     // print_parsed_data(&cube.pd);
+    // get_user(&cube.pd);
     game_loop(&cube.pd);
     // print_argv(cube.pd.map_file);
-
-    // testing window creation
-    // basic_game_loop();
-
     return (mind_free_all(EXIT_SUCCESS), EXIT_SUCCESS);
 }
- 
+
+// TO DO
+/*
+    - reduce gun range, not shoot far
+    - make logic for each gun
+        --> jesse 1 bullet and need to reload but damage is high
+        --> chorus 30 bullets and shots in full auto but damage is low
+        --> oussmac 7 bullets and damage is in the middle
+    - make enemies have an offset for collision around them, to not clip through walls so easily
+    - maybe add vignette
+    - maybe add damage screen [animated], when hit/damaged.
+    - tweak speed and damage of enemies to have a fighting change
+
+    - maybe add a simple score system, and save data of new players in a simple data.undvd
+        --> using get_next_line
+        --> based on this data always parse it to have access to a leaderboard system.
+*/

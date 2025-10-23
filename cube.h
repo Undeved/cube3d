@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/23 00:58:10 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:09:37 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,6 +499,12 @@ typedef struct s_enemy_draw_data
     int         sprite_width;
 }   t_enemy_draw_data;
 
+typedef struct s_score
+{
+    char    *username;
+    
+}       t_score;
+
 typedef struct s_pd
 {
     // parsed data
@@ -532,7 +538,7 @@ typedef struct s_pd
     int             medkit_count;     // Add this
     int             max_medkits;
     double          *zbuffer;  
-    
+    t_score         score;
 }   t_parsed_data;
 
 typedef struct s_cube
@@ -651,6 +657,10 @@ void    load_gun_reload_anim(t_parsed_data *pd, t_character character);
 void    delete_gun_textures(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
 int     ft_rand(void);
+
+// Score Sytem
+void    get_user(t_parsed_data *pd);
+void    save_to_data_file(t_parsed_data *pd);
 
 typedef struct s_ray_dir_data
 {
