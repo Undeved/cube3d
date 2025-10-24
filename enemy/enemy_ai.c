@@ -5,15 +5,11 @@ void chase_player(t_enemy *enemy, t_bpos player_pos, double speed,
 {
     t_bpos  direction;
     t_bpos  new_pos;
-    int     map_x;
-    int     map_y;
 
     calculate_direction_to_player(enemy, player_pos, &direction);
     new_pos.x = enemy->b_pos.x + direction.x * speed;
     new_pos.y = enemy->b_pos.y + direction.y * speed;
-    map_x = (int)new_pos.x;
-    map_y = (int)new_pos.y;
-    if (is_valid_move_position(pd, map_x, map_y))
+    if (is_valid_move_position_circle_global(pd, new_pos.x, new_pos.y))
     {
         enemy->b_pos = new_pos;
         enemy->dir.x = direction.x;
@@ -52,8 +48,6 @@ bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
     double  distance_to_origin;
     t_bpos  direction;
     t_bpos  new_pos;
-    int     map_x;
-    int     map_y;
 
     distance_to_origin = calculate_distance_to_origin(enemy);
     if (distance_to_origin < 0.5)
@@ -61,9 +55,7 @@ bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
     calculate_direction_to_origin(enemy, &direction);
     new_pos.x = enemy->b_pos.x + direction.x * enemy->patrol_speed;
     new_pos.y = enemy->b_pos.y + direction.y * enemy->patrol_speed;
-    map_x = (int)new_pos.x;
-    map_y = (int)new_pos.y;
-   if (is_valid_move_position(pd, map_x, map_y))
+    if (is_valid_move_position_circle_global(pd, new_pos.x, new_pos.y))
     {
         enemy->b_pos = new_pos;
         enemy->dir.x = direction.x;
@@ -71,7 +63,6 @@ bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
     }
     else
         change_enemy_direction(enemy);
-
     return (false);
 }
 

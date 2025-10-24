@@ -77,19 +77,65 @@ void calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos,
     }
 }
 
-bool is_valid_move_position(t_parsed_data *pd, int map_x, int map_y)
+static double clamp_d(double v, double a, double b)
 {
-    char tile;
+    if (v < a) return (a);
+    if (v > b) return (b);
+    return (v);
+}
+
+static bool circle_intersects_tile(double cx, double cy, double r,
+        int tx, int ty)
+{
+    double nx = clamp_d(cx, (double)tx, (double)tx + 1.0);
+    double ny = clamp_d(cy, (double)ty, (double)ty + 1.0);
+    double dx = cx - nx;
+    double dy = cy - ny;
+    return (dx * dx + dy * dy < r * r);
+}
+
+bool is_position_blocked_circle(t_parsed_data *pd, double cx, double cy,
+        double radius)
+{
+    int tx_min = (int)floor(cx - radius);
+    int tx_max = (int)floor(cx + radius);
+    int ty_min = (int)floor(cy - radius);
+    int ty_max = (int)floor(cy + radius);
+    int tx;
+    int ty;
 
     if (!pd)
-        return (false);
-    if (map_y < 0 || map_y >= pd->level.max_y
-     || map_x < 0 || map_x >= pd->level.max_x)
-        return (false);
-
-    tile = pd->map_grid[map_y][map_x];
-    if (tile == '0' || tile == 'O')
+        return (true);
+    if (tx_min < 0 || ty_min < 0 || tx_max >= pd->level.max_x
+        || ty_max >= pd->level.max_y)
         return (true);
 
+    tx = tx_min;
+    while (tx <= tx_max)
+    {
+        ty = ty_min;
+        while (ty <= ty_max)
+        {
+            if (pd->map_grid[ty][tx] == '1' || pd->map_grid[ty][tx] == 'D')
+            {
+                if (circle_intersects_tile(cx, cy, radius, tx, ty))
+                    return (true);
+            }
+            ty++;
+        }
+        tx++;
+    }
     return (false);
 }
+
+bool is_position_blocked(t_parsed_data *pd, double x, double y)
+{
+    return is_position_blocked_circle(pd, x, y, COLLISION_RADIUS);
+}
+
+bool is_valid_move_position_circle_global(t_parsed_data *pd, double x, double y)
+{
+    return (!is_position_blocked_circle(pd, x, y, COLLISION_RADIUS));
+}
+
+

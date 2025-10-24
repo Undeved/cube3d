@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/23 23:09:37 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/24 03:31:08 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,7 +410,7 @@ typedef enum e_enemy_type
     SEGV,
 }   t_enemy_type;
 
-#define CHASE_DISTANCE 4.0      // Distance at which enemy starts chasing
+#define CHASE_DISTANCE 4.0     // Distance at which enemy starts chasing
 #define LOSE_DISTANCE 15.0      // Distance at which enemy gives up chase
 #define ATTACK_DISTANCE 1.5     // Distance at which enemy can attack
 #define ENEMY_ANIM_RATE 8   // ticks per frame (increase = slower animation)
@@ -485,6 +485,9 @@ typedef struct s_enemy
     int             death_timer;
     bool            is_highlighted;    // true while enemy is highlighted (white)
     int             highlight_timer;
+    t_bpos  patrol_target;          /* current point the enemy walks toward */
+    int     patrol_target_timer;    /* frames until picking a new target */
+    int     patrol_change_interval;
 }   t_enemy;
 
 // Structure to hold enemy drawing data for sorting
@@ -879,7 +882,9 @@ void update_death_animation(t_parsed_data *pd, t_enemy *enemy);
 /* From enemy_movement.c */
 void	change_enemy_direction(t_enemy *enemy);
 void	calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
-bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
+// bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
+bool is_valid_move_position_circle_global(t_parsed_data *pd, double x, double y);
+
 
 /* From enemy_ai.c */
 void	set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
@@ -888,6 +893,7 @@ bool	return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
 /* From enemy_pathfinding.c */
 void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
 double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
+bool    is_position_blocked_circle(t_parsed_data *pd, double cx, double cy,double radius);
 void	perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
 void	handle_patrol_state(t_enemy_ctx *ctx);
 
@@ -954,6 +960,7 @@ void		raycast_render(t_parsed_data *pd);
 
 /* External from enemies */
 void		draw_enemies(t_parsed_data *pd);
+void        handle_patrol_state(t_enemy_ctx *ctx);
 // ----------------------------------------------------------------------------------------
 
 // Raycast Light engine
@@ -987,15 +994,18 @@ bool medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *ou
 # define SEGV_DAMAGE 37
 
 // enemy patrol macros 
-# define SKIN_WALKER_PATROL_SPEED 0.1
-# define MEMORY_LEAK_PATROL_SPEED 0.2
-# define SEGV_PATROL_SPEED 0.25
+# define SKIN_WALKER_PATROL_SPEED 0.04
+# define MEMORY_LEAK_PATROL_SPEED 0.08
+# define SEGV_PATROL_SPEED 0.1
 
 // enemy chase macros
-# define SKIN_WALKER_CHASE_SPEED 0.2
-# define MEMORY_LEAK_CHASE_SPEED 0.3
-# define SEGV_CHASE_SPEED 0.35
+# define SKIN_WALKER_CHASE_SPEED 0.06
+# define MEMORY_LEAK_CHASE_SPEED 0.1
+# define SEGV_CHASE_SPEED 0.12
 
+# define COLLISION_RADIUS 0.25
+# define PATROL_TARGET_RADIUS 4.0 
+# define PATROL_REACHED_EPS 0.35 
 
 ///////////////////////////////////////////////////////////////////////////
 

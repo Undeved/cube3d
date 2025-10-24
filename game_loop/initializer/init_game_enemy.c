@@ -41,6 +41,8 @@ static void	init_animation_state(t_enemy *enemy)
 	enemy->death_timer = 0;
 	enemy->is_highlighted = false;
 	enemy->highlight_timer = 0;
+    enemy->patrol_target_timer = 0; 
+    enemy->patrol_change_interval = 300 ;
 }
 
 void	init_enemy_textures(t_parsed_data *pd)
