@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/24 03:31:08 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/24 22:20:46 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -962,7 +962,7 @@ void		raycast_render(t_parsed_data *pd);
 void		draw_enemies(t_parsed_data *pd);
 void        handle_patrol_state(t_enemy_ctx *ctx);
 // ----------------------------------------------------------------------------------------
-
+bool move_towards_target(t_enemy *enemy, t_parsed_data *pd,t_bpos target, double speed);
 // Raycast Light engine
 uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
 void    update_enemies(t_parsed_data *pd);
@@ -1004,9 +1004,9 @@ bool medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *ou
 # define SEGV_CHASE_SPEED 0.12
 
 # define COLLISION_RADIUS 0.25
-# define PATROL_TARGET_RADIUS 4.0 
+# define PATROL_TARGET_RADIUS 3.0 
 # define PATROL_REACHED_EPS 0.35 
-
+#define M_PI 3.14159265358979323846
 ///////////////////////////////////////////////////////////////////////////
 
 #endif

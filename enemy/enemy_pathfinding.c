@@ -98,22 +98,24 @@ static bool choose_random_patrol_target(t_enemy *enemy, t_parsed_data *pd)
 
     if (!enemy || !pd)
         return (false);
+    
     attempts = 0;
-    while (attempts < 30)
+    while (attempts < 50)
     {
         r = ft_rand() % 1000;
         frac = (double)r / 1000.0;
-        rx = enemy->patrol_origin.x + (frac * 2.0 - 1.0) * PATROL_TARGET_RADIUS;
+        rx = enemy->b_pos.x + (frac * 2.0 - 1.0) * PATROL_TARGET_RADIUS;
         r = ft_rand() % 1000;
         frac = (double)r / 1000.0;
-        ry = enemy->patrol_origin.y + (frac * 2.0 - 1.0) * PATROL_TARGET_RADIUS;
-        if (rx < 0.0 || ry < 0.0
-         || rx >= (double)pd->level.max_x || ry >= (double)pd->level.max_y)
+        ry = enemy->b_pos.y + (frac * 2.0 - 1.0) * PATROL_TARGET_RADIUS;
+        
+        if (rx < 1.0 || ry < 1.0 || rx >= (double)pd->level.max_x - 1.0 || ry >= (double)pd->level.max_y - 1.0)
         {
             attempts++;
             continue ;
         }
-        if (!is_position_blocked_circle(pd, rx, ry, COLLISION_RADIUS))
+        if (!is_position_blocked_circle(pd, rx, ry, COLLISION_RADIUS) && 
+            has_line_of_sight(pd, enemy->b_pos, (t_bpos){rx, ry}))
         {
             enemy->patrol_target.x = rx;
             enemy->patrol_target.y = ry;
@@ -125,7 +127,7 @@ static bool choose_random_patrol_target(t_enemy *enemy, t_parsed_data *pd)
     return (false);
 }
 
-static bool move_towards_target(t_enemy *enemy, t_parsed_data *pd,
+bool move_towards_target(t_enemy *enemy, t_parsed_data *pd,
         t_bpos target, double speed)
 {
     t_bpos dir;
@@ -201,31 +203,45 @@ void perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd)
 {
     t_bpos target;
     double reached_dist2;
+    static int stuck_counter = 0;
 
     if (!enemy || !pd)
         return ;
-
-    /* if no target or timer expired, pick a new one */
-    if (enemy->patrol_target_timer <= 0
-        || dist2(enemy->b_pos, enemy->patrol_target) <= (PATROL_REACHED_EPS * PATROL_REACHED_EPS))
+    if (enemy->patrol_target_timer <= 0 ||
+        dist2(enemy->b_pos, enemy->patrol_target) <= (PATROL_REACHED_EPS * PATROL_REACHED_EPS))
     {
         if (!choose_random_patrol_target(enemy, pd))
         {
             change_enemy_direction(enemy);
-            enemy->patrol_target_timer = enemy->patrol_change_interval;
+            enemy->patrol_target_timer = 30;
         }
+        stuck_counter = 0;
     }
 
     target = enemy->patrol_target;
 
     if (!move_towards_target(enemy, pd, target, enemy->patrol_speed))
     {
-        if (!try_alternative_directions(enemy, pd, (t_bpos){target.x - enemy->b_pos.x,
-                    target.y - enemy->b_pos.y}, enemy->patrol_speed))
+        stuck_counter++;
+        if (stuck_counter > 10)  
         {
             enemy->patrol_target_timer = 0;
         }
+        else
+        {
+            if (!try_alternative_directions(enemy, pd, 
+                (t_bpos){target.x - enemy->b_pos.x, target.y - enemy->b_pos.y}, 
+                enemy->patrol_speed))
+            {
+                change_enemy_direction(enemy);
+            }
+        }
     }
+    else
+    {
+        stuck_counter = 0;
+    }
+    
     if (enemy->patrol_target_timer > 0)
         enemy->patrol_target_timer--;
 }

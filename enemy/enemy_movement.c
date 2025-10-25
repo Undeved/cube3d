@@ -128,10 +128,6 @@ bool is_position_blocked_circle(t_parsed_data *pd, double cx, double cy,
     return (false);
 }
 
-bool is_position_blocked(t_parsed_data *pd, double x, double y)
-{
-    return is_position_blocked_circle(pd, x, y, COLLISION_RADIUS);
-}
 
 bool is_valid_move_position_circle_global(t_parsed_data *pd, double x, double y)
 {
