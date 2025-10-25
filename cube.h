@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/25 02:41:14 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/25 22:20:04 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1007,6 +1007,7 @@ bool medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *ou
 # define PATROL_TARGET_RADIUS 3.0 
 # define PATROL_REACHED_EPS 0.35 
 #define M_PI 3.14159265358979323846
+
 ///////////////////////////////////////////////////////////////////////////
 
 #endif

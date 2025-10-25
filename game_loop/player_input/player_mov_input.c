@@ -53,10 +53,16 @@ static bool is_collision(char **map_grid, double x, double y)
 
 static void forward_backward(t_parsed_data *pd)
 {
+    double sprint_mult = (pd->keys.pressed[MLX_KEY_LEFT_SHIFT] ||
+                          pd->keys.pressed[MLX_KEY_RIGHT_SHIFT]) ? 2.0 : 1.0;
+    double move_speed;
+
     if (pd->keys.pressed[MLX_KEY_W])
     {
-        pd->player.new_pos.x += pd->player.bdir.x * SPEED;
-        pd->player.new_pos.y += pd->player.bdir.y * SPEED;
+        move_speed = (double)SPEED;  /* assign first */
+        move_speed *= sprint_mult;   /* then multiply */
+        pd->player.new_pos.x += pd->player.bdir.x * move_speed;
+        pd->player.new_pos.y += pd->player.bdir.y * move_speed;
         if (!is_collision(pd->map_grid, pd->player.new_pos.x, pd->player.bpos.y))
             pd->player.bpos.x = pd->player.new_pos.x;
         if (!is_collision(pd->map_grid, pd->player.bpos.x, pd->player.new_pos.y))
@@ -64,8 +70,10 @@ static void forward_backward(t_parsed_data *pd)
     }
     if (pd->keys.pressed[MLX_KEY_S])
     {
-        pd->player.new_pos.x -= pd->player.bdir.x * SPEED;
-        pd->player.new_pos.y -= pd->player.bdir.y * SPEED;
+        move_speed = (double)SPEED;
+        move_speed *= sprint_mult;
+        pd->player.new_pos.x -= pd->player.bdir.x * move_speed;
+        pd->player.new_pos.y -= pd->player.bdir.y * move_speed;
         if (!is_collision(pd->map_grid, pd->player.new_pos.x, pd->player.bpos.y))
             pd->player.bpos.x = pd->player.new_pos.x;
         if (!is_collision(pd->map_grid, pd->player.bpos.x, pd->player.new_pos.y))
@@ -75,10 +83,16 @@ static void forward_backward(t_parsed_data *pd)
 
 static void strafe(t_parsed_data *pd)
 {
+    double sprint_mult = (pd->keys.pressed[MLX_KEY_LEFT_SHIFT] ||
+                          pd->keys.pressed[MLX_KEY_RIGHT_SHIFT]) ? 2.0 : 1.0;
+    double move_speed;
+
     if (pd->keys.pressed[MLX_KEY_A])
     {
-        pd->player.new_pos.x += pd->player.bdir.y * STRAFE_SPEED;
-        pd->player.new_pos.y += -pd->player.bdir.x * STRAFE_SPEED;
+        move_speed = (double)STRAFE_SPEED;
+        move_speed *= sprint_mult;
+        pd->player.new_pos.x += pd->player.bdir.y * move_speed;
+        pd->player.new_pos.y += -pd->player.bdir.x * move_speed;
         if (!is_collision(pd->map_grid, pd->player.new_pos.x, pd->player.bpos.y))
             pd->player.bpos.x = pd->player.new_pos.x;
         if (!is_collision(pd->map_grid, pd->player.bpos.x, pd->player.new_pos.y))
@@ -86,14 +100,17 @@ static void strafe(t_parsed_data *pd)
     }
     if (pd->keys.pressed[MLX_KEY_D])
     {
-        pd->player.new_pos.x += -pd->player.bdir.y * STRAFE_SPEED;
-        pd->player.new_pos.y += pd->player.bdir.x * STRAFE_SPEED;
+        move_speed = (double)STRAFE_SPEED;
+        move_speed *= sprint_mult;
+        pd->player.new_pos.x += -pd->player.bdir.y * move_speed;
+        pd->player.new_pos.y += pd->player.bdir.x * move_speed;
         if (!is_collision(pd->map_grid, pd->player.new_pos.x, pd->player.bpos.y))
             pd->player.bpos.x = pd->player.new_pos.x;
         if (!is_collision(pd->map_grid, pd->player.bpos.x, pd->player.new_pos.y))
             pd->player.bpos.y = pd->player.new_pos.y;
     }
 }
+
 
 void player_movement(t_parsed_data *pd)
 {
