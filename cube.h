@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/24 22:20:46 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/25 02:41:14 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@
 # define AMMO 30
 # define DAMAGE 10
 
-# define MAX_ENEMIES 20
+# define MAX_ENEMIES 100
 
 // Garbage collector struct.
 // IMPOOORTANT ADD FD TO GC.

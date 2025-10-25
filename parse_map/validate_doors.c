@@ -12,7 +12,7 @@ static bool is_clear(t_parsed_data *pd, int x, int y)
 {
     if (x < 0 || y < 0 || y >= pd->level.max_y || x >= pd->level.max_x)
         return (false);
-    return (pd->map_grid[y][x] == '0');
+    return (pd->map_grid[y][x] == '0' || pd->map_grid[y][x] == 'X' || pd->map_grid[y][x] == 'Y' || pd->map_grid[y][x] == 'Z');  
 }
 
 // Check if the door has exactly two opposite clear sides
