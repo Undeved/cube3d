@@ -1,6 +1,5 @@
 #include "../../cube.h"
 
-#include "../../cube.h"
 
 static void delete_player_textures(t_parsed_data *pd)
 {

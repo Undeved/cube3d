@@ -49,7 +49,7 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->damage = SKIN_WALKER_DAMAGE;
         curr_enemy->health = SKIN_WALKER_HEALTH;
     }
-    else if (c == 'Z')
+    else if (c == 'Y')
     {
         curr_enemy->type = MEMORY_LEAK;
         curr_enemy->patrol_speed = MEMORY_LEAK_PATROL_SPEED;
@@ -61,7 +61,7 @@ static void scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
         curr_enemy->damage = MEMORY_LEAK_DAMAGE;
         curr_enemy->health = MEMORY_LEAK_HEALTH;
     }
-    else if (c == 'Y')
+    else if (c == 'Z')
     {
         curr_enemy->type = SEGV;
         curr_enemy->patrol_speed = SEGV_PATROL_SPEED;

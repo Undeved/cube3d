@@ -13,10 +13,33 @@ void	set_medkit_type_props(t_med_kit *medkit, t_enemy_type type)
 	medkit->size_scale = 0.5f;
 	medkit->vertical_offset = 1.1f;
 }
-
-void	spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type)
+static int medkit_drop_chance(t_enemy_type type)
 {
-	t_med_kit	*medkit;
+	if (type == FT_SKIN_WALKER)
+		return 30;
+	else if (type == MEMORY_LEAK)
+		return 50;
+	else if (type == SEGV)
+		return 69;
+	return 25;
+}
+
+bool should_drop_medkit(t_enemy_type type)
+{
+	int r;
+	int chance;
+
+	chance = medkit_drop_chance(type);
+	r = ft_rand() % 100;
+	return (r < chance);
+}
+
+void spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type)
+{
+	t_med_kit *medkit;
+
+	if (!should_drop_medkit(type))
+		return;
 
 	if (pd->medkit_count >= pd->max_medkits)
 		return;
@@ -27,6 +50,7 @@ void	spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type)
 	medkit->img = pd->medkits[0].img;
 	pd->medkit_count++;
 }
+
 
 int	process_medkit_pickup(t_parsed_data *pd, int i)
 {
