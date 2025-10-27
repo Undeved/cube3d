@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/27 02:01:44 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/27 03:21:45 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@
 
 # define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/Himp-IDLE.png"
 # define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk1.png"
-# define SEGV_DFL "textures/enemy_textures/animation_enemy/z/Reaper-Walk1.png"
+# define SEGV_DFL "textures/enemy_textures/animation_enemy/z/segfault_idle.png"
 
 # define GUN_X 767
 # define GUN_Y 432
@@ -430,14 +430,14 @@ typedef enum e_enemy_type
 #define MEMORY_LEAK_A3 "textures/enemy_textures/animation_enemy/y/CacoDemon-ATT3.png"
 #define MEMORY_LEAK_D1 "textures/enemy_textures/animation_enemy/y/CacoDemon-Death1.png"
 #define MEMORY_LEAK_D2 "textures/enemy_textures/animation_enemy/y/CacoDemon-Death2.png"
-#define SEGV_W1 "textures/enemy_textures/animation_enemy/z/Reaper-Walk1.png"
-#define SEGV_W2 "textures/enemy_textures/animation_enemy/z/Reaper-Walk2.png"
-#define SEGV_W3 "textures/enemy_textures/animation_enemy/z/Reaper-Walk3.png"
-#define SEGV_A1 "textures/enemy_textures/animation_enemy/z/Reaper-ATT1.png"
-#define SEGV_A2 "textures/enemy_textures/animation_enemy/z/Reaper-ATT2.png"
-#define SEGV_A3 "textures/enemy_textures/animation_enemy/z/Reaper-ATT3.png"
-#define SEGV_D1 "textures/enemy_textures/animation_enemy/z/Reaper-Death1.png"
-#define SEGV_D2 "textures/enemy_textures/animation_enemy/z/Reaper-Death2.png"
+#define SEGV_W1 "textures/enemy_textures/animation_enemy/z/segfault_walk_1.png"
+#define SEGV_W2 "textures/enemy_textures/animation_enemy/z/segfault_walk_2.png"
+#define SEGV_W3 "textures/enemy_textures/animation_enemy/z/segfault_walk_3.png"
+#define SEGV_A1 "textures/enemy_textures/animation_enemy/z/segfault_attack_1.png"
+#define SEGV_A2 "textures/enemy_textures/animation_enemy/z/segfault_attack_2.png"
+#define SEGV_A3 "textures/enemy_textures/animation_enemy/z/segfault_attack_3.png"
+#define SEGV_D1 "textures/enemy_textures/animation_enemy/z/segfault_death_1.png"
+#define SEGV_D2 "textures/enemy_textures/animation_enemy/z/segfault_death_2.png"
 #define DEATH_ANIMATION_DURATION 20 // 3 seconds at 60FPS
 #define HIGHLIGHT_FRAMES 3
 
