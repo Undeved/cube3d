@@ -18,7 +18,10 @@ static bool	is_diagonal_gap(t_parsed_data *pd, t_bpos from, t_bpos to)
 	}
 	return (false);
 }
-
+int my_isfinite(double x)
+{
+    return (x == x) && (x != 1.0 / 0.0) && (x != -1.0 / 0.0);
+}
 bool try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
                 t_bpos direction, double speed)
 {
@@ -28,10 +31,15 @@ bool try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,
 
     set_alternative_directions(alternatives, direction);
     i = 0;
-    while (i < 8)
+    while (i < 4)
     {
         new_pos.x = enemy->b_pos.x + alternatives[i].x * speed;
         new_pos.y = enemy->b_pos.y + alternatives[i].y * speed;
+        if (!isfinite(new_pos.x) || !isfinite(new_pos.y))
+        {
+            i++;
+            continue;
+        }
         if (is_valid_move_position_circle_global(pd, new_pos.x, new_pos.y)
                 && !is_diagonal_gap(pd, enemy->b_pos, new_pos))
         {

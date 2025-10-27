@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/25 22:20:04 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/27 02:01:44 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,7 +411,7 @@ typedef enum e_enemy_type
 }   t_enemy_type;
 
 #define CHASE_DISTANCE 4.0     // Distance at which enemy starts chasing
-#define LOSE_DISTANCE 15.0      // Distance at which enemy gives up chase
+#define LOSE_DISTANCE 45.0     // Distance at which enemy gives up chase
 #define ATTACK_DISTANCE 1.5     // Distance at which enemy can attack
 #define ENEMY_ANIM_RATE 8   // ticks per frame (increase = slower animation)
 #define SKIN_WALKER_W1 "textures/enemy_textures/animation_enemy/x/Himp-Walk1.png"

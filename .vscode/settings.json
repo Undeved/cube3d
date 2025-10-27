@@ -14,7 +14,9 @@
         "time.h": "c",
         "stdbool.h": "c",
         "types.h": "c",
-        "struct_timeval.h": "c"
+        "struct_timeval.h": "c",
+        "math.h": "c",
+        "cmath": "c"
     },
     "cmake.sourceDirectory": "/home/oimzilen/Desktop/cube3d/MLX42"
 }

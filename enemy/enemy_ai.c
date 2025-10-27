@@ -70,14 +70,12 @@ bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
     return (false);
 }
 
-void set_alternative_directions(t_bpos alternatives[8], t_bpos direction)
+void set_alternative_directions(t_bpos alternatives[4], t_bpos direction)
 {
-    alternatives[0].x = direction.x;
-    alternatives[1].x = direction.x * 0.7;
-    alternatives[2].x = direction.y;
-    alternatives[3].x = -direction.y;
-    alternatives[4].x = direction.x * 0.7;
-    alternatives[5].y = -direction.x * 0.7;
-    alternatives[6].y = direction.x * 0.7;
-    alternatives[7].y = -direction.y;
+    (void)direction;
+    alternatives[0].x =  1.0; alternatives[0].y =  0.0;  /* right  */
+    alternatives[1].x = -1.0; alternatives[1].y =  0.0;  /* left   */
+    alternatives[2].x =  0.0; alternatives[2].y =  1.0;  /* up     */
+    alternatives[3].x =  0.0; alternatives[3].y = -1.0;  /* down   */
 }
+
