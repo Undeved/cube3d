@@ -138,7 +138,6 @@ void    get_enemies(t_cube *cube)
             {
                 if (!validate_door(&cube->pd, x, y))
                 {
-                    printf("door %d %d\n", x, y);
                     print_error("Error\nInvalid Door Placement.\n");
                     mind_free_all(EXIT_FAILURE);
                 }
