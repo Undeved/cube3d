@@ -1,67 +1,64 @@
 #include "../../cube.h"
 
-static void	free_enemy_skin_walk_textures(t_enemy *enemy)
+static void	free_shared_walk_attack_textures(t_parsed_data *pd)
 {
-    if (enemy->skin.txtr)
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (pd->shared_enemy_textures.skin_walker_walk[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.skin_walker_walk[i].txtr);
+		if (pd->shared_enemy_textures.skin_walker_attack[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.skin_walker_attack[i].txtr);
+		if (pd->shared_enemy_textures.memory_leak_walk[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.memory_leak_walk[i].txtr);
+		if (pd->shared_enemy_textures.memory_leak_attack[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.memory_leak_attack[i].txtr);
+		if (pd->shared_enemy_textures.segv_walk[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.segv_walk[i].txtr);
+		if (pd->shared_enemy_textures.segv_attack[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.segv_attack[i].txtr);
+		i++;
+	}
+}
+
+static void	free_shared_death_textures(t_parsed_data *pd)
+{
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (pd->shared_enemy_textures.skin_walker_death[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.skin_walker_death[i].txtr);
+		if (pd->shared_enemy_textures.memory_leak_death[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.memory_leak_death[i].txtr);
+		if (pd->shared_enemy_textures.segv_death[i].txtr)
+			mlx_delete_texture(pd->shared_enemy_textures.segv_death[i].txtr);
+		i++;
+	}
+}
+
+void free_shared_enemy_textures(t_parsed_data *pd)
+{
+	if (!pd->shared_enemy_textures.initialized)
+		return ;
+	free_shared_walk_attack_textures(pd);
+	free_shared_death_textures(pd);
+	pd->shared_enemy_textures.initialized = false;
+	pd->shared_enemy_textures.skin_walker_initialized = false;
+	pd->shared_enemy_textures.memory_leak_initialized = false;
+	pd->shared_enemy_textures.segv_initialized = false;
+}
+
+static void	free_enemy_skin_textures(t_enemy *enemy)
+{
+	if (enemy->skin.txtr)
 	{
 		mlx_delete_texture(enemy->skin.txtr);
 		enemy->skin.txtr = NULL;
 	}
-	if (enemy->walk1.txtr)
-	{
-		mlx_delete_texture(enemy->walk1.txtr);
-		enemy->walk1.txtr = NULL;
-	}
-	if (enemy->walk2.txtr)
-	{
-		mlx_delete_texture(enemy->walk2.txtr);
-		enemy->walk2.txtr = NULL;
-	}
-	if (enemy->walk3.txtr)
-	{
-		mlx_delete_texture(enemy->walk3.txtr);
-		enemy->walk3.txtr = NULL;
-	}
-}
-
-static void	free_enemy_attack_textures(t_enemy *enemy)
-{
-	if (enemy->attack1.txtr)
-	{
-		mlx_delete_texture(enemy->attack1.txtr);
-		enemy->attack1.txtr = NULL;
-	}
-	if (enemy->attack2.txtr)
-	{
-		mlx_delete_texture(enemy->attack2.txtr);
-		enemy->attack2.txtr = NULL;
-	}
-	if (enemy->attack3.txtr)
-	{
-		mlx_delete_texture(enemy->attack3.txtr);
-		enemy->attack3.txtr = NULL;
-	}
-}
-
-static void	free_enemy_death_textures(t_enemy *enemy)
-{
-	if (enemy->death1.txtr)
-	{
-		mlx_delete_texture(enemy->death1.txtr);
-		enemy->death1.txtr = NULL;
-	}
-	if (enemy->death2.txtr)
-	{
-		mlx_delete_texture(enemy->death2.txtr);
-		enemy->death2.txtr = NULL;
-	}
-}
-
-static void	free_single_enemy_textures(t_enemy *enemy)
-{
-	free_enemy_skin_walk_textures(enemy);
-	free_enemy_attack_textures(enemy);
-	free_enemy_death_textures(enemy);
 }
 
 void	free_enemy_textures(t_parsed_data *pd)
@@ -73,7 +70,7 @@ void	free_enemy_textures(t_parsed_data *pd)
 	i = 0;
 	while (i < pd->enemy_count)
 	{
-		free_single_enemy_textures(&pd->enemies[i]);
+		free_enemy_skin_textures(&pd->enemies[i]);
 		i++;
 	}
 }

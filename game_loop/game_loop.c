@@ -41,20 +41,21 @@ void init_textures(t_parsed_data *pd)
 	load_one_texture(pd, &pd->txtr_so);
 	load_one_texture(pd, &pd->txtr_we);
 	load_one_texture(pd, &pd->txtr_ea);
-    init_enemy_textures(pd);
+    init_shared_enemy_textures(pd);
+    // init_enemy_textures(pd);
 }
 
 void game_loop(t_parsed_data *pd)
 {
-    init_all_textures(pd);
     init_precise_data(pd);
+    init_all_textures(pd); // i init to null here
     set_pd(pd);
     pd->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
     if(!pd->mlx)
         mind_free_all(EXIT_FAILURE);
     init_medkits(pd);
     init_door_texture(pd);
-    init_textures(pd);
+    init_textures(pd); // i call init shared enemy here mlx is initialized bro
     init_gameplay_screen(pd);
     init_mini_map(pd);
     init_main_menu(pd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/27 22:44:17 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/10/29 05:41:03 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,8 +188,8 @@
 # define HBAR_BG_Y 298
 
 
-# define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/Himp-IDLE.png"
-# define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk1.png"
+# define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/garbage_value.png"
+# define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/memleak.png"
 # define SEGV_DFL "textures/enemy_textures/animation_enemy/z/segfault_idle.png"
 
 # define GUN_X 767
@@ -414,22 +414,24 @@ typedef enum e_enemy_type
 #define LOSE_DISTANCE 45.0     // Distance at which enemy gives up chase
 #define ATTACK_DISTANCE 1.5     // Distance at which enemy can attack
 #define ENEMY_ANIM_RATE 8   // ticks per frame (increase = slower animation)
-#define SKIN_WALKER_W1 "textures/enemy_textures/animation_enemy/x/Himp-Walk1.png"
-#define SKIN_WALKER_W2 "textures/enemy_textures/animation_enemy/x/Himp-Walk2.png"
-#define SKIN_WALKER_W3 "textures/enemy_textures/animation_enemy/x/Himp-Walk3.png"
-#define SKIN_WALKER_A1 "textures/enemy_textures/animation_enemy/x/HIMP-ATT1.png"
-#define SKIN_WALKER_A2 "textures/enemy_textures/animation_enemy/x/HIMP-ATT2.png"
-#define SKIN_WALKER_A3 "textures/enemy_textures/animation_enemy/x/HIMP-ATT3.png"
-#define SKIN_WALKER_D1 "textures/enemy_textures/animation_enemy/x/Himp-Death1.png"
-#define SKIN_WALKER_D2 "textures/enemy_textures/animation_enemy/x/Himp-Death2.png"
-#define MEMORY_LEAK_W1 "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk1.png"
-#define MEMORY_LEAK_W2 "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk2.png"
-#define MEMORY_LEAK_W3 "textures/enemy_textures/animation_enemy/y/CacoDemon-Walk3.png"
-#define MEMORY_LEAK_A1 "textures/enemy_textures/animation_enemy/y/CacoDemon-ATT1.png"
-#define MEMORY_LEAK_A2 "textures/enemy_textures/animation_enemy/y/CacoDemon-ATT2.png"
-#define MEMORY_LEAK_A3 "textures/enemy_textures/animation_enemy/y/CacoDemon-ATT3.png"
-#define MEMORY_LEAK_D1 "textures/enemy_textures/animation_enemy/y/CacoDemon-Death1.png"
-#define MEMORY_LEAK_D2 "textures/enemy_textures/animation_enemy/y/CacoDemon-Death2.png"
+#define SKIN_WALKER_W1 "textures/enemy_textures/animation_enemy/x/garbage_value_walk_1.png"
+#define SKIN_WALKER_W2 "textures/enemy_textures/animation_enemy/x/garbage_value_walk_2.png"
+#define SKIN_WALKER_W3 "textures/enemy_textures/animation_enemy/x/garbage_value_walk_3.png"
+#define SKIN_WALKER_A1 "textures/enemy_textures/animation_enemy/x/garbage_value_attack_1.png"
+#define SKIN_WALKER_A2 "textures/enemy_textures/animation_enemy/x/garbage_value_attack_2.png"
+#define SKIN_WALKER_A3 "textures/enemy_textures/animation_enemy/x/garbage_value_attack_3.png"
+#define SKIN_WALKER_D1 "textures/enemy_textures/animation_enemy/x/garbage_value_death_1.png"
+#define SKIN_WALKER_D2 "textures/enemy_textures/animation_enemy/x/garbage_value_death_2.png"
+
+#define MEMORY_LEAK_W1 "textures/enemy_textures/animation_enemy/y/memleak_walk_1.png"
+#define MEMORY_LEAK_W2 "textures/enemy_textures/animation_enemy/y/memleak_walk_2.png"
+#define MEMORY_LEAK_W3 "textures/enemy_textures/animation_enemy/y/memleak_walk_3.png"
+#define MEMORY_LEAK_A1 "textures/enemy_textures/animation_enemy/y/memleak_attack_1.png"
+#define MEMORY_LEAK_A2 "textures/enemy_textures/animation_enemy/y/memleak_attack_2.png"
+#define MEMORY_LEAK_A3 "textures/enemy_textures/animation_enemy/y/memleak_attack_3.png"
+#define MEMORY_LEAK_D1 "textures/enemy_textures/animation_enemy/y/memleak_death_1.png"
+#define MEMORY_LEAK_D2 "textures/enemy_textures/animation_enemy/y/memleak_death_2.png"
+
 #define SEGV_W1 "textures/enemy_textures/animation_enemy/z/segfault_walk_1.png"
 #define SEGV_W2 "textures/enemy_textures/animation_enemy/z/segfault_walk_2.png"
 #define SEGV_W3 "textures/enemy_textures/animation_enemy/z/segfault_walk_3.png"
@@ -465,20 +467,20 @@ typedef struct s_enemy
     t_bpos          patrol_origin;   // Original position to return to
     double          chase_speed;     // Speed when chasing
     double          patrol_speed;    // Speed when patrolling
-    t_raw_img       walk1;
-    t_raw_img       walk2;
-    t_raw_img       walk3;
-    t_raw_img       attack1;        // Add attack animation frames
-    t_raw_img       attack2;
-    t_raw_img       attack3;
+    t_raw_img       *walk1;
+    t_raw_img       *walk2;
+    t_raw_img       *walk3;
+    t_raw_img       *attack1;        // Add attack animation frames
+    t_raw_img       *attack2;
+    t_raw_img       *attack3;
     mlx_image_t     *anim_img;    // current image used when drawing (points to one of the imgs)
     int             anim_frame;   // 0..2
     int             anim_counter;
     int             attack_cooldown;
     bool            is_attacking;  // Track if currently in attack animation
     int             attack_anim_counter; // Separate counter for attack animation
-    t_raw_img       death1;        // Add death animation frames
-    t_raw_img       death2;
+    t_raw_img       *death1;        // Add death animation frames
+    t_raw_img       *death2;
     bool            is_dying;      // Track if enemy is in death animation
     int             death_anim_frame;
     int             death_anim_counter;
@@ -507,6 +509,34 @@ typedef struct s_score
     char    *username;
     
 }       t_score;
+
+typedef struct s_shared_enemy_textures 
+{
+    // Default skins
+    t_raw_img skin_walker_default;
+    t_raw_img memory_leak_default; 
+    t_raw_img segv_default;
+
+    // Skin Walker
+    t_raw_img skin_walker_walk[3];
+    t_raw_img skin_walker_attack[3];
+    t_raw_img skin_walker_death[2];
+    bool skin_walker_initialized;
+    
+    // Memory Leak
+    t_raw_img memory_leak_walk[3];
+    t_raw_img memory_leak_attack[3];
+    t_raw_img memory_leak_death[2];
+    bool memory_leak_initialized;
+    
+    // SEGV
+    t_raw_img segv_walk[3];
+    t_raw_img segv_attack[3];
+    t_raw_img segv_death[2];
+    bool segv_initialized;
+    
+    bool initialized;
+} t_shared_enemy_textures;
 
 typedef struct s_pd
 {
@@ -540,7 +570,8 @@ typedef struct s_pd
     t_raw_img       medkit;
     int             medkit_count;     // Add this
     int             max_medkits;
-    double          *zbuffer;  
+    double          *zbuffer;
+    t_shared_enemy_textures shared_enemy_textures;
     t_score         score;
 }   t_parsed_data;
 
@@ -628,6 +659,9 @@ void    init_door_wall(t_parsed_data *pd);
 void    init_medkit_textures(t_parsed_data *pd);
 void    init_enemy_textures_to_null(t_parsed_data *pd);
 void    init_door_texture(t_parsed_data *pd);
+
+void    init_shared_enemy_textures(t_parsed_data *pd);
+void    free_shared_enemy_textures(t_parsed_data *pd);
 
 // Raycast
 void    update_raycast_data(t_parsed_data *pd);

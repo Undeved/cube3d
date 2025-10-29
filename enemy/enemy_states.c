@@ -88,12 +88,12 @@ void update_attack_animation(t_enemy *enemy)
         enemy->attack_anim_counter = 0;
         enemy->anim_frame = (enemy->anim_frame + 1) % 3;
         if (enemy->anim_frame == 0)
-            enemy->anim_img = enemy->attack1.img;
+            enemy->anim_img = enemy->attack1->img;
         else if (enemy->anim_frame == 1)
-            enemy->anim_img = enemy->attack2.img;
+            enemy->anim_img = enemy->attack2->img;
         else
         {
-            enemy->anim_img = enemy->attack3.img;
+            enemy->anim_img = enemy->attack3->img;
             if (enemy->attack_cooldown <= 0)
                 enemy->is_attacking = false;
         }

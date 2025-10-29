@@ -65,12 +65,12 @@ void	init_animation_frames(t_parsed_data *pd, int i)
 	char	*paths[8];
 
 	set_animation_paths(&pd->enemies[i], paths);
-	load_animation_frame(pd, i, &pd->enemies[i].walk1, paths[0]);
-	load_animation_frame(pd, i, &pd->enemies[i].walk2, paths[1]);
-	load_animation_frame(pd, i, &pd->enemies[i].walk3, paths[2]);
-	load_animation_frame(pd, i, &pd->enemies[i].attack1, paths[3]);
-	load_animation_frame(pd, i, &pd->enemies[i].attack2, paths[4]);
-	load_animation_frame(pd, i, &pd->enemies[i].attack3, paths[5]);
-	load_animation_frame(pd, i, &pd->enemies[i].death1, paths[6]);
-	load_animation_frame(pd, i, &pd->enemies[i].death2, paths[7]);
+	load_animation_frame(pd, i, pd->enemies[i].walk1, paths[0]);
+	load_animation_frame(pd, i, pd->enemies[i].walk2, paths[1]);
+	load_animation_frame(pd, i, pd->enemies[i].walk3, paths[2]);
+	load_animation_frame(pd, i, pd->enemies[i].attack1, paths[3]);
+	load_animation_frame(pd, i, pd->enemies[i].attack2, paths[4]);
+	load_animation_frame(pd, i, pd->enemies[i].attack3, paths[5]);
+	load_animation_frame(pd, i, pd->enemies[i].death1, paths[6]);
+	load_animation_frame(pd, i, pd->enemies[i].death2, paths[7]);
 }

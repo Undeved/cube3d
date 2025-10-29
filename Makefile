@@ -38,6 +38,7 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	game_loop/game_ui/setup_character_gun_shoot.c game_loop/game_ui/setup_character_gun_reload.c \
 	game_loop/game_ui/setup_character_delete.c game_loop/game_ui/game_ui_hp.c raycast/med_kit2.c \
 	score_system/get_user_data.c score_system/data_file.c \
+	game_loop/initializer/init_shared_textures.c
 
 OBJ=$(SRC:.c=.o)
 

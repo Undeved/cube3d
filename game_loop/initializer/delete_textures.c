@@ -164,67 +164,67 @@ static void delete_game_ui_textures(t_parsed_data *pd)
 
 }
 
-static void delete_enemy_textures(t_parsed_data *pd)
-{
-    int i;
+// static void delete_enemy_textures(t_parsed_data *pd)
+// {
+//     int i;
 
-    if (pd->enemy_count == 0 || pd->enemies == NULL)
-        return;
+//     if (pd->enemy_count == 0 || pd->enemies == NULL)
+//         return;
     
-    i = 0;
-    while (i < pd->enemy_count)
-    {
-        if (pd->enemies[i].skin.txtr)
-            mlx_delete_texture(pd->enemies[i].skin.txtr);
-        if (pd->enemies[i].skin.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].skin.img);
+//     i = 0;
+//     while (i < pd->enemy_count)
+//     {
+//         if (pd->enemies[i].skin.txtr)
+//             mlx_delete_texture(pd->enemies[i].skin.txtr);
+//         if (pd->enemies[i].skin.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].skin.img);
         
-        if (pd->enemies[i].walk1.txtr)
-            mlx_delete_texture(pd->enemies[i].walk1.txtr);
-        if (pd->enemies[i].walk1.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].walk1.img);
+//         if (pd->enemies[i].walk1.txtr)
+//             mlx_delete_texture(pd->enemies[i].walk1.txtr);
+//         if (pd->enemies[i].walk1.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].walk1.img);
         
-        if (pd->enemies[i].walk2.txtr)
-            mlx_delete_texture(pd->enemies[i].walk2.txtr);
-        if (pd->enemies[i].walk2.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].walk2.img);
+//         if (pd->enemies[i].walk2.txtr)
+//             mlx_delete_texture(pd->enemies[i].walk2.txtr);
+//         if (pd->enemies[i].walk2.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].walk2.img);
         
-        if (pd->enemies[i].walk3.txtr)
-            mlx_delete_texture(pd->enemies[i].walk3.txtr);
-        if (pd->enemies[i].walk3.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].walk3.img);
+//         if (pd->enemies[i].walk3.txtr)
+//             mlx_delete_texture(pd->enemies[i].walk3.txtr);
+//         if (pd->enemies[i].walk3.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].walk3.img);
         
-        if (pd->enemies[i].attack1.txtr)
-            mlx_delete_texture(pd->enemies[i].attack1.txtr);
-        if (pd->enemies[i].attack1.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].attack1.img);
+//         if (pd->enemies[i].attack1.txtr)
+//             mlx_delete_texture(pd->enemies[i].attack1.txtr);
+//         if (pd->enemies[i].attack1.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].attack1.img);
         
-        if (pd->enemies[i].attack2.txtr)
-            mlx_delete_texture(pd->enemies[i].attack2.txtr);
-        if (pd->enemies[i].attack2.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].attack2.img);
+//         if (pd->enemies[i].attack2.txtr)
+//             mlx_delete_texture(pd->enemies[i].attack2.txtr);
+//         if (pd->enemies[i].attack2.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].attack2.img);
         
-        if (pd->enemies[i].attack3.txtr)
-            mlx_delete_texture(pd->enemies[i].attack3.txtr);
-        if (pd->enemies[i].attack3.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].attack3.img);
+//         if (pd->enemies[i].attack3.txtr)
+//             mlx_delete_texture(pd->enemies[i].attack3.txtr);
+//         if (pd->enemies[i].attack3.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].attack3.img);
         
-        if (pd->enemies[i].death1.txtr)
-            mlx_delete_texture(pd->enemies[i].death1.txtr);
-        if (pd->enemies[i].death1.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].death1.img);
+//         if (pd->enemies[i].death1.txtr)
+//             mlx_delete_texture(pd->enemies[i].death1.txtr);
+//         if (pd->enemies[i].death1.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].death1.img);
         
-        if (pd->enemies[i].death2.txtr)
-            mlx_delete_texture(pd->enemies[i].death2.txtr);
-        if (pd->enemies[i].death2.img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].death2.img);
+//         if (pd->enemies[i].death2.txtr)
+//             mlx_delete_texture(pd->enemies[i].death2.txtr);
+//         if (pd->enemies[i].death2.img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].death2.img);
         
-        if (pd->enemies[i].anim_img)
-            mlx_delete_image(pd->mlx, pd->enemies[i].anim_img);
+//         if (pd->enemies[i].anim_img)
+//             mlx_delete_image(pd->mlx, pd->enemies[i].anim_img);
         
-        i++;
-    }
-}
+//         i++;
+//     }
+// }
 
 static void delete_door_wall_textures(t_parsed_data *pd)
 {
@@ -287,7 +287,7 @@ void delete_all_textures(t_parsed_data *pd)
     delete_main_menu_textures(pd);
     delete_characters_ui_textures(pd);
     delete_game_ui_textures(pd);
-    delete_enemy_textures(pd);
+    // delete_enemy_textures(pd);
     delete_door_wall_textures(pd);
     delete_medkit_textures(pd);
 }

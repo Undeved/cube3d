@@ -13,9 +13,9 @@ void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
         {
             enemy->death_anim_frame++;
             if (enemy->death_anim_frame == 1)
-                enemy->anim_img = enemy->death2.img;
+                enemy->anim_img = enemy->death2->img;
             else if (enemy->death_anim_frame == 2)
-                enemy->anim_img = enemy->death2.img;
+                enemy->anim_img = enemy->death2->img;
         }
     }
     
@@ -79,7 +79,7 @@ void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
         enemy->death_anim_frame = 0;
         enemy->death_anim_counter = 0;
         enemy->death_timer = DEATH_ANIMATION_DURATION;
-        enemy->anim_img = enemy->death1.img;
+        enemy->anim_img = enemy->death1->img;
         enemy->is_highlighted = false;
         enemy->highlight_timer = 0;
     }
