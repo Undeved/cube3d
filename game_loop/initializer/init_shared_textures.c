@@ -202,6 +202,88 @@ static void init_animation_state(t_enemy *enemy)
     enemy->patrol_target_timer = 0;
     enemy->patrol_change_interval = 300;
 }
+// freee all shared images in shared images struct in pd 
+// but keep the textures for future use
+static void free_shared_enemy_textures(t_parsed_data *pd)
+{
+    int i;
+
+    if (!pd->shared_enemy_textures.initialized)
+        return;
+    // free skin textures as well, default skin
+    if (pd->shared_enemy_textures.skin_walker_default.txtr)
+    {
+        mlx_delete_texture(pd->shared_enemy_textures.skin_walker_default.txtr);
+        pd->shared_enemy_textures.skin_walker_default.txtr = NULL;
+    }
+    if (pd->shared_enemy_textures.memory_leak_default.txtr)
+    {
+        mlx_delete_texture(pd->shared_enemy_textures.memory_leak_default.txtr);
+        pd->shared_enemy_textures.memory_leak_default.txtr = NULL;
+    }
+    if (pd->shared_enemy_textures.segv_default.txtr)
+    {
+        mlx_delete_texture(pd->shared_enemy_textures.segv_default.txtr);
+        pd->shared_enemy_textures.segv_default.txtr = NULL;
+    }
+    i = 0;
+    while (i < 3)
+    {
+        if (pd->shared_enemy_textures.skin_walker_walk[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.skin_walker_walk[i].txtr);
+            pd->shared_enemy_textures.skin_walker_walk[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.skin_walker_attack[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.skin_walker_attack[i].txtr);
+            pd->shared_enemy_textures.skin_walker_attack[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.memory_leak_walk[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.memory_leak_walk[i].txtr);
+            pd->shared_enemy_textures.memory_leak_walk[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.memory_leak_attack[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.memory_leak_attack[i].txtr);
+            pd->shared_enemy_textures.memory_leak_attack[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.segv_walk[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.segv_walk[i].txtr);
+            pd->shared_enemy_textures.segv_walk[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.segv_attack[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.segv_attack[i].txtr);
+            pd->shared_enemy_textures.segv_attack[i].txtr = NULL;
+        }
+        i++;
+    }
+
+    i = 0;
+    while (i < 2)
+    {
+        if (pd->shared_enemy_textures.skin_walker_death[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.skin_walker_death[i].txtr);
+            pd->shared_enemy_textures.skin_walker_death[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.memory_leak_death[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.memory_leak_death[i].txtr);
+            pd->shared_enemy_textures.memory_leak_death[i].txtr = NULL;
+        }
+        if (pd->shared_enemy_textures.segv_death[i].txtr)
+        {
+            mlx_delete_texture(pd->shared_enemy_textures.segv_death[i].txtr);
+            pd->shared_enemy_textures.segv_death[i].txtr = NULL;
+        }
+        i++;
+    }
+}
+    
 
 void init_shared_enemy_textures(t_parsed_data *pd)
 {
@@ -221,7 +303,8 @@ void init_shared_enemy_textures(t_parsed_data *pd)
         init_animation_state(&pd->enemies[i]);
         i++;
     }
-    // free_enemy_textures(pd);
+    // to save on memory, only imgs are needed during gameplay, so free textures
+    free_shared_enemy_textures(pd);
 }
 
 // // Function to free shared textures (call this on game shutdown)

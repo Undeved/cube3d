@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/29 05:41:03 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/30 22:46:30 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@
 
 
 # define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/garbage_value.png"
-# define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/memleak.png"
+# define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/memleak_idle.png"
 # define SEGV_DFL "textures/enemy_textures/animation_enemy/z/segfault_idle.png"
 
 # define GUN_X 767
@@ -661,7 +661,6 @@ void    init_enemy_textures_to_null(t_parsed_data *pd);
 void    init_door_texture(t_parsed_data *pd);
 
 void    init_shared_enemy_textures(t_parsed_data *pd);
-void    free_shared_enemy_textures(t_parsed_data *pd);
 
 // Raycast
 void    update_raycast_data(t_parsed_data *pd);
