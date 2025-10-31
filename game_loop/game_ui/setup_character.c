@@ -27,20 +27,21 @@ static void set_gun_stats(t_parsed_data *pd)
 {
     if (pd->player.gun.type == JESSE_SLINGER)
     {
-        pd->player.gun.ammo = 30;
-        pd->player.gun.damage = 10;
+        pd->player.gun.ammo = 1;
+        pd->player.gun.damage = 45;
     }
     else if (pd->player.gun.type == CHORUS_MP42)
     {
-        pd->player.gun.ammo = 40;
-        pd->player.gun.damage = 8;
+        pd->player.gun.ammo = 30;
+        pd->player.gun.damage = 10;
     }
     else if (pd->player.gun.type == OUSSMAC_37MM)
     {
-        pd->player.gun.ammo = 20;
-        pd->player.gun.damage = 15;
+        pd->player.gun.ammo = 7;
+        pd->player.gun.damage = 20;
     }
 }
+
 
 static void load_gun_ui_textures(t_parsed_data *pd)
 {

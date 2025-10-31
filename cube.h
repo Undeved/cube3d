@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/30 22:46:30 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/10/31 08:11:55 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,51 +129,51 @@
 # define DOOR_TEXTURE "textures/wall_textures/door.png"
 
 // Gun textures -----------------------------------------------------------
-# define GUN_JESSE_IDLE "textures/ui/in_game/gun/gun_idle.png"
-# define GUN_JESSE_AIM "textures/ui/in_game/gun/gun_aim.png"
+# define GUN_JESSE_IDLE "textures/ui/in_game/gun/slingshot_idle.png"
+# define GUN_JESSE_AIM "textures/ui/in_game/gun/slingshot_aim.png"
 
 // Gun shoot anim
-# define GUN_JESSE_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_JESSE_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_JESSE_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_JESSE_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/gun_aim_shoot_4.png"
+# define GUN_JESSE_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/slingshot_shoot0001.png"
+# define GUN_JESSE_SHOOT_2 "textures/ui/in_game/gun/gun_aim_shoot_anim/slingshot_shoot0002.png"
+# define GUN_JESSE_SHOOT_3 "textures/ui/in_game/gun/gun_aim_shoot_anim/slingshot_shoot0003.png"
+# define GUN_JESSE_SHOOT_4 "textures/ui/in_game/gun/gun_aim_shoot_anim/slingshot_shoot0004.png"
 # define GUN_SHOOT_FRMS 4
 
 // Gun reload anim
-# define GUN_JESSE_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_1.png"
-# define GUN_JESSE_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_2.png"
-# define GUN_JESSE_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_3.png"
-# define GUN_JESSE_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_4.png"
-# define GUN_JESSE_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_5.png"
-# define GUN_JESSE_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/gun_reload_6.png"
+# define GUN_JESSE_RELOAD_1 "textures/ui/in_game/gun/gun_reload_anim/slingshot_reload0001.png"
+# define GUN_JESSE_RELOAD_2 "textures/ui/in_game/gun/gun_reload_anim/slingshot_reload0002.png"
+# define GUN_JESSE_RELOAD_3 "textures/ui/in_game/gun/gun_reload_anim/slingshot_reload0003.png"
+# define GUN_JESSE_RELOAD_4 "textures/ui/in_game/gun/gun_reload_anim/slingshot_reload0004.png"
+# define GUN_JESSE_RELOAD_5 "textures/ui/in_game/gun/gun_reload_anim/slingshot_reload0005.png"
+# define GUN_JESSE_RELOAD_6 "textures/ui/in_game/gun/gun_reload_anim/slingshot_reload0006.png"
 # define GUN_RELOAD_FRMS 6
 
 // Chorus gun textures
-# define GUN_CHORUS_IDLE "textures/ui/in_game/gun_chorus/gun_idle.png"
-# define GUN_CHORUS_AIM "textures/ui/in_game/gun_chorus/gun_aim.png"
-# define GUN_CHORUS_SHOOT_1 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_CHORUS_SHOOT_2 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_CHORUS_SHOOT_3 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_CHORUS_SHOOT_4 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/gun_aim_shoot_4.png"
-# define GUN_CHORUS_RELOAD_1 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_1.png"
-# define GUN_CHORUS_RELOAD_2 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_2.png"
-# define GUN_CHORUS_RELOAD_3 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_3.png"
-# define GUN_CHORUS_RELOAD_4 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_4.png"          
-# define GUN_CHORUS_RELOAD_5 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_5.png"
-# define GUN_CHORUS_RELOAD_6 "textures/ui/in_game/gun_chorus/gun_reload_anim/gun_reload_6.png"
+# define GUN_CHORUS_IDLE "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_AIM "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_SHOOT_1 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_SHOOT_2 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_SHOOT_3 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_SHOOT_4 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_RELOAD_1 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_RELOAD_2 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_RELOAD_3 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_RELOAD_4 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_RELOAD_5 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_RELOAD_6 "textures/ui/in_game/gun_chorus/m42_idle.png"
 // Oussmac gun textures
-# define GUN_OUSSMAC_IDLE "textures/ui/in_game/gun_oussmac/gun_idle.png"
-# define GUN_OUSSMAC_AIM "textures/ui/in_game/gun_oussmac/gun_aim.png"
-# define GUN_OUSSMAC_SHOOT_1 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_1.png"
-# define GUN_OUSSMAC_SHOOT_2 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_2.png"
-# define GUN_OUSSMAC_SHOOT_3 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_3.png"
-# define GUN_OUSSMAC_SHOOT_4 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/gun_aim_shoot_4.png"
-# define GUN_OUSSMAC_RELOAD_1 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_1.png"
-# define GUN_OUSSMAC_RELOAD_2 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_2.png"
-# define GUN_OUSSMAC_RELOAD_3 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_3.png"
-# define GUN_OUSSMAC_RELOAD_4 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_4.png"          
-# define GUN_OUSSMAC_RELOAD_5 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_5.png"
-# define GUN_OUSSMAC_RELOAD_6 "textures/ui/in_game/gun_oussmac/gun_reload_anim/gun_reload_6.png"
+# define GUN_OUSSMAC_IDLE "textures/ui/in_game/gun_oussmac/37mm_idle.png"
+# define GUN_OUSSMAC_AIM "textures/ui/in_game/gun_oussmac/37mm_aim.png"
+# define GUN_OUSSMAC_SHOOT_1 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/37mm_shoot0001.png"
+# define GUN_OUSSMAC_SHOOT_2 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/37mm_shoot0002.png"
+# define GUN_OUSSMAC_SHOOT_3 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/37mm_shoot0003.png"
+# define GUN_OUSSMAC_SHOOT_4 "textures/ui/in_game/gun_oussmac/gun_aim_shoot_anim/37mm_shoot0004.png"
+# define GUN_OUSSMAC_RELOAD_1 "textures/ui/in_game/gun_oussmac/gun_reload_anim/37mm_reload0001.png"
+# define GUN_OUSSMAC_RELOAD_2 "textures/ui/in_game/gun_oussmac/gun_reload_anim/37mm_reload0002.png"
+# define GUN_OUSSMAC_RELOAD_3 "textures/ui/in_game/gun_oussmac/gun_reload_anim/37mm_reload0003.png"
+# define GUN_OUSSMAC_RELOAD_4 "textures/ui/in_game/gun_oussmac/gun_reload_anim/37mm_reload0004.png"          
+# define GUN_OUSSMAC_RELOAD_5 "textures/ui/in_game/gun_oussmac/gun_reload_anim/37mm_reload0005.png"
+# define GUN_OUSSMAC_RELOAD_6 "textures/ui/in_game/gun_oussmac/gun_reload_anim/37mm_reload0006.png"
 
 // Health_UI textures
 # define HEALTH_BAR "textures/ui/in_game/health/health_bar.png"

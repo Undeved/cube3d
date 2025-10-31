@@ -2,10 +2,10 @@
 
 void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
 {
-    enemy->is_highlighted = false;
+    if (enemy->death_anim_frame <= 0)
+        enemy->is_highlighted = true;
     enemy->highlight_timer = 0;
     enemy->death_anim_counter++;
-    
     if (enemy->death_anim_counter >= 15)
     {
         enemy->death_anim_counter = 0;
@@ -13,12 +13,14 @@ void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
         {
             enemy->death_anim_frame++;
             if (enemy->death_anim_frame == 1)
+            {
                 enemy->anim_img = enemy->death2->img;
+                enemy->is_highlighted = false;
+            }
             else if (enemy->death_anim_frame == 2)
                 enemy->anim_img = enemy->death2->img;
         }
     }
-    
     if (enemy->death_anim_frame >= 2)
         enemy->death_timer--;
     if (enemy->death_timer <= 0 && !enemy->dead)

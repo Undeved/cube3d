@@ -44,6 +44,20 @@ t_tex_sample sample_texture_pixel(mlx_image_t *img, int tx, int ty)
     return (s);
 }
 
+uint32_t tint_with_white(uint32_t color, float white_percentage)
+{
+    uint8_t r = (color >> 24) & 0xFF;
+    uint8_t g = (color >> 16) & 0xFF;
+    uint8_t b = (color >> 8) & 0xFF;
+    
+    // Blend each channel towards white (255)
+    r = r + (uint8_t)((149 - r) * white_percentage);
+    g = g + (uint8_t)((6 - g) * white_percentage);
+    b = b + (uint8_t)((6 - b) * white_percentage);
+    
+    return (r << 24) | (g << 16) | (b << 8) | 0xFF;
+}
+
 void draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
 {
     int             tex[2];
@@ -76,10 +90,12 @@ void draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
     if (!depth_ok)
         return;
 
-    if (ctx->curr->enemy->is_highlighted)
+   if (ctx->curr->enemy->is_highlighted)
     {
-        mlx_put_pixel(ctx->pd->screen, stripe, y, 0xFFFFFFFF);
-        return;
+        uint32_t original_color = shade_color(sample.color, ctx->curr->distance, 0.15);
+        uint32_t tinted_color = tint_with_white(original_color, 0.50f); // 70% white tint
+        mlx_put_pixel(ctx->pd->screen, stripe, y, tinted_color);
+    return;
     }
     mlx_put_pixel(ctx->pd->screen, stripe, y,
         shade_color(sample.color, ctx->curr->distance, 0.15));
