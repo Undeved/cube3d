@@ -1,25 +1,5 @@
 #include "../cube.h"
 
-int find_current_direction(t_enemy *enemy, double directions[4][2])
-{
-    int i;
-    int current_dir_index;
-
-    i = 0;
-    current_dir_index = -1;
-    while (i < 4)
-    {
-        if (fabs(enemy->dir.x - directions[i][0]) < 0.1
-            && fabs(enemy->dir.y - directions[i][1]) < 0.1)
-        {
-            current_dir_index = i;
-            break ;
-        }
-        i++;
-    }
-    return (current_dir_index);
-}
-
 int calculate_new_direction(int current_dir_index)
 {
     int turn_direction;
@@ -62,37 +42,31 @@ void change_enemy_direction(t_enemy *enemy)
     }
 }
 
-void calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos,
-        t_bpos *direction)
+static bool	circle_intersects_tile(double cx, double cy, double r,
+				int tx, int ty)
 {
-    double length;
+	double	nx;
+	double	ny;
+	double	dx;
+	double	dy;
 
-    direction->x = player_pos.x - enemy->b_pos.x;
-    direction->y = player_pos.y - enemy->b_pos.y;
-    length = sqrt(direction->x * direction->x + direction->y * direction->y);
-    if (length > 0)
-    {
-        direction->x /= length;
-        direction->y /= length;
-    }
+	if (cx < (double)tx)
+		nx = (double)tx;
+	else if (cx > (double)tx + 1.0)
+		nx = (double)tx + 1.0;
+	else
+		nx = cx;
+	if (cy < (double)ty)
+		ny = (double)ty;
+	else if (cy > (double)ty + 1.0)
+		ny = (double)ty + 1.0;
+	else
+		ny = cy;
+	dx = cx - nx;
+	dy = cy - ny;
+	return (dx * dx + dy * dy < r * r);
 }
 
-static double clamp_d(double v, double a, double b)
-{
-    if (v < a) return (a);
-    if (v > b) return (b);
-    return (v);
-}
-
-static bool circle_intersects_tile(double cx, double cy, double r,
-        int tx, int ty)
-{
-    double nx = clamp_d(cx, (double)tx, (double)tx + 1.0);
-    double ny = clamp_d(cy, (double)ty, (double)ty + 1.0);
-    double dx = cx - nx;
-    double dy = cy - ny;
-    return (dx * dx + dy * dy < r * r);
-}
 
 bool is_position_blocked_circle(t_parsed_data *pd, double cx, double cy,
         double radius)

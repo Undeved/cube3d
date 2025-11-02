@@ -29,28 +29,30 @@ double calculate_distance_to_origin(t_enemy *enemy)
     return (distance);
 }
 
-
-static t_bpos find_nearest_valid_position(t_enemy *enemy, t_parsed_data *pd)
+static t_bpos	find_nearest_valid_position(t_enemy *enemy, t_parsed_data *pd)
 {
-    t_bpos positions[8];
-    int i;
-    double radius = 1.0;
+	t_bpos	positions[8];
+	int		i;
+	double	radius;
+	double	angle;
 
-    for (i = 0; i < 8; i++)
-    {
-        double angle = (i * M_PI) / 4.0;
-        positions[i].x = enemy->b_pos.x + cos(angle) * radius;
-        positions[i].y = enemy->b_pos.y + sin(angle) * radius;
-        
-        if (positions[i].x >= 1.0 && positions[i].x < pd->level.max_x - 1.0 &&
-            positions[i].y >= 1.0 && positions[i].y < pd->level.max_y - 1.0 &&
-            !is_position_blocked_circle(pd, positions[i].x, positions[i].y, COLLISION_RADIUS))
-        {
-            return positions[i];
-        }
-    }
-    return enemy->b_pos;
+	i = 0;
+	radius = 1.0;
+	while (i < 8)
+	{
+		angle = (i * M_PI) / 4.0;
+		positions[i].x = enemy->b_pos.x + cos(angle) * radius;
+		positions[i].y = enemy->b_pos.y + sin(angle) * radius;
+		if (positions[i].x >= 1.0 && positions[i].x < pd->level.max_x - 1.0
+			&& positions[i].y >= 1.0 && positions[i].y < pd->level.max_y - 1.0
+			&& !is_position_blocked_circle(pd, positions[i].x,
+				positions[i].y, COLLISION_RADIUS))
+			return (positions[i]);
+		i++;
+	}
+	return (enemy->b_pos);
 }
+
 
 bool return_to_patrol(t_enemy *enemy, t_parsed_data *pd)
 {

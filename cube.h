@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/10/31 08:11:55 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:56:13 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,9 +566,9 @@ typedef struct s_pd
     t_enemy         *enemies;
     uint8_t         enemy_count;
     t_raw_img       door_txt;
-    t_med_kit       *medkits;        // Add this
+    t_med_kit       *medkits;
     t_raw_img       medkit;
-    int             medkit_count;     // Add this
+    int             medkit_count;
     int             max_medkits;
     double          *zbuffer;
     t_shared_enemy_textures shared_enemy_textures;
@@ -885,123 +885,104 @@ typedef struct
     t_tex_sample tmp_sample;
 } t_medkit_draw_data;
 
-void draw_medkits(t_parsed_data *pd);
-void spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
-void check_medkit_pickup(t_parsed_data *pd);
-void draw_medkits(t_parsed_data *pd);
+typedef struct s_move_ctx
+{
+    double  step_x;
+    double  step_y;
+    double  alt_step;
+    int     steps;
+    int     s;
+    bool    moved;
+}   t_move_ctx;
 
-void    get_enemies(t_cube *cube);
-void    draw_enemies(t_parsed_data *pd);
-
-// helpers test
-void    print_argv(char **argv);
-
-/* From enemy_line_of_sight.c */
-bool	has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end);
-
-/* From enemy_visibility.c */
-int		collect_and_sort_enemies_small(t_parsed_data *pd, t_enemy_draw_data *draw_data);
-
-/* From enemy_drawing.c */
-void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon);
-t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty);
-
-/* From enemy_combat.c */
-void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
-void	update_all_death_animations(t_parsed_data *pd);
-// void	update_death_animation(t_enemy *enemy);
-void update_death_animation(t_parsed_data *pd, t_enemy *enemy);
-
-/* From enemy_movement.c */
-void	change_enemy_direction(t_enemy *enemy);
-void	calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
-// bool	is_valid_move_position(t_parsed_data *pd, int map_x, int map_y);
-bool is_valid_move_position_circle_global(t_parsed_data *pd, double x, double y);
-
-
-/* From enemy_ai.c */
-void	set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
-bool	return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
-
-/* From enemy_pathfinding.c */
-void	smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
-double	calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
-bool    is_position_blocked_circle(t_parsed_data *pd, double cx, double cy,double radius);
-void	perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
-void	handle_patrol_state(t_enemy_ctx *ctx);
-
-/* From enemy_states.c */
-void	handle_enemy_state(t_enemy_ctx *ctx);
-void	update_attack_animation(t_enemy *enemy);
-
-/* From enemy_animation.c */
-void	update_walk_animation(t_enemy *enemy);
-
-
-//--------------------------------------------------------------------------------------
-
-
-
-/* wall_drawing.h */
-void		draw_wall(t_parsed_data *pd, int x, t_line_data *line, uint32_t wall_col);
-mlx_texture_t	*get_wall_texture(t_parsed_data *pd, int side, t_bdir ray_dir);
-uint32_t	darken_color(uint32_t c);
-void		draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon);
-void		draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon);
-
-/* texture_rendering.h */
-void		init_texture_column(t_texture_column *tc);
-void		setup_texture_stepping(t_texture_column *tc);
-uint32_t	get_pixel_color(t_texture_column *tc, int tex_y);
-void		draw_texture_pixels(t_texture_column *tc);
-void		draw_textured_column(t_parsed_data *pd, t_column_data *col, t_line_data *line);
-
-/* door_rendering.h */
-mlx_texture_t	*get_door_texture(t_parsed_data *pd);
-void		init_door_column(t_door_column *dc);
-void		setup_door_stepping(t_door_column *dc);
-uint32_t	get_door_pixel_color(t_door_column *dc, int tex_y);
-void		draw_door_pixels(t_door_column *dc);
-void		draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line);
-
-/* dda_calculations.h */
-void		compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist);
-void		set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data);
-void		set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data);
-void		init_step_and_sidedist(t_bpos player, t_step_data *data);
-void		update_x_side(t_dda_data *data);
-void		update_y_side(t_dda_data *data);
-
-/* ray_utils.h */
-bool		is_wall_hit(t_parsed_data *pd, t_pos map);
-void		perform_dda(t_parsed_data *pd, t_dda_data *data);
-double		calc_x_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir);
-double		calc_y_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir);
-double		compute_perp_wall_dist(t_perp_data *data);
-
-/* line_calculations.h */
-void		calc_line_params(int h, double perp_dist, t_line_data *line, t_parsed_data *pd);
-void		draw_column(t_parsed_data *pd, t_column_data *col);
-
-/* ray_casting.h */
-void		set_ray_dir(t_ray_dir_data *data);
-void		init_ray_data(t_ray_data *ray, t_player *pl, int x, int w);
-void		init_dda_data(t_parsed_data *pd, t_ray_data *ray, t_dda_data *dda_data);
-void		init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray, t_perp_data *perp_data, t_column_data *col_data);
-void		cast_single_ray(t_parsed_data *pd, int x);
-void		raycast_render(t_parsed_data *pd);
-
-/* External from enemies */
-void		draw_enemies(t_parsed_data *pd);
-void        handle_patrol_state(t_enemy_ctx *ctx);
-// ----------------------------------------------------------------------------------------
-bool move_towards_target(t_enemy *enemy, t_parsed_data *pd,t_bpos target, double speed);
-// Raycast Light engine
-uint32_t    shade_color(uint32_t base_col, double dist, double magnitude);
-void    update_enemies(t_parsed_data *pd);
-void	spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
-void	check_medkit_pickup(t_parsed_data *pd);
-bool medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *out);
+void                 draw_medkits(t_parsed_data *pd);
+void                 spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
+void                 check_medkit_pickup(t_parsed_data *pd);
+void                 draw_medkits(t_parsed_data *pd);
+void                 get_enemies(t_cube *cube);
+void                 draw_enemies(t_parsed_data *pd);
+void                 print_argv(char **argv);
+bool                 has_line_of_sight(t_parsed_data *pd, t_bpos start, t_bpos end);
+int	                 collect_and_sort_enemies_small(t_parsed_data *pd, t_enemy_draw_data *draw_data);
+void                 draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr, int horizon);
+t_tex_sample         sample_texture_pixel(mlx_image_t *img, int tx, int ty);
+void                 handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data, int draw_count);
+void                 update_all_death_animations(t_parsed_data *pd);
+void                 update_death_animation(t_parsed_data *pd, t_enemy *enemy);
+void                 change_enemy_direction(t_enemy *enemy);
+void                 calculate_direction_to_player(t_enemy *enemy, t_bpos player_pos, t_bpos *direction);
+bool                 is_valid_move_position_circle_global(t_parsed_data *pd, double x, double y);
+void                 set_alternative_directions(t_bpos alternatives[8], t_bpos direction);
+bool                 return_to_patrol(t_enemy *enemy, t_parsed_data *pd);
+void                 smart_chase_player(t_enemy *enemy, t_bpos player_pos, double speed, t_parsed_data *pd);
+double               calculate_distance_to_player(t_enemy *enemy, t_parsed_data *pd);
+bool                 is_position_blocked_circle(t_parsed_data *pd, double cx, double cy,double radius);
+void                 perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
+void                 handle_patrol_state(t_enemy_ctx *ctx);
+void                 handle_enemy_state(t_enemy_ctx *ctx);
+void                 update_attack_animation(t_enemy *enemy);
+void                 update_walk_animation(t_enemy *enemy);
+void                 draw_wall(t_parsed_data *pd, int x, t_line_data *line, uint32_t wall_col);
+mlx_texture_t        *get_wall_texture(t_parsed_data *pd, int side, t_bdir ray_dir);
+uint32_t             darken_color(uint32_t c);
+void                 draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon);
+void                 draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon);
+void                 init_texture_column(t_texture_column *tc);
+void                 setup_texture_stepping(t_texture_column *tc);
+uint32_t             get_pixel_color(t_texture_column *tc, int tex_y);
+void                 draw_texture_pixels(t_texture_column *tc);
+void                 draw_textured_column(t_parsed_data *pd, t_column_data *col, t_line_data *line);
+mlx_texture_t        *get_door_texture(t_parsed_data *pd);
+void                 init_door_column(t_door_column *dc);
+void                 setup_door_stepping(t_door_column *dc);
+uint32_t             get_door_pixel_color(t_door_column *dc, int tex_y);
+void	    	     draw_door_pixels(t_door_column *dc);
+void	    	     draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line);
+void	    	     compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist);
+void                 set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data);
+void                 set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data);
+void                 init_step_and_sidedist(t_bpos player, t_step_data *data);
+void                 update_x_side(t_dda_data *data);
+void                 update_y_side(t_dda_data *data);
+bool                 is_wall_hit(t_parsed_data *pd, t_pos map);
+void                 perform_dda(t_parsed_data *pd, t_dda_data *data);
+double               calc_x_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir);
+double               calc_y_perp_dist(t_pos map, t_bpos pos, t_pos step, t_bdir ray_dir);
+double               compute_perp_wall_dist(t_perp_data *data);
+void                 calc_line_params(int h, double perp_dist, t_line_data *line, t_parsed_data *pd);
+void                 draw_column(t_parsed_data *pd, t_column_data *col);
+void                 set_ray_dir(t_ray_dir_data *data);
+void                 init_ray_data(t_ray_data *ray, t_player *pl, int x, int w);
+void                 init_dda_data(t_parsed_data *pd, t_ray_data *ray, t_dda_data *dda_data);
+void                 init_perp_and_col_data(t_parsed_data *pd, int x, t_ray_data *ray, t_perp_data *perp_data, t_column_data *col_data);
+void                 cast_single_ray(t_parsed_data *pd, int x);
+void                 raycast_render(t_parsed_data *pd);
+void                 draw_enemies(t_parsed_data *pd);
+void                 handle_patrol_state(t_enemy_ctx *ctx);
+bool                 move_towards_target(t_enemy *enemy, t_parsed_data *pd,t_bpos target, double speed);
+uint32_t             shade_color(uint32_t base_col, double dist, double magnitude);
+void                 update_enemies(t_parsed_data *pd);
+void                 spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type);
+void                 check_medkit_pickup(t_parsed_data *pd);
+bool                 medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *out);
+bool                 all_enemies_dead(t_parsed_data *pd);
+void                 calculate_draw_bounds(t_enemy_draw_data *curr, int horizon,t_draw_bounds *b);
+int                  find_current_direction(t_enemy *enemy, double directions[4][2]);
+uint32_t                tint_with_white(uint32_t color, float white_percentage);
+t_enemy_draw_data       *find_shot_target(t_enemy_draw_data *draw_data,int draw_count, double center_tolerance);
+void                    apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy);
+int                     is_valid_enemy(t_enemy_draw_data *data);
+double                  dist2(t_bpos a, t_bpos b);
+void                    perform_patrol_movement(t_enemy *enemy, t_parsed_data *pd);
+bool                    is_diagonal_gap(t_parsed_data *pd, t_bpos from, t_bpos to);
+bool                    try_axis_moves(t_enemy *enemy, t_parsed_data *pd,double nx, double ny);
+bool                    attempt_one_step(t_enemy *enemy, t_parsed_data *pd,t_bpos dir, t_move_ctx *ctx);
+bool                    perform_move_steps(t_enemy *enemy, t_parsed_data *pd,t_bpos dir, double speed);
+bool                    move_towards_target(t_enemy *enemy, t_parsed_data *pd,t_bpos target, double speed);
+void                    handle_patrol_attempt(t_enemy *enemy, t_parsed_data *pd,t_bpos target, int *stuck_counter);
+void                    handle_patrol_state(t_enemy_ctx *ctx);
+bool                    try_alternative_directions(t_enemy *enemy, t_parsed_data *pd,t_bpos direction, double speed);
+bool                    choose_random_patrol_target(t_enemy *enemy, t_parsed_data *pd);
 
 
 # define CEILING 0xB5AB6BFF

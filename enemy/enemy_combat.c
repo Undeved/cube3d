@@ -31,15 +31,6 @@ void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
     }
 }
 
-static int	is_valid_enemy(t_enemy_draw_data *data)
-{
-	if (data->enemy->is_dying)
-		return (0);
-	if (data->enemy->dead && !data->enemy->is_dying)
-		return (0);
-	return (1);
-}
-
 t_enemy_draw_data	*find_shot_target(t_enemy_draw_data *draw_data,
 		int draw_count, double center_tolerance)
 {
@@ -88,7 +79,6 @@ void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
     else
         enemy->state = ENEMY_CHASE;
 }
-
 void handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data,
         int draw_count)
 {

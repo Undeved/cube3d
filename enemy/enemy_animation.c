@@ -60,22 +60,6 @@ void update_single_enemy(t_parsed_data *pd, int i)
     }
     update_enemy_animations(enemy);
 }
-bool all_enemies_dead(t_parsed_data *pd)
-{
-    int i;
-
-    if (!pd || !pd->enemies || pd->enemy_count == 0)
-        return (false);
-
-    i = 0;
-    while (i < pd->enemy_count)
-    {
-        if (!pd->enemies[i].dead)
-            return (false);
-        i++;
-    }
-    return (true);
-}
 
 void show_game_won_if_needed(t_parsed_data *pd)
 {

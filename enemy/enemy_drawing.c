@@ -1,24 +1,5 @@
 #include "../cube.h"
 
-void calculate_draw_bounds(t_enemy_draw_data *curr, int horizon,
-        t_draw_bounds *b)
-{
-    b->orig_draw_start_y = -curr->sprite_height / 2 + horizon;
-    b->orig_draw_start_x = -curr->sprite_width  / 2 + curr->sprite_screen_x;
-    b->draw_start_y = b->orig_draw_start_y;
-    if (b->draw_start_y < 0)
-        b->draw_start_y = 0;
-    b->draw_end_y = curr->sprite_height / 2 + horizon;
-    if (b->draw_end_y >= HEIGHT)
-        b->draw_end_y = HEIGHT - 1;
-    b->draw_start_x = b->orig_draw_start_x;
-    if (b->draw_start_x < 0)
-        b->draw_start_x = 0;
-    b->draw_end_x = curr->sprite_width / 2 + curr->sprite_screen_x;
-    if (b->draw_end_x >= WIDTH)
-        b->draw_end_x = WIDTH - 1;
-}
-
 t_tex_sample sample_texture_pixel(mlx_image_t *img, int tx, int ty)
 {
     t_tex_sample    s;
@@ -44,61 +25,48 @@ t_tex_sample sample_texture_pixel(mlx_image_t *img, int tx, int ty)
     return (s);
 }
 
-uint32_t tint_with_white(uint32_t color, float white_percentage)
+static bool	get_enemy_sample(t_draw_context *ctx, int stripe,
+				int y, t_tex_sample *sample)
 {
-    uint8_t r = (color >> 24) & 0xFF;
-    uint8_t g = (color >> 16) & 0xFF;
-    uint8_t b = (color >> 8) & 0xFF;
-    
-    // Blend each channel towards white (255)
-    r = r + (uint8_t)((149 - r) * white_percentage);
-    g = g + (uint8_t)((6 - g) * white_percentage);
-    b = b + (uint8_t)((6 - b) * white_percentage);
-    
-    return (r << 24) | (g << 16) | (b << 8) | 0xFF;
+	int		tex[2];
+
+	if (ctx->curr->enemy->anim_img == NULL)
+		return (false);
+	if (ctx->curr->sprite_width == 0 || ctx->curr->sprite_height == 0)
+		return (false);
+	if (stripe < 0 || stripe >= ctx->pd->screen->width)
+		return (false);
+	tex[0] = (int)((stripe - ctx->b->orig_draw_start_x)
+			* (double)ctx->curr->enemy->anim_img->width
+			/ (double)ctx->curr->sprite_width);
+	tex[1] = (int)((y - ctx->b->orig_draw_start_y)
+			* (double)ctx->curr->enemy->anim_img->height
+			/ (double)ctx->curr->sprite_height);
+	*sample = sample_texture_pixel(ctx->curr->enemy->anim_img,
+			tex[0], tex[1]);
+	if (!sample->ok || sample->alpha == 0)
+		return (false);
+	return (true);
 }
 
-void draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
+void	draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
 {
-    int             tex[2];
-    t_tex_sample    sample;
-    bool            depth_ok;
+	t_tex_sample	sample;
+	bool			depth_ok;
+	uint32_t		color;
 
-    if (ctx->curr->enemy->anim_img == NULL)
-        return;
-    if (ctx->curr->sprite_width == 0 || ctx->curr->sprite_height == 0)
-        return;
-    if (stripe < 0 || stripe >= ctx->pd->screen->width)
-        return;
-
-    tex[0] = (int)((stripe - ctx->b->orig_draw_start_x)
-             * (double)ctx->curr->enemy->anim_img->width
-             / (double)ctx->curr->sprite_width);
-    tex[1] = (int)((y - ctx->b->orig_draw_start_y)
-             * (double)ctx->curr->enemy->anim_img->height
-             / (double)ctx->curr->sprite_height);
-    sample = sample_texture_pixel(ctx->curr->enemy->anim_img, tex[0], tex[1]);
-    if (!sample.ok)
-        return;
-    if (sample.alpha == 0)
-        return;
-    if (ctx->pd->zbuffer)
-        depth_ok = (ctx->curr->transform.y < ctx->pd->zbuffer[stripe]);
-    else
-        depth_ok = true;
-
-    if (!depth_ok)
-        return;
-
-   if (ctx->curr->enemy->is_highlighted)
-    {
-        uint32_t original_color = shade_color(sample.color, ctx->curr->distance, 0.15);
-        uint32_t tinted_color = tint_with_white(original_color, 0.50f); // 70% white tint
-        mlx_put_pixel(ctx->pd->screen, stripe, y, tinted_color);
-    return;
-    }
-    mlx_put_pixel(ctx->pd->screen, stripe, y,
-        shade_color(sample.color, ctx->curr->distance, 0.15));
+	if (!get_enemy_sample(ctx, stripe, y, &sample))
+		return;
+	if (ctx->pd->zbuffer)
+		depth_ok = (ctx->curr->transform.y < ctx->pd->zbuffer[stripe]);
+	else
+		depth_ok = true;
+	if (!depth_ok)
+		return;
+	color = shade_color(sample.color, ctx->curr->distance, 0.15);
+	if (ctx->curr->enemy->is_highlighted)
+		color = tint_with_white(color, 0.50f);
+	mlx_put_pixel(ctx->pd->screen, stripe, y, color);
 }
 
 void draw_enemy_sprite(t_draw_context *ctx)
