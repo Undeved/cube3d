@@ -1,15 +1,4 @@
 #include "../../cube.h"
-void init_game_won_ui(t_parsed_data *pd);
-void    toggle_game_ui(t_parsed_data *pd)
-{
-    pd->minimap.img->enabled = true;
-    puts("choosing player...");
-    setup_character(pd);
-    setup_health_ui(pd);
-    init_game_ui(pd);
-    init_game_won_ui(pd);
-    pd->game_ui.gun.img->enabled = true;
-}
 
 void    init_game_ui(t_parsed_data *pd)
 {
@@ -38,4 +27,15 @@ void init_game_won_ui(t_parsed_data *pd)
     pd->game_ui.game_won.img->enabled = false;
     mlx_delete_texture(pd->game_ui.game_won.txtr);
     pd->game_ui.game_won.txtr = NULL;
+}
+
+void    toggle_game_ui(t_parsed_data *pd)
+{
+    pd->minimap.img->enabled = true;
+    puts("choosing player...");
+    setup_character(pd);
+    setup_health_ui(pd);
+    init_game_ui(pd);
+    init_game_won_ui(pd);
+    pd->game_ui.gun.img->enabled = true;
 }

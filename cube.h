@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/02 00:56:13 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/03 06:28:33 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@
 // Gun textures -----------------------------------------------------------
 # define GUN_JESSE_IDLE "textures/ui/in_game/gun/slingshot_idle.png"
 # define GUN_JESSE_AIM "textures/ui/in_game/gun/slingshot_aim.png"
+# define GUN_JESSE_NOAMMO "textures/ui/in_game/gun/slingshot_idle_empty.png"
 
 // Gun shoot anim
 # define GUN_JESSE_SHOOT_1 "textures/ui/in_game/gun/gun_aim_shoot_anim/slingshot_shoot0001.png"
@@ -150,17 +151,17 @@
 
 // Chorus gun textures
 # define GUN_CHORUS_IDLE "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_AIM "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_SHOOT_1 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_SHOOT_2 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_SHOOT_3 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_SHOOT_4 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_RELOAD_1 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_RELOAD_2 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_RELOAD_3 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_RELOAD_4 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_RELOAD_5 "textures/ui/in_game/gun_chorus/m42_idle.png"
-# define GUN_CHORUS_RELOAD_6 "textures/ui/in_game/gun_chorus/m42_idle.png"
+# define GUN_CHORUS_AIM "textures/ui/in_game/gun_chorus/m42_aim.png"
+# define GUN_CHORUS_SHOOT_1 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/m42_shoot0001.png"
+# define GUN_CHORUS_SHOOT_2 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/m42_shoot0002.png"
+# define GUN_CHORUS_SHOOT_3 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/m42_shoot0003.png"
+# define GUN_CHORUS_SHOOT_4 "textures/ui/in_game/gun_chorus/gun_aim_shoot_anim/m42_shoot0004.png"
+# define GUN_CHORUS_RELOAD_1 "textures/ui/in_game/gun_chorus/gun_reload_anim/m42_reload0001.png"
+# define GUN_CHORUS_RELOAD_2 "textures/ui/in_game/gun_chorus/gun_reload_anim/m42_reload0002.png"
+# define GUN_CHORUS_RELOAD_3 "textures/ui/in_game/gun_chorus/gun_reload_anim/m42_reload0003.png"
+# define GUN_CHORUS_RELOAD_4 "textures/ui/in_game/gun_chorus/gun_reload_anim/m42_reload0004.png"
+# define GUN_CHORUS_RELOAD_5 "textures/ui/in_game/gun_chorus/gun_reload_anim/m42_reload0005.png"
+# define GUN_CHORUS_RELOAD_6 "textures/ui/in_game/gun_chorus/gun_reload_anim/m42_reload0006.png"
 // Oussmac gun textures
 # define GUN_OUSSMAC_IDLE "textures/ui/in_game/gun_oussmac/37mm_idle.png"
 # define GUN_OUSSMAC_AIM "textures/ui/in_game/gun_oussmac/37mm_aim.png"
@@ -188,7 +189,7 @@
 # define HBAR_BG_Y 298
 
 
-# define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/garbage_value.png"
+# define SKIN_WALKER_DFL "textures/enemy_textures/animation_enemy/x/garbage_value_idle.png"
 # define MEMORY_LEAK_DFL "textures/enemy_textures/animation_enemy/y/memleak_idle.png"
 # define SEGV_DFL "textures/enemy_textures/animation_enemy/z/segfault_idle.png"
 
@@ -196,7 +197,6 @@
 # define GUN_Y 432
 # define GUN_AIM_X 383
 # define GUN_AIM_Y 431
-# define AMMO 30
 # define DAMAGE 10
 
 # define MAX_ENEMIES 100
@@ -316,6 +316,7 @@ typedef struct s_gun
     t_ui_anim   reload;
     bool        aiming;
     int         ammo;
+    int         max_ammo;
     int         damage;
     gun_type      type;
 }   t_gun;
@@ -393,6 +394,7 @@ typedef struct s_game_ui
 {
     t_raw_img           gun;
     t_raw_img           gun_aim;
+    t_raw_img           no_ammo;
     t_raw_img           health;
     t_raw_img           health_bg;
     t_raw_img           game_over;

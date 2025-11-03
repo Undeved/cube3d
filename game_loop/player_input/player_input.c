@@ -19,12 +19,12 @@ static void player_pitch(t_parsed_data *pd)
 
 static void reload_gun(t_parsed_data *pd)
 {
-    if (pd->keys.pressed[MLX_KEY_R] && pd->player.gun.ammo < AMMO && !pd->player.gun.reload.active)
+    if (pd->keys.pressed[MLX_KEY_R] && pd->player.gun.ammo < pd->player.gun.max_ammo && !pd->player.gun.reload.active)
     {
         pd->player.gun.reload.active = true;
         pd->player.gun.shoot.active = false;
         pd->player.gun.aiming = false;
-        pd->player.gun.ammo = AMMO;
+        pd->player.gun.ammo = pd->player.gun.max_ammo;
         printf("Reloading... Ammo refilled to %d\n", pd->player.gun.ammo);
         trigger_reload_anim(pd);
     }

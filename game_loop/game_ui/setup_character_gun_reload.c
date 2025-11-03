@@ -71,7 +71,7 @@ void load_gun_reload_anim(t_parsed_data *pd, t_character character)
     pd->player.gun.reload.current = 0;
     pd->player.gun.reload.active = false;
     pd->player.gun.reload.last_frame_time = 0;
-    pd->player.gun.reload.frame_delay = 100;
+    pd->player.gun.reload.frame_delay = 200;
     i = 0;
     while (i < GUN_RELOAD_FRMS)
     {

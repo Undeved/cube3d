@@ -55,6 +55,8 @@ static void init_characters_ui_textures(t_parsed_data *pd)
 
 static void init_game_ui_textures(t_parsed_data *pd)
 {
+    pd->game_ui.no_ammo.img = NULL;
+    pd->game_ui.no_ammo.txtr = NULL;
     pd->game_ui.gun.img = NULL;
     pd->game_ui.gun.txtr = NULL;
     pd->game_ui.gun_aim.img = NULL;

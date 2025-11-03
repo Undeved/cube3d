@@ -47,7 +47,7 @@ void init_precise_data(t_parsed_data *pd)
     pd->player.pitch = 0;
     pd->player.health = PLAYER_HEALTH;
     pd->game_ui.health.img = NULL;
-    pd->player.gun.ammo = AMMO;
+    pd->player.gun.ammo = 0;
     pd->player.gun.damage = DAMAGE;
     pd->player.is_shooting = false;
     pd->medkits = NULL;

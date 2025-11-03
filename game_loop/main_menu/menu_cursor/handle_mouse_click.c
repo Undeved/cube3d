@@ -39,6 +39,8 @@ void	render_gun(t_parsed_data *pd)
     // disable all gun images initially
     pd->game_ui.gun.img->enabled = false;
     pd->game_ui.gun_aim.img->enabled = false;
+    if (pd->game_ui.no_ammo.img)
+        pd->game_ui.no_ammo.img->enabled = false;
     i = 0;
     while (i < pd->player.gun.shoot.frame_count)
     {
@@ -56,7 +58,20 @@ void	render_gun(t_parsed_data *pd)
 	else if (gun->aiming)
 		pd->game_ui.gun_aim.img->enabled = true;
 	else
-		pd->game_ui.gun.img->enabled = true;
+    {
+        if (pd->player.character == JESSE)
+        {
+            if (pd->player.gun.ammo > 0)
+                pd->game_ui.gun.img->enabled = true;
+            else
+            {
+                if (pd->game_ui.no_ammo.img)
+                    pd->game_ui.no_ammo.img->enabled = true;
+            }
+        }
+        else
+		    pd->game_ui.gun.img->enabled = true;
+    }
 }
 
 void handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
