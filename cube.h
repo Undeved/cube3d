@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/03 06:28:33 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/03 07:54:58 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -970,7 +970,7 @@ bool                 medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medk
 bool                 all_enemies_dead(t_parsed_data *pd);
 void                 calculate_draw_bounds(t_enemy_draw_data *curr, int horizon,t_draw_bounds *b);
 int                  find_current_direction(t_enemy *enemy, double directions[4][2]);
-uint32_t                tint_with_white(uint32_t color, float white_percentage);
+uint32_t                tint_with_red(uint32_t color, float red_percentage);
 t_enemy_draw_data       *find_shot_target(t_enemy_draw_data *draw_data,int draw_count, double center_tolerance);
 void                    apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy);
 int                     is_valid_enemy(t_enemy_draw_data *data);

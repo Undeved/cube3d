@@ -65,7 +65,7 @@ void	draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
 		return;
 	color = shade_color(sample.color, ctx->curr->distance, 0.15);
 	if (ctx->curr->enemy->is_highlighted)
-		color = tint_with_white(color, 0.50f);
+		color = tint_with_red(color, 0.50f);
 	mlx_put_pixel(ctx->pd->screen, stripe, y, color);
 }
 

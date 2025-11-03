@@ -17,7 +17,7 @@ bool all_enemies_dead(t_parsed_data *pd)
     return (true);
 }
 
-uint32_t tint_with_white(uint32_t color, float red_percentage)
+uint32_t tint_with_red(uint32_t color, float red_percentage)
 {
     uint8_t r = (color >> 24) & 0xFF;
     uint8_t g = (color >> 16) & 0xFF;
