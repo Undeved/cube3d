@@ -62,9 +62,7 @@ t_enemy_draw_data	*find_shot_target(t_enemy_draw_data *draw_data,
 
 void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
 {
-    printf("== > enemy health %d, gun damage %d\n", enemy->health, pd->player.gun.damage);
     enemy->health -= pd->player.gun.damage;
-    printf("== > enemy health %d, gun damage %d\n", enemy->health, pd->player.gun.damage);
     enemy->is_highlighted = true;
     enemy->highlight_timer = HIGHLIGHT_FRAMES;
     if (enemy->health <= 0)

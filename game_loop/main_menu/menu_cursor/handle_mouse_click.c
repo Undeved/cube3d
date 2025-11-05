@@ -1,7 +1,5 @@
 #include "../../../cube.h"
 
-#include <sys/time.h>
-
 long	current_time_ms(void)
 {
 	struct timeval	tv;
@@ -29,13 +27,10 @@ void	update_ui_anim(t_ui_anim *anim)
     }
 }
 
-
-void	render_gun(t_parsed_data *pd)
+static void disbale_all_frames(t_parsed_data *pd)
 {
-	t_gun *gun;
     int i;
 
-    gun = &pd->player.gun;
     // disable all gun images initially
     pd->game_ui.gun.img->enabled = false;
     pd->game_ui.gun_aim.img->enabled = false;
@@ -43,14 +38,18 @@ void	render_gun(t_parsed_data *pd)
         pd->game_ui.no_ammo.img->enabled = false;
     i = 0;
     while (i < pd->player.gun.shoot.frame_count)
-    {
         pd->player.gun.shoot.frames[i++].img->enabled = false;
-    }
     i = 0;
     while (i < pd->player.gun.reload.frame_count)
-    {
         pd->player.gun.reload.frames[i++].img->enabled = false;
-    }
+}
+
+void	render_gun(t_parsed_data *pd)
+{
+	t_gun *gun;
+
+    gun = &pd->player.gun;
+    disbale_all_frames(pd);
 	if (gun->shoot.active)
 		pd->player.gun.shoot.frames[pd->player.gun.shoot.current].img->enabled = true;
     else if (gun->reload.active)

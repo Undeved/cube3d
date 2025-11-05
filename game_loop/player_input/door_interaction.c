@@ -26,9 +26,13 @@ static void check_nearby_doors(t_parsed_data *pd, int px, int py)
 void interact_with_door(t_parsed_data *pd)
 {
     static bool e_was_pressed = false;
-    int px = (int)pd->player.bpos.x;
-    int py = (int)pd->player.bpos.y;
-    bool e_pressed = pd->keys.pressed[MLX_KEY_E];
+    bool e_pressed;
+    int px;
+    int py;
+
+    px = (int)pd->player.bpos.x;
+    py = (int)pd->player.bpos.y;
+    e_pressed = pd->keys.pressed[MLX_KEY_E];
     if (e_pressed && !e_was_pressed)
         check_nearby_doors(pd, px, py);
     e_was_pressed = e_pressed;

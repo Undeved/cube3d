@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/03 07:54:58 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:23:07 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 # define MM_PLAYER_COLOR 0xBE0000FF
 
 // Player movement.
-# define SPEED 0.085;
+# define SPEED 0.085
 # define STRAFE_SPEED 0.070
 # define ROT_SPEED 0.08
 # define NUDGE_FROM_WALL 0.5
@@ -512,7 +512,8 @@ typedef struct s_score
     
 }       t_score;
 
-typedef struct s_shared_enemy_textures 
+// shared enemy textures
+typedef struct s_sh 
 {
     // Default skins
     t_raw_img skin_walker_default;
@@ -538,7 +539,7 @@ typedef struct s_shared_enemy_textures
     bool segv_initialized;
     
     bool initialized;
-} t_shared_enemy_textures;
+} t_sh;
 
 typedef struct s_pd
 {
@@ -573,7 +574,7 @@ typedef struct s_pd
     int             medkit_count;
     int             max_medkits;
     double          *zbuffer;
-    t_shared_enemy_textures shared_enemy_textures;
+    t_sh            sh;
     t_score         score;
 }   t_parsed_data;
 
@@ -595,10 +596,17 @@ void    parse_map(char *map_path, t_cube *cube);
 char	*ft_strdup(char *s1);
 
 // Garbage Collector.
-void	*allocate_gc(void *ptr);
-void	mind_free_all(int status);
-void    delete_all_textures(t_parsed_data *pd);
-void	set_pd(t_parsed_data *new_pd);
+void	        *allocate_gc(void *ptr);
+void	        mind_free_all(int status);
+void            delete_all_textures(t_parsed_data *pd);
+void            delete_player_textures(t_parsed_data *pd);
+void            delete_main_menu_textures(t_parsed_data *pd);
+void            delete_screen_and_map(t_parsed_data *pd);
+void            delete_characters_ui_textures(t_parsed_data *pd);
+void            delete_game_ui_textures(t_parsed_data *pd);
+void            delete_door_wall_textures(t_parsed_data *pd);
+void	        set_pd(t_parsed_data *new_pd);
+t_parsed_data	**get_pd(void);
 
 // GNL
 char	*get_next_line(int fd);
@@ -622,7 +630,7 @@ bool    is_num(char *str);
 int     ft_atoi(const char *str);
 void     extarct_floor_roof(char *str, t_cube *cube);
 char    **trim_newlines(char **old_argv);
-bool valid_grid_chars(char *str, int *player_count, bool map_grid);
+bool    valid_grid_chars(char *str, int *player_count, bool map_grid);
 void    extract_map(char **map_file, int *i, t_cube *cube);
 void    closed_bounds(t_cube *cube);
 void    get_level_data(t_cube *cube);
@@ -631,6 +639,7 @@ void    flood_fill(char **grid, t_pos pos, t_pos max);
 char    **grid_dup(char **grid);
 bool    is_door(char c);
 bool    validate_door(t_parsed_data *pd, int x, int y);
+void    scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy);
 
 // Game loop.
 void    init_all_textures(t_parsed_data *pd);
@@ -639,6 +648,10 @@ void    game_render(void *param);
 void    draw_minimap(t_parsed_data *pd);
 void    handle_player_input(mlx_key_data_t keydata, void *param);
 void    update_player_data(t_parsed_data *pd);
+void    update_player_movement(t_parsed_data *pd);
+double  get_move_speed(t_parsed_data *pd, double speed);
+void    player_pitch(t_parsed_data *pd);
+void    reload_gun(t_parsed_data *pd);
 void    update_health_ui(t_parsed_data *pd);
 void    interact_with_door(t_parsed_data *pd);
 bool    cool_down(long usec);
@@ -649,6 +662,7 @@ void    player_rotation(t_parsed_data *pd);
 void    game_mouse_input(mouse_key_t button, action_t action, modifier_key_t mods, t_parsed_data *pd);
 void    trigger_reload_anim(t_parsed_data *pd);
 long	current_time_ms(void);
+void    keyboard_shoot(t_parsed_data *pd);
 
 // Init For Gameloop
 void	init_enemy_textures(t_parsed_data *pd);
@@ -661,8 +675,12 @@ void    init_door_wall(t_parsed_data *pd);
 void    init_medkit_textures(t_parsed_data *pd);
 void    init_enemy_textures_to_null(t_parsed_data *pd);
 void    init_door_texture(t_parsed_data *pd);
+void    init_shared_textures(t_parsed_data *pd);
+void    free_sh_txtrs(t_parsed_data *pd);
+void    init_shared_attack_null(t_parsed_data *pd);
+void    init_default_skins(t_parsed_data *pd);
 
-void    init_shared_enemy_textures(t_parsed_data *pd);
+void    init_sh(t_parsed_data *pd);
 
 // Raycast
 void    update_raycast_data(t_parsed_data *pd);
@@ -675,7 +693,6 @@ void    handle_ui_input(mlx_key_data_t keydata, t_parsed_data *pd);
 void    ui_error(void);
 void    init_characters_menu(t_parsed_data *pd);
 void    characters_menu(t_parsed_data *pd);
-void    setup_mouse(t_parsed_data *pd);
 void    handle_mouse_input(double xpos, double ypos, void *param);
 void    handle_mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
 void    menu_trigger_click(t_parsed_data *pd);
@@ -684,11 +701,12 @@ void    toggle_game_ui(t_parsed_data *pd);
 void    init_radar(t_parsed_data *pd);
 void    render_radar(t_parsed_data *pd);
 void    render_player_icon(t_parsed_data *pd);
+void	draw_minimap_grid(t_parsed_data *pd);
 int     sqr(int x);
-void    init_game_ui(t_parsed_data *pd);
 void	update_ui_anim(t_ui_anim *anim);
 void	render_gun(t_parsed_data *pd);
 void    setup_character(t_parsed_data *pd);
+void    set_gun_stats(t_parsed_data *pd);
 void    setup_health_ui(t_parsed_data *pd);
 void    load_gun_shoot_anim(t_parsed_data *pd, t_character character);
 void    load_gun_reload_anim(t_parsed_data *pd, t_character character);

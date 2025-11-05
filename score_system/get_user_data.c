@@ -39,7 +39,7 @@ static void read_username(t_parsed_data *pd)
         }
         i++;
     }
-    printf("yout username is: %s", pd->score.username);
+    printf("your username is: %s\n", pd->score.username);
 }
 
 void    get_user(t_parsed_data *pd)

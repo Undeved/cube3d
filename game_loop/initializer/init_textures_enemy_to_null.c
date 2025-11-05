@@ -27,40 +27,23 @@ void init_medkit_textures(t_parsed_data *pd)
 	pd->medkits = NULL;
 }
 
-void init_shared_enemy_textures_to_null(t_parsed_data *pd)
+void init_sh_to_null(t_parsed_data *pd)
 {
 	int	i;
-	pd->shared_enemy_textures.initialized = false;
-	pd->shared_enemy_textures.skin_walker_initialized = false;
-	pd->shared_enemy_textures.memory_leak_initialized = false;
-	pd->shared_enemy_textures.segv_initialized = false;
-    
-	i = 0;
-	while (i < 3)
-	{
-		pd->shared_enemy_textures.skin_walker_walk[i].img = NULL;
-		pd->shared_enemy_textures.skin_walker_walk[i].txtr = NULL;
-		pd->shared_enemy_textures.skin_walker_attack[i].img = NULL;
-		pd->shared_enemy_textures.skin_walker_attack[i].txtr = NULL;
-		pd->shared_enemy_textures.memory_leak_walk[i].img = NULL;
-		pd->shared_enemy_textures.memory_leak_walk[i].txtr = NULL;
-		pd->shared_enemy_textures.memory_leak_attack[i].img = NULL;
-		pd->shared_enemy_textures.memory_leak_attack[i].txtr = NULL;
-		pd->shared_enemy_textures.segv_walk[i].img = NULL;
-		pd->shared_enemy_textures.segv_walk[i].txtr = NULL;
-		pd->shared_enemy_textures.segv_attack[i].img = NULL;
-		pd->shared_enemy_textures.segv_attack[i].txtr = NULL;
-		i++;
-	}
+	pd->sh.initialized = false;
+	pd->sh.skin_walker_initialized = false;
+	pd->sh.memory_leak_initialized = false;
+	pd->sh.segv_initialized = false;
+	init_shared_attack_null(pd);
 	i = 0;
 	while (i < 2)
 	{
-		pd->shared_enemy_textures.skin_walker_death[i].img = NULL;
-		pd->shared_enemy_textures.skin_walker_death[i].txtr = NULL;
-		pd->shared_enemy_textures.memory_leak_death[i].img = NULL;
-		pd->shared_enemy_textures.memory_leak_death[i].txtr = NULL;
-		pd->shared_enemy_textures.segv_death[i].img = NULL;
-		pd->shared_enemy_textures.segv_death[i].txtr = NULL;
+		pd->sh.skin_walker_death[i].img = NULL;
+		pd->sh.skin_walker_death[i].txtr = NULL;
+		pd->sh.memory_leak_death[i].img = NULL;
+		pd->sh.memory_leak_death[i].txtr = NULL;
+		pd->sh.segv_death[i].img = NULL;
+		pd->sh.segv_death[i].txtr = NULL;
 		i++;
 	}
 }
@@ -71,7 +54,7 @@ void init_enemy_textures_to_null(t_parsed_data *pd)
 
 	if (pd->enemy_count == 0 || pd->enemies == NULL)
 		return ;
-    init_shared_enemy_textures_to_null(pd);
+    init_sh_to_null(pd);
 	i = 0;
 	while (i < pd->enemy_count)
 	{

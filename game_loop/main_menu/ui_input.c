@@ -28,16 +28,6 @@ void    toggle_characters_ui(t_parsed_data *pd, bool trigger)
     pd->chars_menu.selected.img->enabled = trigger;
 }
 
-void characters_trigger_click(t_parsed_data *pd)
-{
-    if (pd->chars_menu.button_index == JESSE)
-            pd->chars_menu.select_index = JESSE;
-    else if (pd->chars_menu.button_index == CHORUS)
-            pd->chars_menu.select_index = CHORUS;
-    else if (pd->chars_menu.button_index == OUSSMAC)
-            pd->chars_menu.select_index = OUSSMAC;
-}
-
 void    handle_character_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
 {
     if (pd->level.game_started || pd->ui_index != 1 || keydata.action != MLX_PRESS)

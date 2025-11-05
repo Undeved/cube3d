@@ -32,13 +32,17 @@ SRC= helpers.c main.c input_arguments/printers.c input_arguments/evaluate_input.
 	raycast/ray_casting.c raycast/line_calculations.c raycast/door_rendering.c\
 	raycast/dda_calculations.c parse_map/validate_doors.c raycast/med_kit.c \
 	game_loop/initializer/init_textures.c game_loop/initializer/delete_textures.c \
-	game_loop/initializer/init_game_enemy.c game_loop/initializer/init_game_enemy_animation.c \
-	game_loop/initializer/free_game_enemy.c game_loop/initializer/init_game.c \
+	game_loop/initializer/init_game.c \
 	game_loop/initializer/init_textures_enemy_to_null.c game_loop/player_input/player_mov_input.c \
 	game_loop/game_ui/setup_character_gun_shoot.c game_loop/game_ui/setup_character_gun_reload.c \
 	game_loop/game_ui/setup_character_delete.c game_loop/game_ui/game_ui_hp.c raycast/med_kit2.c \
 	score_system/get_user_data.c score_system/data_file.c enemy/enemy_utils.c enemy/enemy_utils2.c enemy/enemy_utils3.c \
-	game_loop/initializer/init_shared_textures.c enemy/enemy_utils4.c 
+	game_loop/initializer/init_shared_textures.c enemy/enemy_utils4.c \
+	game_loop/initializer/delete_textures_utils.c game_loop/initializer/delete_textures_utils2.c \
+	game_loop/initializer/init_shared_textures_utils.c game_loop/initializer/init_shared_textures_utils2.c \
+	game_loop/initializer/init_shared_textures_utils3.c game_loop/player_input/update_player.c \
+	mind_allocater/mind_utils.c parse_map/get_enemy_data_utils.c \
+	
 
 OBJ=$(SRC:.c=.o)
 

@@ -76,7 +76,7 @@ static void	draw_minimap_pixel(t_parsed_data *pd, t_pos pixel, t_pos center, dou
 	}
 }
 
-static void	draw_minimap_grid(t_parsed_data *pd)
+void	draw_minimap_grid(t_parsed_data *pd)
 {
 	t_pos	center;
 	t_pos	pixel;
@@ -96,11 +96,4 @@ static void	draw_minimap_grid(t_parsed_data *pd)
 		}
 		pixel.y++;
 	}
-}
-
-void    render_radar(t_parsed_data *pd)
-{
-    (void)pd;
-    draw_minimap_grid(pd);
-    render_player_icon(pd);
 }

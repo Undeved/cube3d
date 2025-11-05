@@ -1,6 +1,6 @@
 #include "../../cube.h"
 
-void delete_shoot_frames(t_parsed_data *pd)
+static void delete_shoot_frames(t_parsed_data *pd)
 {
     int i;
 
@@ -19,7 +19,7 @@ void delete_shoot_frames(t_parsed_data *pd)
     }
 }
 
-void delete_reload_frames(t_parsed_data *pd)
+static void delete_reload_frames(t_parsed_data *pd)
 {
     int i;
 
@@ -50,8 +50,6 @@ void delete_gun_textures(t_parsed_data *pd)
         mlx_delete_texture(pd->game_ui.gun_aim.txtr);
         pd->game_ui.gun_aim.txtr = NULL;
     }
-
     delete_shoot_frames(pd);
     delete_reload_frames(pd);
 }
-

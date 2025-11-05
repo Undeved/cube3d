@@ -13,9 +13,8 @@ static void render_ch_button_index(t_parsed_data *pd)
         pd->chars_menu.b_oussmac.hoverd = true;
 }
 
-static void update_ch_button_state(t_parsed_data *pd)
+static void jesse_button_state(t_parsed_data *pd)
 {
-    render_ch_button_index(pd);
     if (pd->chars_menu.b_jesse.hoverd)
     {
         pd->chars_menu.b_jesse_hv.img->enabled = true;
@@ -26,7 +25,12 @@ static void update_ch_button_state(t_parsed_data *pd)
         pd->chars_menu.b_jesse.img->enabled = true;
         pd->chars_menu.b_jesse_hv.img->enabled = false;
     }
+}
 
+static void update_ch_button_state(t_parsed_data *pd)
+{
+    render_ch_button_index(pd);
+    jesse_button_state(pd);
     if (pd->chars_menu.b_chorus.hoverd)
     {
         pd->chars_menu.b_chorus_hv.img->enabled = true;
@@ -69,4 +73,3 @@ void    characters_menu(t_parsed_data *pd)
     update_selection(pd);
     update_ch_button_state(pd);
 }
-

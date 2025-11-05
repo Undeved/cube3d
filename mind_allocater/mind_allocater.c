@@ -26,21 +26,6 @@ int	add_to_gc(void *new_address)
 	return (EXIT_SUCCESS);
 }
 
-t_parsed_data	**get_pd(void)
-{
-	static t_parsed_data	*pd = NULL;
-
-	return (&pd);
-}
-
-void	set_pd(t_parsed_data *new_pd)
-{
-	t_parsed_data	**pd_ptr;
-
-	pd_ptr = get_pd();
-	*pd_ptr = new_pd;
-}
-
 void	mind_free_all(int status)
 {
 	t_mind_alloc	**head;
@@ -53,6 +38,8 @@ void	mind_free_all(int status)
 	{
 		delete_all_textures(*pd);
 		mlx_terminate((*pd)->mlx);
+		(*pd)->mlx = NULL;
+		*pd = NULL;
 	}
 	while (*head)
 	{
@@ -62,7 +49,7 @@ void	mind_free_all(int status)
 		*head = tmp;
 	}
 	// close fd if forgot to close it somewhere very unlikely but safe check.
-	*get_head() = NULL;
+	*head = NULL;
 	exit(status);
 }
 

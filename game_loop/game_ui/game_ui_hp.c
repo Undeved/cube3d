@@ -21,41 +21,43 @@ static int smooth_step(int current, int target, int step)
 
 static uint32_t calculate_health_color(int displayed_health)
 {
-    uint8_t r = (uint8_t)(255 * (1.0f - displayed_health / 100.0f));
-    uint8_t g = (uint8_t)(255 * (displayed_health / 100.0f));
+    uint8_t r;
+    uint8_t g;
+
+    r = (uint8_t)(255 * (1.0f - displayed_health / 100.0f));
+    g = (uint8_t)(255 * (displayed_health / 100.0f));
     return (0xFF << 24) | (r) | (g << 8) | (0 << 16);
 }
 
 static int calculate_health_width(int displayed_health, int full_width)
 {
-    return (displayed_health * full_width) / 100;
+    return ((displayed_health * full_width) / 100);
 }
 
 static void update_health_pixels(t_parsed_data *pd, int health_width, uint32_t color)
 {
-    int x, y;
-    uint32_t *pixel;
+    t_pos pxl;
+    uint32_t    *pixel;
+    int         full_width;
+    int         height;
 
-    int full_width = pd->game_ui.health.img->width;
-    int height = pd->game_ui.health.img->height;
-
-    y = 0;
-    while (y < height)
+    full_width = pd->game_ui.health.img->width;
+    height = pd->game_ui.health.img->height;
+    pxl.y = 0;
+    while (pxl.y < height)
     {
-        x = 0;
-        while (x < full_width)
+        pxl.x = 0;
+        while (pxl.x < full_width)
         {
             pixel = (uint32_t *)(pd->game_ui.health.img->pixels
-                    + (y * full_width + x) * sizeof(uint32_t));
-
-            if (x < health_width)
+                    + (pxl.y * full_width + pxl.x) * sizeof(uint32_t));
+            if (pxl.x < health_width)
                 *pixel = color;
             else
                 *pixel = 0x00000000;
-
-            x++;
+            pxl.x++;
         }
-        y++;
+        pxl.y++;
     }
 }
 

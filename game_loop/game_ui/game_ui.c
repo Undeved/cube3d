@@ -1,6 +1,6 @@
 #include "../../cube.h"
 
-void    init_game_ui(t_parsed_data *pd)
+static void    init_game_ui(t_parsed_data *pd)
 {
     pd->game_ui.game_over.txtr = mlx_load_png(GAME_OVER);
     if (!pd->game_ui.game_over.txtr)
@@ -14,7 +14,7 @@ void    init_game_ui(t_parsed_data *pd)
     pd->game_ui.game_over.txtr = NULL;
 }
 
-void init_game_won_ui(t_parsed_data *pd)
+static void init_game_won_ui(t_parsed_data *pd)
 {
     pd->game_ui.game_won.txtr = mlx_load_png(GAME_WON);
     if (!pd->game_ui.game_won.txtr)

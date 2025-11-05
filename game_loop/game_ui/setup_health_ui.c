@@ -48,6 +48,7 @@ static void delete_health_textures(t_parsed_data *pd)
     }
 }
 
+// entry function for health setup.
 void setup_health_ui(t_parsed_data *pd)
 {
     load_health_background(pd);
@@ -58,4 +59,27 @@ void setup_health_ui(t_parsed_data *pd)
     if (!pd->game_ui.health.img || mlx_image_to_window(pd->mlx, pd->game_ui.health.img, HBAR_X, HBAR_Y) == -1)
         mind_free_all(EXIT_FAILURE);
     delete_health_textures(pd);
+}
+
+// needed in setuping character.
+void set_gun_stats(t_parsed_data *pd)
+{
+    if (pd->player.gun.type == JESSE_SLINGER)
+    {
+        pd->player.gun.ammo = 1;
+        pd->player.gun.max_ammo = 1;
+        pd->player.gun.damage = 45;
+    }
+    else if (pd->player.gun.type == CHORUS_MP42)
+    {
+        pd->player.gun.ammo = 40;
+        pd->player.gun.max_ammo = 40;
+        pd->player.gun.damage = 12;
+    }
+    else if (pd->player.gun.type == OUSSMAC_37MM)
+    {
+        pd->player.gun.ammo = 7;
+        pd->player.gun.max_ammo = 7;
+        pd->player.gun.damage = 20;
+    }
 }

@@ -41,8 +41,7 @@ void init_textures(t_parsed_data *pd)
 	load_one_texture(pd, &pd->txtr_so);
 	load_one_texture(pd, &pd->txtr_we);
 	load_one_texture(pd, &pd->txtr_ea);
-    init_shared_enemy_textures(pd);
-    // init_enemy_textures(pd);
+    init_sh(pd);
 }
 
 void game_loop(t_parsed_data *pd)

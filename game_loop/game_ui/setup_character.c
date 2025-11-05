@@ -1,6 +1,5 @@
 #include "../../cube.h"
 
-// load idle and aim failure helper function
 static void load_gun_idle_png_failure(t_parsed_data *pd, char *path)
 {
     pd->game_ui.gun.txtr = mlx_load_png(path);
@@ -34,29 +33,6 @@ static void load_gun_no_ammo_png_failure(t_parsed_data *pd , char *path)
     pd->game_ui.no_ammo.img->enabled = false;
 }
 
-static void set_gun_stats(t_parsed_data *pd)
-{
-    if (pd->player.gun.type == JESSE_SLINGER)
-    {
-        pd->player.gun.ammo = 1;
-        pd->player.gun.max_ammo = 1;
-        pd->player.gun.damage = 45;
-    }
-    else if (pd->player.gun.type == CHORUS_MP42)
-    {
-        pd->player.gun.ammo = 30;
-        pd->player.gun.max_ammo = 30;
-        pd->player.gun.damage = 10;
-    }
-    else if (pd->player.gun.type == OUSSMAC_37MM)
-    {
-        pd->player.gun.ammo = 7;
-        pd->player.gun.max_ammo = 7;
-        pd->player.gun.damage = 20;
-    }
-}
-
-
 static void load_gun_ui_textures(t_parsed_data *pd)
 {
     if (pd->chars_menu.select_index == JESSE)
@@ -84,7 +60,6 @@ static void load_gun_ui_textures(t_parsed_data *pd)
         load_gun_shoot_anim(pd, OUSSMAC);
         load_gun_reload_anim(pd, OUSSMAC);
     }
-    set_gun_stats(pd);
 }
 
 void setup_character(t_parsed_data *pd)
@@ -106,6 +81,7 @@ void setup_character(t_parsed_data *pd)
     }
     // load gun ui textures based on gun type
     load_gun_ui_textures(pd);
+    set_gun_stats(pd);
     delete_gun_textures(pd);
 }
  
