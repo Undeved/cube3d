@@ -1,34 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy_combat.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 01:15:07 by oukhanfa          #+#    #+#             */
+/*   Updated: 2025/11/06 02:18:40 by oukhanfa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
-void update_death_animation(t_parsed_data *pd, t_enemy *enemy)
+void	update_death_animation(t_parsed_data *pd, t_enemy *enemy)
 {
-    if (enemy->death_anim_frame <= 0)
-        enemy->is_highlighted = true;
-    enemy->highlight_timer = 0;
-    enemy->death_anim_counter++;
-    if (enemy->death_anim_counter >= 15)
-    {
-        enemy->death_anim_counter = 0;
-        if (enemy->death_anim_frame < 2)
-        {
-            enemy->death_anim_frame++;
-            if (enemy->death_anim_frame == 1)
-            {
-                enemy->anim_img = enemy->death2->img;
-                enemy->is_highlighted = false;
-            }
-            else if (enemy->death_anim_frame == 2)
-                enemy->anim_img = enemy->death2->img;
-        }
-    }
-    if (enemy->death_anim_frame >= 2)
-        enemy->death_timer--;
-    if (enemy->death_timer <= 0 && !enemy->dead)
-    {
-        spawn_medkit(pd, enemy->b_pos, enemy->type);
-        enemy->is_dying = false;
-        enemy->dead = true;
-    }
+	if (enemy->death_anim_frame <= 0)
+		enemy->is_highlighted = true;
+	enemy->highlight_timer = 0;
+	enemy->death_anim_counter++;
+	if (enemy->death_anim_counter >= 15)
+	{
+		enemy->death_anim_counter = 0;
+		if (enemy->death_anim_frame < 2)
+		{
+			enemy->death_anim_frame++;
+			set_death_frame(enemy);
+		}
+	}
+	if (enemy->death_anim_frame >= 2)
+		enemy->death_timer--;
+	if (enemy->death_timer <= 0 && !enemy->dead)
+	{
+		spawn_medkit(pd, enemy->b_pos, enemy->type);
+		enemy->is_dying = false;
+		enemy->dead = true;
+	}
 }
 
 t_enemy_draw_data	*find_shot_target(t_enemy_draw_data *draw_data,
@@ -60,53 +66,54 @@ t_enemy_draw_data	*find_shot_target(t_enemy_draw_data *draw_data,
 	return (target_enemy);
 }
 
-void apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
+void	apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
 {
-    enemy->health -= pd->player.gun.damage;
-    enemy->is_highlighted = true;
-    enemy->highlight_timer = HIGHLIGHT_FRAMES;
-    if (enemy->health <= 0)
-    {
-        puts("should be dead");
-        enemy->is_dying = true;
-        enemy->dead = false;
-        enemy->death_anim_frame = 0;
-        enemy->death_anim_counter = 0;
-        enemy->death_timer = DEATH_ANIMATION_DURATION;
-        enemy->anim_img = enemy->death1->img;
-        enemy->is_highlighted = false;
-        enemy->highlight_timer = 0;
-    }
-    else
-        enemy->state = ENEMY_CHASE;
-}
-void handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data,
-        int draw_count)
-{
-    t_enemy_draw_data   *target_enemy;
-    double              center_tolerance;
-
-    if (!pd->player.is_shooting)
-        return ;
-    center_tolerance = WIDTH * 0.05;
-    target_enemy = find_shot_target(draw_data, draw_count, center_tolerance);
-    if (target_enemy && !target_enemy->enemy->is_dying
-            && !target_enemy->enemy->dead)
-    {
-        apply_damage_to_enemy(pd, target_enemy->enemy);
-    }
-    pd->player.is_shooting = false;
+	enemy->health -= pd->player.gun.damage;
+	enemy->is_highlighted = true;
+	enemy->highlight_timer = HIGHLIGHT_FRAMES;
+	if (enemy->health <= 0)
+	{
+		puts("should be dead");
+		enemy->is_dying = true;
+		enemy->dead = false;
+		enemy->death_anim_frame = 0;
+		enemy->death_anim_counter = 0;
+		enemy->death_timer = DEATH_ANIMATION_DURATION;
+		enemy->anim_img = enemy->death1->img;
+		enemy->is_highlighted = false;
+		enemy->highlight_timer = 0;
+	}
+	else
+		enemy->state = ENEMY_CHASE;
 }
 
-void update_all_death_animations(t_parsed_data *pd)
+void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data,
+		int draw_count)
 {
-    int i;
+	t_enemy_draw_data	*target_enemy;
+	double				center_tolerance;
 
-    i = 0;
-    while (i < pd->enemy_count)
-    {
-        if (pd->enemies[i].is_dying)
-            update_death_animation(pd, &pd->enemies[i]);
-        i++;
-    }
+	if (!pd->player.is_shooting)
+		return ;
+	center_tolerance = WIDTH * 0.05;
+	target_enemy = find_shot_target(draw_data, draw_count, center_tolerance);
+	if (target_enemy && !target_enemy->enemy->is_dying
+		&& !target_enemy->enemy->dead)
+	{
+		apply_damage_to_enemy(pd, target_enemy->enemy);
+	}
+	pd->player.is_shooting = false;
+}
+
+void	update_all_death_animations(t_parsed_data *pd)
+{
+	int	i;
+
+	i = 0;
+	while (i < pd->enemy_count)
+	{
+		if (pd->enemies[i].is_dying)
+			update_death_animation(pd, &pd->enemies[i]);
+		i++;
+	}
 }

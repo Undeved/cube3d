@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   med_kit2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 04:08:33 by oukhanfa          #+#    #+#             */
+/*   Updated: 2025/11/06 04:51:15 by oukhanfa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 void	set_medkit_type_props(t_med_kit *medkit, t_enemy_type type)
@@ -13,36 +25,15 @@ void	set_medkit_type_props(t_med_kit *medkit, t_enemy_type type)
 	medkit->size_scale = 0.5f;
 	medkit->vertical_offset = 1.1f;
 }
-static int medkit_drop_chance(t_enemy_type type)
-{
-	if (type == FT_SKIN_WALKER)
-		return 30;
-	else if (type == MEMORY_LEAK)
-		return 50;
-	else if (type == SEGV)
-		return 69;
-	return 25;
-}
 
-bool should_drop_medkit(t_enemy_type type)
+void	spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type)
 {
-	int r;
-	int chance;
-
-	chance = medkit_drop_chance(type);
-	r = ft_rand() % 100;
-	return (r < chance);
-}
-
-void spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type)
-{
-	t_med_kit *medkit;
+	t_med_kit	*medkit;
 
 	if (!should_drop_medkit(type))
-		return;
-
+		return ;
 	if (pd->medkit_count >= pd->max_medkits)
-		return;
+		return ;
 	medkit = &pd->medkits[pd->medkit_count];
 	medkit->pos = pos;
 	medkit->picked = false;
@@ -50,7 +41,6 @@ void spawn_medkit(t_parsed_data *pd, t_bpos pos, t_enemy_type type)
 	medkit->img = pd->medkits[0].img;
 	pd->medkit_count++;
 }
-
 
 int	process_medkit_pickup(t_parsed_data *pd, int i)
 {
@@ -96,31 +86,32 @@ void	check_medkit_pickup(t_parsed_data *pd)
 	}
 }
 
-bool medkit_visible(t_parsed_data *pd, t_med_kit *medkit, t_medkit_draw_data *out)
+bool	medkit_visible(t_parsed_data *pd, t_med_kit *medkit,
+		t_medkit_draw_data *out)
 {
-    t_bpos rel_pos;
-    double distance;
-    double inv_det;
-    t_bpos transform;
+	t_bpos	rel_pos;
+	double	distance;
+	double	inv_det;
+	t_bpos	transform;
 
-    rel_pos.x = medkit->pos.x - pd->player.bpos.x;
-    rel_pos.y = medkit->pos.y - pd->player.bpos.y;
-    distance = sqrt(rel_pos.x * rel_pos.x + rel_pos.y * rel_pos.y);
-    if (distance > 24.0 || !has_line_of_sight(pd, pd->player.bpos, medkit->pos))
-        return (false);
-    inv_det = 1.0 / (pd->player.camera_plane.dir.x * pd->player.bdir.y
-            - pd->player.bdir.x * pd->player.camera_plane.dir.y);
-    transform.x = -inv_det * (pd->player.bdir.y * rel_pos.x
-            - pd->player.bdir.x * rel_pos.y);
-    transform.y = inv_det * (-pd->player.camera_plane.dir.y * rel_pos.x
-            + pd->player.camera_plane.dir.x * rel_pos.y);
-    if (transform.y <= 0)
-        return (false);
-    out->medkit = medkit;
-    out->distance = distance;
-    out->transform = transform;
-    out->sprite_screen_x = (int)((WIDTH / 2) * (1 + transform.x / transform.y));
-    out->sprite_height = abs((int)(HEIGHT / transform.y)) * medkit->size_scale;
-    out->sprite_width = abs((int)(HEIGHT / transform.y)) * medkit->size_scale;
-    return (true);
+	rel_pos.x = medkit->pos.x - pd->player.bpos.x;
+	rel_pos.y = medkit->pos.y - pd->player.bpos.y;
+	distance = sqrt(rel_pos.x * rel_pos.x + rel_pos.y * rel_pos.y);
+	if (distance > 24.0 || !has_line_of_sight(pd, pd->player.bpos, medkit->pos))
+		return (false);
+	inv_det = 1.0 / (pd->player.camera_plane.dir.x * pd->player.bdir.y
+			- pd->player.bdir.x * pd->player.camera_plane.dir.y);
+	transform.x = -inv_det * (pd->player.bdir.y * rel_pos.x
+			- pd->player.bdir.x * rel_pos.y);
+	transform.y = inv_det * (-pd->player.camera_plane.dir.y * rel_pos.x
+			+ pd->player.camera_plane.dir.x * rel_pos.y);
+	if (transform.y <= 0)
+		return (false);
+	out->medkit = medkit;
+	out->distance = distance;
+	out->transform = transform;
+	out->sprite_screen_x = (int)((WIDTH / 2) * (1 + transform.x / transform.y));
+	out->sprite_height = abs((int)(HEIGHT / transform.y)) * medkit->size_scale;
+	out->sprite_width = abs((int)(HEIGHT / transform.y)) * medkit->size_scale;
+	return (true);
 }

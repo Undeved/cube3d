@@ -1,32 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy_drawing.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 01:14:09 by oukhanfa          #+#    #+#             */
+/*   Updated: 2025/11/06 02:20:31 by oukhanfa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
-t_tex_sample sample_texture_pixel(mlx_image_t *img, int tx, int ty)
+t_tex_sample	sample_texture_pixel(mlx_image_t *img, int tx, int ty)
 {
-    t_tex_sample    s;
-    unsigned char   *p;
-    int             idx;
-    int             size[2];
+	t_tex_sample	s;
+	unsigned char	*p;
+	int				idx;
+	int				size[2];
 
-    s.ok = 0;
-    s.color = 0;
-    s.alpha = 0;
-    if (!img)
-        return (s);
-    size[0] = img->width;
-    size[1] = img->height;
-    if (tx < 0 || tx >= size[0] || ty < 0 || ty >= size[1])
-        return (s);
-    p = (unsigned char *)img->pixels;
-    idx = (ty * size[0] + tx) * 4;
-    s.alpha = p[idx + 3];
-    s.color = (p[idx + 0] << 24) | (p[idx + 1] << 16)
-        | (p[idx + 2] << 8) | p[idx + 3];
-    s.ok = 1;
-    return (s);
+	s.ok = 0;
+	s.color = 0;
+	s.alpha = 0;
+	if (!img)
+		return (s);
+	size[0] = img->width;
+	size[1] = img->height;
+	if (tx < 0 || tx >= size[0] || ty < 0 || ty >= size[1])
+		return (s);
+	p = (unsigned char *)img->pixels;
+	idx = (ty * size[0] + tx) * 4;
+	s.alpha = p[idx + 3];
+	s.color = (p[idx + 0] << 24) | (p[idx + 1] << 16)
+		| (p[idx + 2] << 8) | p[idx + 3];
+	s.ok = 1;
+	return (s);
 }
 
-static bool	get_enemy_sample(t_draw_context *ctx, int stripe,
-				int y, t_tex_sample *sample)
+bool	get_enemy_sample(t_draw_context *ctx, int stripe,
+		int y, t_tex_sample *sample)
 {
 	int		tex[2];
 
@@ -56,49 +68,49 @@ void	draw_enemy_pixel(t_draw_context *ctx, int stripe, int y)
 	uint32_t		color;
 
 	if (!get_enemy_sample(ctx, stripe, y, &sample))
-		return;
+		return ;
 	if (ctx->pd->zbuffer)
 		depth_ok = (ctx->curr->transform.y < ctx->pd->zbuffer[stripe]);
 	else
 		depth_ok = true;
 	if (!depth_ok)
-		return;
+		return ;
 	color = shade_color(sample.color, ctx->curr->distance, 0.15);
 	if (ctx->curr->enemy->is_highlighted)
 		color = tint_with_red(color, 0.50f);
 	mlx_put_pixel(ctx->pd->screen, stripe, y, color);
 }
 
-void draw_enemy_sprite(t_draw_context *ctx)
+void	draw_enemy_sprite(t_draw_context *ctx)
 {
-    int stripe;
-    int y;
+	int	stripe;
+	int	y;
 
-    stripe = ctx->b->draw_start_x;
-    while (stripe < ctx->b->draw_end_x)
-    {
-        if (stripe >= 0 && stripe < ctx->pd->screen->width)
-        {
-            y = ctx->b->draw_start_y;
-            while (y < ctx->b->draw_end_y)
-            {
-                draw_enemy_pixel(ctx, stripe, y);
-                y++;
-            }
-        }
-        stripe++;
-    }
+	stripe = ctx->b->draw_start_x;
+	while (stripe < ctx->b->draw_end_x)
+	{
+		if (stripe >= 0 && stripe < ctx->pd->screen->width)
+		{
+			y = ctx->b->draw_start_y;
+			while (y < ctx->b->draw_end_y)
+			{
+				draw_enemy_pixel(ctx, stripe, y);
+				y++;
+			}
+		}
+		stripe++;
+	}
 }
 
-void draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr,
-        int horizon)
+void	draw_single_enemy(t_parsed_data *pd, t_enemy_draw_data *curr,
+		int horizon)
 {
-    t_draw_bounds    b;
-    t_draw_context   ctx;
+	t_draw_bounds	b;
+	t_draw_context	ctx;
 
-    calculate_draw_bounds(curr, horizon, &b);
-    ctx.pd = pd;
-    ctx.curr = curr;
-    ctx.b = &b;
-    draw_enemy_sprite(&ctx);
+	calculate_draw_bounds(curr, horizon, &b);
+	ctx.pd = pd;
+	ctx.curr = curr;
+	ctx.b = &b;
+	draw_enemy_sprite(&ctx);
 }

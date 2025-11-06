@@ -1,11 +1,16 @@
-#include "../cube.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   door_rendering.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 03:55:54 by oukhanfa          #+#    #+#             */
+/*   Updated: 2025/11/06 05:18:12 by oukhanfa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-mlx_texture_t *get_door_texture(t_parsed_data *pd)
-{
-    if (!pd)
-        return (NULL);
-    return pd->door_txt.txtr;
-}
+#include "../cube.h"
 
 void	init_door_column(t_door_column *dc)
 {
@@ -29,35 +34,22 @@ void	init_door_column(t_door_column *dc)
 	if (dc->tex_x >= dc->tex_w)
 		dc->tex_x = dc->tex_w - 1;
 	dc->tex_x = dc->tex_w - dc->tex_x - 1;
-
 	if (dc->side == 0 && dc->ray_dir.x > 0.0)
 		dc->tex_x = dc->tex_w - dc->tex_x - 1;
 	if (dc->side == 1 && dc->ray_dir.y < 0.0)
 		dc->tex_x = dc->tex_w - dc->tex_x - 1;
 }
 
-void	setup_door_stepping(t_door_column *dc)
-{
-	dc->step = (double)dc->tex_h / (double)dc->line->height;
-	dc->tex_pos = ((double)dc->line->draw_start
-			- ((double)dc->screen_h / 2.0 + (double)dc->pd->player.pitch)
-			+ (double)dc->line->height / 2.0) * dc->step;
-}
-
 uint32_t	get_door_pixel_color(t_door_column *dc, int tex_y)
 {
 	unsigned char	*p;
 	int				idx;
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	uint32_t		color;
 
 	p = (unsigned char *)dc->tx->pixels;
 	idx = (tex_y * dc->tx->width + dc->tex_x) * 4;
-	r = p[idx + 0];
-	g = p[idx + 1];
-	b = p[idx + 2];
-	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
+	color = (p[idx + 0] << 24) | (p[idx + 1] << 16) | (p[idx + 2] << 8) | 0xFF;
+	return (color);
 }
 
 void	draw_door_pixels(t_door_column *dc)
@@ -106,7 +98,8 @@ static char	get_column_tile_char(t_parsed_data *pd, t_column_data *col)
 	return (tile_char);
 }
 
-void	draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line)
+void	draw_door_column(t_parsed_data *pd, t_column_data *col,
+		t_line_data *line)
 {
 	t_door_column	dc;
 	char			tile_char;
@@ -126,4 +119,3 @@ void	draw_door_column(t_parsed_data *pd, t_column_data *col, t_line_data *line)
 	setup_door_stepping(&dc);
 	draw_door_pixels(&dc);
 }
-

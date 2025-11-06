@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture_rendering.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 04:09:20 by oukhanfa          #+#    #+#             */
+/*   Updated: 2025/11/06 05:15:31 by oukhanfa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 void	init_texture_column(t_texture_column *tc)
@@ -40,16 +52,12 @@ uint32_t	get_pixel_color(t_texture_column *tc, int tex_y)
 {
 	unsigned char	*p;
 	int				idx;
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	uint32_t		color;
 
 	p = (unsigned char *)tc->tx->pixels;
 	idx = (tex_y * tc->tx->width + tc->tex_x) * 4;
-	r = p[idx + 0];
-	g = p[idx + 1];
-	b = p[idx + 2];
-	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
+	color = (p[idx + 0] << 24) | (p[idx + 1] << 16) | (p[idx + 2] << 8) | 0xFF;
+	return (color);
 }
 
 void	draw_texture_pixels(t_texture_column *tc)
@@ -76,7 +84,8 @@ void	draw_texture_pixels(t_texture_column *tc)
 	}
 }
 
-void draw_textured_column(t_parsed_data *pd, t_column_data *col, t_line_data *line)
+void	draw_textured_column(t_parsed_data *pd, t_column_data *col,
+		t_line_data *line)
 {
 	t_texture_column	tc;
 
@@ -87,7 +96,6 @@ void draw_textured_column(t_parsed_data *pd, t_column_data *col, t_line_data *li
 	tc.side = col->side;
 	tc.ray_dir = col->ray_dir;
 	tc.pos = col->player_pos;
-
 	init_texture_column(&tc);
 	if (!tc.tx)
 		return ;

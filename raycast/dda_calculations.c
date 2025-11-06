@@ -1,18 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda_calculations.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 03:49:40 by oukhanfa          #+#    #+#             */
+/*   Updated: 2025/11/06 03:51:58 by oukhanfa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
-void compute_delta_dist(t_bdir ray_dir, t_bpos *delta_dist)
-{
-	if (ray_dir.x == 0.0)
-		delta_dist->x = 1000000.0;
-	else
-		delta_dist->x = fabs(1.0 / ray_dir.x);
-	if (ray_dir.y == 0.0)
-		delta_dist->y = 1000000.0;
-	else
-		delta_dist->y = fabs(1.0 / ray_dir.y);
-}
-
-void set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
+void	set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 {
 	if (ray_dir.x < 0.0)
 	{
@@ -26,7 +26,7 @@ void set_x_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 	}
 }
 
-void set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
+void	set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 {
 	if (ray_dir.y < 0.0)
 	{
@@ -40,20 +40,20 @@ void set_y_step(t_bpos pos, t_pos map, t_bdir ray_dir, t_step_data *data)
 	}
 }
 
-void init_step_and_sidedist(t_bpos player, t_step_data *data)
+void	init_step_and_sidedist(t_bpos player, t_step_data *data)
 {
 	set_x_step(player, data->map, data->ray_dir, data);
 	set_y_step(player, data->map, data->ray_dir, data);
 }
 
-void update_x_side(t_dda_data *data)
+void	update_x_side(t_dda_data *data)
 {
 	data->side_dist->x += data->delta_dist.x;
 	data->map->x += data->step.x;
 	*data->side = 0;
 }
 
-void update_y_side(t_dda_data *data)
+void	update_y_side(t_dda_data *data)
 {
 	data->side_dist->y += data->delta_dist.y;
 	data->map->y += data->step.y;
