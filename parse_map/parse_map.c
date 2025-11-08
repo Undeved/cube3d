@@ -1,103 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 05:53:50 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/11/08 05:55:05 by oimzilen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
-static void closer(int *fd)
+static void	map_error(void)
 {
-    if (*fd != -1)
-        close(*fd);
-    *fd = -1;
+	print_error("Error\nMap File Invalid.\n");
+	mind_free_all(EXIT_FAILURE);
 }
 
-// refactor this and handle if gnl fails better.
-static void read_map_file(char *map_path, t_cube *cube)
+static void	closer(int *fd)
 {
-    char    *line;
-    int     count;
-    int     i;
-
-    cube->pd.fd = open(map_path, O_RDONLY);
-    if (cube->pd.fd == -1)
-    {
-        print_error("Error\nMap File Invalid.\n");
-        mind_free_all(EXIT_FAILURE);
-    }
-    count = 0;
-    line = get_next_line(cube->pd.fd);
-    while (line != NULL)
-    {
-        count++;
-        free(line);
-        line = get_next_line(cube->pd.fd);
-    }
-    // gnl -1
-    if (count >= MAX_MAP)
-    {
-        print_error("Error\nBig Map.\n");
-        mind_free_all(EXIT_FAILURE);
-    }
-    closer(&cube->pd.fd);
-    if (count == 0)
-        mind_free_all(EXIT_FAILURE);
-    cube->pd.map_file = allocate_gc(malloc(sizeof(char *) * (count + 1)));
-    cube->pd.fd = open(map_path, O_RDONLY);
-    if (cube->pd.fd == -1)
-        mind_free_all(EXIT_FAILURE);
-    i = 0;
-    line = get_next_line(cube->pd.fd); 
-    while (line != NULL)
-    {
-        cube->pd.map_file[i] = allocate_gc(ft_strdup(line));
-        free(line);
-        if (!cube->pd.map_file[i])
-        {
-            closer(&cube->pd.fd);
-            //gnl -1
-            mind_free_all(EXIT_FAILURE);
-        }
-        i++;
-        line = get_next_line(cube->pd.fd);
-    }
-    cube->pd.map_file[i] = NULL;
-    closer(&cube->pd.fd);
+	if (*fd != -1)
+		close(*fd);
+	*fd = -1;
 }
 
-static void init_textures(t_cube *cube)
+static int	count_map_size(t_cube *cube)
 {
-    cube->pd.txtr_no.path = NULL;
-    cube->pd.txtr_so.path = NULL;
-    cube->pd.txtr_we.path = NULL;
-    cube->pd.txtr_ea.path = NULL;
-    cube->pd.txtr_no.already_extracted = false;
-    cube->pd.txtr_so.already_extracted = false;
-    cube->pd.txtr_we.already_extracted = false;
-    cube->pd.txtr_ea.already_extracted = false;
-    cube->pd.txtr_no.dir = NORTH_TXT;
-    cube->pd.txtr_so.dir = SOUTH_TXT;
-    cube->pd.txtr_we.dir = WEST_TXT;
-    cube->pd.txtr_ea.dir = EAST_TXT;
-    cube->pd.floor.already_extracted = false;
-    cube->pd.roof.already_extracted = false;
+	char	*line;
+	int		count;
+
+	count = 0;
+	line = get_next_line(cube->pd.fd);
+	while (line != NULL)
+	{
+		count++;
+		free(line);
+		line = get_next_line(cube->pd.fd);
+	}
+	get_next_line(-1);
+	closer(&cube->pd.fd);
+	if (count >= MAX_MAP || count == 0)
+		map_error();
+	return (count);
 }
 
-static void init_parsed_data(t_cube *cube)
+static int	read_map_file(char *map_path, t_cube *cube)
 {
-    cube->pd.fd = -1;
-    cube->pd.map_file = NULL;
-    cube->pd.map_grid = NULL;
-    cube->pd.level.max_x = 0;
-    cube->pd.level.max_y = 0;
-    cube->pd.player.pos.x = 0;
-    cube->pd.player.pos.y = 0;
-    cube->pd.player.dir = 'E';
-    cube->pd.player_count = 0;
-    init_textures(cube);
+	char	*line;
+	int		count;
+	int		i;
+
+	cube->pd.fd = open(map_path, O_RDONLY);
+	if (cube->pd.fd == -1)
+		map_error();
+	count = count_map_size(cube);
+	cube->pd.map_file = allocate_gc(malloc(sizeof(char *) * (count + 1)));
+	cube->pd.fd = open(map_path, O_RDONLY);
+	if (cube->pd.fd == -1)
+		map_error();
+	i = 0;
+	line = get_next_line(cube->pd.fd);
+	while (line != NULL)
+	{
+		cube->pd.map_file[i] = allocate_gc(ft_strdup(line));
+		free(line);
+		if (!cube->pd.map_file[i])
+			return (closer(&cube->pd.fd), mind_free_all(EXIT_FAILURE), 1);
+		i++;
+		line = get_next_line(cube->pd.fd);
+	}
+	return (cube->pd.map_file[i] = NULL, closer(&cube->pd.fd), 0);
 }
 
-void    parse_map(char *map_path, t_cube *cube)
+void	parse_map(char *map_path, t_cube *cube)
 {
-    init_parsed_data(cube);
-    cube->map_path = allocate_gc(ft_strdup(map_path));
-    read_map_file(cube->map_path, cube);
-    cube->pd.map_file = trim_newlines(cube->pd.map_file);
-    validate_map(cube->pd.map_file, cube);
+	init_parsed_data(cube);
+	cube->map_path = allocate_gc(ft_strdup(map_path));
+	read_map_file(cube->map_path, cube);
+	cube->pd.map_file = trim_newlines(cube->pd.map_file);
+	validate_map(cube->pd.map_file, cube);
 }
-

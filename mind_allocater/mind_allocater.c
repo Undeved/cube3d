@@ -34,6 +34,7 @@ void	mind_free_all(int status)
 
 	head = get_head();
 	pd = get_pd();
+	get_next_line(-1);
 	if (*pd && (*pd)->mlx)
 	{
 		delete_all_textures(*pd);

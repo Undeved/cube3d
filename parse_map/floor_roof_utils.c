@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   floor_roof_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 04:30:21 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/11/08 04:56:59 by oimzilen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 static int	flow_check(long pow, char c, int s)
@@ -42,20 +54,28 @@ int	ft_atoi(const char *str)
 	return ((int)pow * s);
 }
 
-bool is_num(char *str)
+bool	is_num(char *str)
 {
-    int i;
-    int num;
+	int	i;
+	int	num;
 
-    i = 0;
-    while (str[i])
-    {
-        if (!(str[i] <= '9' && str[i] >= '0'))
-            return (false);
-        i++;
-    }
-    num = ft_atoi(str);
-    if (!(num <= 255 && num >=0))
-        return (false);
-    return (true);
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] <= '9' && str[i] >= '0'))
+			return (false);
+		i++;
+	}
+	num = ft_atoi(str);
+	if (!(num <= 255 && num >= 0))
+		return (false);
+	return (true);
+}
+
+bool	duplicated_floor_roof(char type, t_cube *cube)
+{
+	if ((type == 'F' && cube->pd.floor.already_extracted)
+		|| (type == 'C' && cube->pd.roof.already_extracted))
+		return (true);
+	return (false);
 }
