@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_textures_enemy_to_null.c                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/10 03:53:17 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/11/10 03:54:17 by oimzilen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cube.h"
 
-void init_screen_and_map(t_parsed_data *pd)
+void	init_screen_and_map(t_parsed_data *pd)
 {
 	pd->screen = NULL;
 	pd->minimap.img = NULL;
 }
 
-void init_door_wall(t_parsed_data *pd)
+void	init_door_wall(t_parsed_data *pd)
 {
 	pd->txtr_ea.img = NULL;
 	pd->txtr_ea.txtr = NULL;
@@ -20,16 +32,17 @@ void init_door_wall(t_parsed_data *pd)
 	pd->door_txt.txtr = NULL;
 }
 
-void init_medkit_textures(t_parsed_data *pd)
+void	init_medkit_textures(t_parsed_data *pd)
 {
 	pd->medkit.img = NULL;
 	pd->medkit.txtr = NULL;
 	pd->medkits = NULL;
 }
 
-void init_sh_to_null(t_parsed_data *pd)
+void	init_sh_to_null(t_parsed_data *pd)
 {
 	int	i;
+
 	pd->sh.initialized = false;
 	pd->sh.skin_walker_initialized = false;
 	pd->sh.memory_leak_initialized = false;
@@ -48,13 +61,13 @@ void init_sh_to_null(t_parsed_data *pd)
 	}
 }
 
-void init_enemy_textures_to_null(t_parsed_data *pd)
+void	init_enemy_textures_to_null(t_parsed_data *pd)
 {
 	int	i;
 
 	if (pd->enemy_count == 0 || pd->enemies == NULL)
 		return ;
-    init_sh_to_null(pd);
+	init_sh_to_null(pd);
 	i = 0;
 	while (i < pd->enemy_count)
 	{

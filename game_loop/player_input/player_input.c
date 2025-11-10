@@ -1,102 +1,117 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_input.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/11/10 05:35:57 by oimzilen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cube.h"
 
-void player_pitch(t_parsed_data *pd)
+void	player_pitch(t_parsed_data *pd)
 {
-    (void)pd;
-    if (pd->keys.pressed[MLX_KEY_UP] || pd->mouse.y < (HEIGHT / 2))
-    {
-        pd->player.pitch += PITCH_SPEED;
-        if (pd->player.pitch > MAX_PITCH)
-            pd->player.pitch = MAX_PITCH;
-    }
-    if (pd->keys.pressed[MLX_KEY_DOWN] || pd->mouse.y > (HEIGHT / 2))
-    {
-        pd->player.pitch -= PITCH_SPEED;
-        if (pd->player.pitch < MIN_PITCH)
-            pd->player.pitch = MIN_PITCH;
-    }
+	(void)pd;
+	if (pd->keys.pressed[MLX_KEY_UP] || pd->mouse.y < (HEIGHT / 2))
+	{
+		pd->player.pitch += PITCH_SPEED;
+		if (pd->player.pitch > MAX_PITCH)
+			pd->player.pitch = MAX_PITCH;
+	}
+	if (pd->keys.pressed[MLX_KEY_DOWN] || pd->mouse.y > (HEIGHT / 2))
+	{
+		pd->player.pitch -= PITCH_SPEED;
+		if (pd->player.pitch < MIN_PITCH)
+			pd->player.pitch = MIN_PITCH;
+	}
 }
 
-void reload_gun(t_parsed_data *pd)
+void	reload_gun(t_parsed_data *pd)
 {
-    if (pd->keys.pressed[MLX_KEY_R] && pd->player.gun.ammo < pd->player.gun.max_ammo && !pd->player.gun.reload.active)
-    {
-        pd->player.gun.reload.active = true;
-        pd->player.gun.shoot.active = false;
-        pd->player.gun.aiming = false;
-        pd->player.gun.ammo = pd->player.gun.max_ammo;
-        trigger_reload_anim(pd);
-    }
+	if (pd->keys.pressed[MLX_KEY_R]
+		&& pd->player.gun.ammo < pd->player.gun.max_ammo
+		&& !pd->player.gun.reload.active)
+	{
+		pd->player.gun.reload.active = true;
+		pd->player.gun.shoot.active = false;
+		pd->player.gun.aiming = false;
+		pd->player.gun.ammo = pd->player.gun.max_ammo;
+		trigger_reload_anim(pd);
+	}
 }
 
-// cooldown using gettimeofday letting game to run a bit more then exiting here
-// use static variable and let game run multiple times before exiting
-bool cool_down(long usec)
+bool	cool_down(long usec)
 {
-    static struct timeval start = {0};
-    static bool running = false;
+	static struct timeval	start = {0};
+	struct timeval			current;
+	static bool				running = false;
+	long					elapsed;
 
-    if (!running)
-    {
-        gettimeofday(&start, NULL);
-        running = true;
-        return false;
-    }
-    struct timeval current;
-    gettimeofday(&current, NULL);
-    long elapsed = (current.tv_sec - start.tv_sec) * 1000000L + (current.tv_usec - start.tv_usec);
-    if (elapsed >= usec)
-    {
-        running = false;
-        return true;
-    }
-    return false;
+	if (!running)
+	{
+		gettimeofday(&start, NULL);
+		running = true;
+		return (false);
+	}
+	gettimeofday(&current, NULL);
+	elapsed = (current.tv_sec - start.tv_sec)
+		* 1000000L + (current.tv_usec - start.tv_usec);
+	if (elapsed >= usec)
+	{
+		running = false;
+		return (true);
+	}
+	return (false);
 }
 
-void    update_player_data(t_parsed_data *pd)
+void	update_player_data(t_parsed_data *pd)
 {
-    if (pd->player.health <= 0)
-    {
-        pd->game_ui.game_over.img->enabled = true;
-        pd->player.is_dead = true;
-        if (cool_down(1000000))
-        {
-            pd->player.health = 0;
-            print_comm("You died! Game Over!\n");
-            mind_free_all(EXIT_SUCCESS);
-        }
-    }
-    if (pd->player.has_won)
-    {
-        pd->game_ui.game_won.img->enabled = true;
-        if (cool_down(1000000))
-        {
-            print_comm("YOU WON BROO!\n");
-            mind_free_all(EXIT_SUCCESS);
-        }
-    }
-    mlx_get_mouse_pos(pd->mlx, &pd->mouse.x, &pd->mouse.y);
-    update_player_movement(pd);
+	if (pd->player.health <= 0)
+	{
+		pd->game_ui.game_over.img->enabled = true;
+		pd->player.is_dead = true;
+		if (cool_down(1000000))
+		{
+			pd->player.health = 0;
+			print_comm("You died! Game Over!\n");
+			mind_free_all(EXIT_SUCCESS);
+		}
+	}
+	if (pd->player.has_won)
+	{
+		pd->game_ui.game_won.img->enabled = true;
+		if (cool_down(1000000))
+		{
+			print_comm("YOU WON BROO!\n");
+			mind_free_all(EXIT_SUCCESS);
+		}
+	}
+	mlx_get_mouse_pos(pd->mlx, &pd->mouse.x, &pd->mouse.y);
+	update_player_movement(pd);
 }
 
-void    handle_player_input(mlx_key_data_t keydata, void *param)
+void	handle_player_input(mlx_key_data_t keydata, void *param)
 {
-    t_parsed_data *pd;
+	t_parsed_data	*pd;
 
-    pd = param;
-    if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS && pd->ui_index != 1)
-    {
-        mlx_close_window(pd->mlx);
-        return ;
-    }
-    handle_ui_input(keydata, pd);
-    if (!pd->level.game_started)
-        return ;
-    if (keydata.key >= 0 && keydata.key < KEYS_NUMBER)
-    {
-        if (keydata.action == MLX_RELEASE)
-            pd->keys.pressed[keydata.key] = false;
-        else
-            pd->keys.pressed[keydata.key] = true;
-    }
+	pd = param;
+	if (keydata.key == MLX_KEY_ESCAPE
+		&& keydata.action == MLX_PRESS && pd->ui_index != 1)
+	{
+		mlx_close_window(pd->mlx);
+		return ;
+	}
+	handle_ui_input(keydata, pd);
+	if (!pd->level.game_started)
+		return ;
+	if (keydata.key >= 0 && keydata.key < KEYS_NUMBER)
+	{
+		if (keydata.action == MLX_RELEASE)
+			pd->keys.pressed[keydata.key] = false;
+		else
+			pd->keys.pressed[keydata.key] = true;
+	}
 }

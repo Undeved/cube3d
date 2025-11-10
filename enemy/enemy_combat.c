@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_combat.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:15:07 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 02:18:40 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/10 08:34:38 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
 	enemy->highlight_timer = HIGHLIGHT_FRAMES;
 	if (enemy->health <= 0)
 	{
-		puts("should be dead");
 		enemy->is_dying = true;
 		enemy->dead = false;
 		enemy->death_anim_frame = 0;

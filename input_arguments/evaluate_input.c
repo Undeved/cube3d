@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   evaluate_input.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/09 22:41:02 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/11/09 22:41:39 by oimzilen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 int	ft_strcmp(char *s1, char *s2)
@@ -5,10 +17,10 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-    if (!s1 || !s2)
-    {
-        return (1);
-    }
+	if (!s1 || !s2)
+	{
+		return (1);
+	}
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
@@ -42,16 +54,16 @@ static char	*ft_strrchr(const char *s, int c)
 	return (ptr);
 }
 
-void    evaluate_input(int argc, char **argv)
+void	evaluate_input(int argc, char **argv)
 {
-    if (argc != 2)
-    {
-        print_comm("Usage ./cub3D <map_name>.cub\n");
-        exit(EXIT_SUCCESS);
-    }
-    if (ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0)
-    {
-        print_error("Error\nInvalid Map Name.\n");
-        exit(EXIT_SUCCESS);
-    }
+	if (argc != 2)
+	{
+		print_comm("Usage ./cub3D <map_name>.cub\n");
+		exit(EXIT_SUCCESS);
+	}
+	if (ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0)
+	{
+		print_error("Error\nInvalid Map Name.\n");
+		exit(EXIT_SUCCESS);
+	}
 }

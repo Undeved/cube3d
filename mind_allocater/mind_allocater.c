@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mind_allocater.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/09 22:38:39 by oimzilen          #+#    #+#             */
+/*   Updated: 2025/11/09 22:39:32 by oimzilen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 t_mind_alloc	**get_head(void)
@@ -30,7 +42,7 @@ void	mind_free_all(int status)
 {
 	t_mind_alloc	**head;
 	t_mind_alloc	*tmp;
-	t_parsed_data   **pd;
+	t_parsed_data	**pd;
 
 	head = get_head();
 	pd = get_pd();
@@ -49,7 +61,6 @@ void	mind_free_all(int status)
 		free(*head);
 		*head = tmp;
 	}
-	// close fd if forgot to close it somewhere very unlikely but safe check.
 	*head = NULL;
 	exit(status);
 }
