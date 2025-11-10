@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 03:12:50 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 03:28:39 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:03:32 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	init_precise_data(t_parsed_data *pd)
 {
 	pd->player.bpos.x = pd->player.pos.x + NUDGE_FROM_WALL;
 	pd->player.bpos.y = pd->player.pos.y + NUDGE_FROM_WALL;
-	pd->player.camera_plane.pos.x = pd->player.bdir.x * SCALER;
-	pd->player.camera_plane.pos.y = pd->player.bdir.y * SCALER;
+	pd->player.camera_plane.pos.x = pd->player.bdir.x;
+	pd->player.camera_plane.pos.y = pd->player.bdir.y;
 	pd->player.camera_plane.dir.x = pd->player.bdir.y;
 	pd->player.camera_plane.dir.y = -pd->player.bdir.x;
 	pd->level.game_started = false;

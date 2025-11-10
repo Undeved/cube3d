@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 11:57:58 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:03:27 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@
 # define PITCH_SPEED 30
 # define MAX_PITCH  (HEIGHT / 2) - 330
 # define MIN_PITCH  (-HEIGHT / 2) + 490
-# define SCALER 0.3
 # define FOV 60
 // player stats
 # define PLAYER_HEALTH 100

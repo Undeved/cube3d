@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 04:09:04 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 04:57:06 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:03:38 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	camera_plane(t_parsed_data *pd)
 {
-	pd->player.camera_plane.pos.x = pd->player.bdir.x * SCALER;
-	pd->player.camera_plane.pos.y = pd->player.bdir.y * SCALER;
+	pd->player.camera_plane.pos.x = pd->player.bdir.x;
+	pd->player.camera_plane.pos.y = pd->player.bdir.y;
 	pd->player.camera_plane.dir.x = pd->player.bdir.y;
 	pd->player.camera_plane.dir.y = -pd->player.bdir.x;
 }
