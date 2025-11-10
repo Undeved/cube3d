@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_textures_utils2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 03:08:32 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 03:09:00 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:17:50 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,6 @@ void	delete_door_wall_textures(t_parsed_data *pd)
 		mlx_delete_image(pd->mlx, pd->door_txt.img);
 	if (pd->door_txt.txtr)
 		mlx_delete_texture(pd->door_txt.txtr);
-}
-
-static void	delete_game_ui_helper(t_parsed_data *pd)
-{
-	if (pd->game_ui.health_bg.img)
-		mlx_delete_image(pd->mlx, pd->game_ui.health_bg.img);
-	if (pd->game_ui.health_bg.txtr)
-		mlx_delete_texture(pd->game_ui.health_bg.txtr);
-	if (pd->game_ui.game_over.img)
-		mlx_delete_image(pd->mlx, pd->game_ui.game_over.img);
-	if (pd->game_ui.game_over.txtr)
-		mlx_delete_texture(pd->game_ui.game_over.txtr);
-	if (pd->game_ui.game_won.img)
-		mlx_delete_image(pd->mlx, pd->game_ui.game_won.img);
-	if (pd->game_ui.game_won.txtr)
-		mlx_delete_texture(pd->game_ui.game_won.txtr);
 }
 
 void	delete_game_ui_textures(t_parsed_data *pd)

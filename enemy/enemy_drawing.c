@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:14:09 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 02:20:31 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:16:08 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	get_enemy_sample(t_draw_context *ctx, int stripe,
 		return (false);
 	if (ctx->curr->sprite_width == 0 || ctx->curr->sprite_height == 0)
 		return (false);
-	if (stripe < 0 || stripe >= ctx->pd->screen->width)
+	if (stripe < 0 || stripe >= (int)ctx->pd->screen->width)
 		return (false);
 	tex[0] = (int)((stripe - ctx->b->orig_draw_start_x)
 			* (double)ctx->curr->enemy->anim_img->width
@@ -89,7 +89,7 @@ void	draw_enemy_sprite(t_draw_context *ctx)
 	stripe = ctx->b->draw_start_x;
 	while (stripe < ctx->b->draw_end_x)
 	{
-		if (stripe >= 0 && stripe < ctx->pd->screen->width)
+		if (stripe >= 0 && stripe < (int)ctx->pd->screen->width)
 		{
 			y = ctx->b->draw_start_y;
 			while (y < ctx->b->draw_end_y)
