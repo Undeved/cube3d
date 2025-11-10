@@ -1,5 +1,5 @@
 CC= cc
-SANITIZE= -fsanitize=address -g3
+SANITIZE= #-fsanitize=address -g3
 FLAGS= -Ofast -O3 -Wall -Werror -Wextra 
 
 INCLUDES= -Iinclude -I$(HOME)/local/include
@@ -42,7 +42,7 @@ SRC= main.c input_arguments/printers.c input_arguments/evaluate_input.c \
 	game_loop/initializer/init_shared_textures_utils.c game_loop/initializer/init_shared_textures_utils2.c \
 	game_loop/initializer/init_shared_textures_utils3.c game_loop/player_input/update_player.c \
 	mind_allocater/mind_utils.c parse_map/get_enemy_data_utils.c raycast/raycast_utils.c raycast/ray_casting2.c \
-	parse_map/parse_map_utils.c
+	parse_map/parse_map_utils.c deceptive_output.c
 
 OBJ=$(SRC:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 05:35:57 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:31:22 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ void	update_player_data(t_parsed_data *pd)
 	{
 		pd->game_ui.game_over.img->enabled = true;
 		pd->player.is_dead = true;
-		if (cool_down(1000000))
+		if (cool_down(0))
 		{
 			pd->player.health = 0;
-			print_comm("You died! Game Over!\n");
+			print_death_message(pd, pd->player.last_killer);
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}
 	if (pd->player.has_won)
 	{
 		pd->game_ui.game_won.img->enabled = true;
-		if (cool_down(1000000))
+		if (cool_down(0))
 		{
 			print_comm("YOU WON BROO!\n");
 			mind_free_all(EXIT_SUCCESS);

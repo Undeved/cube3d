@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 03:12:50 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 12:03:32 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:07:28 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_precise_data(t_parsed_data *pd)
 	pd->player.gun.damage = DAMAGE;
 	pd->player.is_shooting = false;
 	pd->medkits = NULL;
+	pd->player.last_killer = NULL;
 	precise_direction(pd);
 	init_key_flags(pd);
 }

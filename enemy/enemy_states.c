@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:13:38 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 03:21:05 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:29:44 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
 	{
 		enemy->state = ENEMY_ATTACK;
 		pd->player.health -= enemy->damage;
+		if (pd->player.health <= 0)
+		{
+			pd->player.health = 0;
+			pd->player.last_killer = enemy;
+		}
 	}
 	else
 		smart_chase_player(enemy, pd->player.bpos, enemy->chase_speed, pd);
@@ -40,6 +45,11 @@ static void	perform_enemy_attack(t_parsed_data *pd, t_enemy *enemy)
 		enemy->anim_frame = 0;
 		enemy->attack_anim_counter = 0;
 		pd->player.health -= enemy->damage;
+		if (pd->player.health <= 0)
+		{
+			pd->player.health = 0;
+			pd->player.last_killer = enemy;
+		}
 		enemy->attack_cooldown = 20;
 	}
 	else

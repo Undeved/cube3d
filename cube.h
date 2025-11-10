@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 12:03:27 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:34:31 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,6 +307,8 @@ typedef struct s_med_kit
 	int			stripe_count;
 }	t_med_kit;
 
+typedef struct s_enemy	t_enemy;
+
 typedef struct s_player
 {
 	t_pos		pos;
@@ -322,6 +324,7 @@ typedef struct s_player
 	t_character	character;
 	bool		is_dead;
 	bool		has_won;
+	t_enemy		*last_killer;
 }	t_player;
 
 typedef struct s_minimap
@@ -1003,6 +1006,7 @@ int						medkit_drop_chance(t_enemy_type type);
 bool					should_drop_medkit(t_enemy_type type);
 void					sort_medkits_by_distance(t_medkit_draw_data *draw_data,
 							int draw_count);
+void					print_death_message(t_parsed_data *pd, t_enemy *killer);
 
 # define CEILING 0xB5AB6BFF
 # define FLOOR 0x876D46FF
