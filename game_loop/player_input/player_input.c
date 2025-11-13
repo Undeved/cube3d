@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 15:31:22 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/13 23:32:16 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	update_player_data(t_parsed_data *pd)
 		if (cool_down(0))
 		{
 			pd->player.health = 0;
-			print_death_message(pd, pd->player.last_killer);
+			print_death_message(pd, pd->player.last_killer, false);
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}
@@ -85,7 +85,8 @@ void	update_player_data(t_parsed_data *pd)
 		pd->game_ui.game_won.img->enabled = true;
 		if (cool_down(0))
 		{
-			print_comm("YOU WON BROO!\n");
+			print_comm(GRN"Norminette: [OK], [OK], [OK], [OK], [OK], [OK]\n");
+			print_comm("File: You Won.exe\n"RST);
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}

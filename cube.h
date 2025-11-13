@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 15:34:31 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/13 23:38:55 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+// Colors
+# define RED "\e[31m"
+# define GRN "\e[32m"
+# define BLU "\e[34m"
+# define YLW "\e[33m"
+# define MGN "\e[35m"
+# define CYN "\e[36m"
+# define RST "\e[97m"
 // Our Macros
 # define HEIGHT 1080
 # define WIDTH 1920
@@ -57,29 +65,29 @@
 # define MOUSE_SENSITIVITY 0.00088
 # define PI 3.14159
 # define PITCH_SPEED 30
-# define MAX_PITCH  (HEIGHT / 2) - 330
-# define MIN_PITCH  (-HEIGHT / 2) + 490
+# define MAX_PITCH  210
+# define MIN_PITCH  -50
 # define FOV 60
 // player stats
 # define PLAYER_HEALTH 100
 # define COLLISION 0.1
 # define KEYS_NUMBER 350
 // UI Positions Based On Figma
-# define TITLE_X ((WIDTH / 2) - (605 / 2))
+# define TITLE_X 658
 # define TITLE_Y 165
-# define START_BUTTON_X ((WIDTH / 2) - (549 / 2))
+# define START_BUTTON_X 686
 # define START_BUTTON_Y 484
-# define CHARS_BUTTON_X ((WIDTH / 2) - (549 / 2))
+# define CHARS_BUTTON_X 686
 # define CHARS_BUTTON_Y 639
-# define EXIT_BUTTON_X ((WIDTH / 2) - (549 / 2))
+# define EXIT_BUTTON_X 686
 # define EXIT_BUTTON_Y 806
 # define BTN_POP 5
 # define TRN_OFST 30
-# define JESSE_X (96 - 30)
+# define JESSE_X 66
 # define JESSE_Y 271
-# define CHORUS_X (691 - 30)
+# define CHORUS_X 661
 # define CHORUS_Y 271
-# define OUSSMAC_X (1286 - 30)
+# define OUSSMAC_X 1256
 # define OUSSMAC_Y 271
 # define SELECT_JESSE_X 238
 # define SELECT_CHORUS_X 833
@@ -1006,7 +1014,8 @@ int						medkit_drop_chance(t_enemy_type type);
 bool					should_drop_medkit(t_enemy_type type);
 void					sort_medkits_by_distance(t_medkit_draw_data *draw_data,
 							int draw_count);
-void					print_death_message(t_parsed_data *pd, t_enemy *killer);
+void					print_death_message(t_parsed_data *pd,
+							t_enemy *killer, bool deceptive);
 
 # define CEILING 0xB5AB6BFF
 # define FLOOR 0x876D46FF
