@@ -3,13 +3,13 @@
 
 Menu UI and character selection :
 
-![[main_menu.gif]]
+![](attachment/bf92fa2640af29c9d524f662beb5535c.gif)
 
 Game play footage :
 
-![[game_play.gif]]
+![](attachment/846fefc44b8801813ed191a7c77153de.gif)
 
-![[slingshot.gif]]
+![](attachment/b01c4e883bb3539a02c4146a2264f92a.gif)
 
 # 1337 Ways To Die (The Game) :
 
@@ -26,14 +26,14 @@ like clickable and hover-able buttons.
 - CHARACTERS : lets you choose your starting character.
 - EXIT : quits the game cleanly.
 
-![[main_menu.png]]
+![](attachment/369e8fd548235fe2dab915c00fa19189.png)
 
 ## Characters :
 
 here you can decide your character and playing style, each character you choose\
 comes with a different weapon, with different attributes like ammo and damage.
 
-![[characters_bg.png]]
+![](attachment/7e5ec33f4a5bbec0215f933b80b9a69e.png)
 
 | Character | Weapon     | Damage | Ammo   | Playstyle                                |
 | --------- | ---------- | ------ | ------ | ---------------------------------------- |
@@ -53,7 +53,7 @@ on these levels of the architecture, these are the entities you will come across
 upon death has a chance to drop a medkit to replenish health.\
 and each deal different damage, the more sever the bug the higher the damage.
 
-![[monsters.png]]
+![](attachment/c629c079356d47d7175f12f2cc2a7c25.png)
 
 | Bug           | Damage | Health | Chance To Drop Medkit |
 | ------------- | ------ | ------ | --------------------- |
