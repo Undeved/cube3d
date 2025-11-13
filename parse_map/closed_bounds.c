@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 03:56:23 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/08 04:25:50 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/14 00:02:40 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,21 @@ char	**grid_dup(char **grid)
 
 void	closed_bounds(t_cube *cube)
 {
+	char	**grid_cpy;
+
 	gridify_map(cube->pd.map_grid);
 	get_level_data(cube);
 	get_player_pos(cube->pd.map_grid, &cube->pd.player.pos.x,
 		&cube->pd.player.pos.y, &cube->pd.player.dir);
+	grid_cpy = grid_dup(cube->pd.map_grid);
 	get_enemies(cube);
-	flood_fill(grid_dup(cube->pd.map_grid), cube->pd.player.pos,
-		(t_pos){cube->pd.level.max_x, cube->pd.level.max_y});
+	cube->pd.enemy_count_r = 0;
+	flood_fill(grid_cpy, cube->pd.player.pos,
+		(t_pos){cube->pd.level.max_x, cube->pd.level.max_y},
+		&cube->pd.enemy_count_r);
+	if (cube->pd.enemy_count_r != cube->pd.enemy_count)
+	{
+		print_error("Error\nMake Sure All Enemies Are Reachable\n");
+		mind_free_all(EXIT_FAILURE);
+	}
 }

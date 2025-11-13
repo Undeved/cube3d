@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/13 23:38:55 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/14 00:01:23 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -538,6 +538,7 @@ typedef struct s_pd
 	int				max_medkits;
 	double			*zbuffer;
 	t_sh			sh;
+	int				enemy_count_r;
 }	t_parsed_data;
 
 typedef struct s_cube
@@ -599,7 +600,8 @@ void					closed_bounds(t_cube *cube);
 void					get_level_data(t_cube *cube);
 void					get_player_pos(char **map_grid,
 							int *x, int *y, char *dir);
-void					flood_fill(char **grid, t_pos pos, t_pos max);
+void					flood_fill(char **grid, t_pos pos,
+							t_pos max, int *enemy_count);
 char					**grid_dup(char **grid);
 bool					is_door(char c);
 bool					validate_door(t_parsed_data *pd, int x, int y);
