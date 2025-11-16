@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 03:12:50 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 13:07:28 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/16 04:26:01 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	init_key_flags(t_parsed_data *pd)
 
 void	init_precise_data(t_parsed_data *pd)
 {
+	precise_direction(pd);
 	pd->player.bpos.x = pd->player.pos.x + NUDGE_FROM_WALL;
 	pd->player.bpos.y = pd->player.pos.y + NUDGE_FROM_WALL;
 	pd->player.camera_plane.pos.x = pd->player.bdir.x;
@@ -63,7 +64,6 @@ void	init_precise_data(t_parsed_data *pd)
 	pd->player.is_shooting = false;
 	pd->medkits = NULL;
 	pd->player.last_killer = NULL;
-	precise_direction(pd);
 	init_key_flags(pd);
 }
 

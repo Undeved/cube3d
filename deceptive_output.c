@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 13:42:49 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/13 23:32:35 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 03:59:44 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	print_death_message(t_parsed_data *pd, t_enemy *killer, bool deceptive)
 	if (!deceptive)
 	{
 		print_comm(RED"Norminette: [KO], [KO], [KO], [KO], [KO], [KO]\n");
-		print_comm("File: Game Over.exe\n"RST);
+		print_comm("File: Game Over.exe"RST"\n");
 		return ;
 	}
 	(void)pd;

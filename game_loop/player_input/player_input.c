@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/13 23:32:16 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 04:02:41 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	update_player_data(t_parsed_data *pd)
 		if (cool_down(0))
 		{
 			print_comm(GRN"Norminette: [OK], [OK], [OK], [OK], [OK], [OK]\n");
-			print_comm("File: You Won.exe\n"RST);
+			print_comm("File: You Won.exe"RST"\n");
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}
