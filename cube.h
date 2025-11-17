@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/16 15:27:55 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:43:45 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -505,6 +505,15 @@ typedef struct s_sh
 	bool		initialized;
 }	t_sh;
 
+#include "miniaudio.h"
+
+typedef struct s_audio
+{
+    ma_engine       engine;
+    ma_sound        bg_music;
+    bool            bg_music_playing;
+}   t_audio;
+
 typedef struct s_pd
 {
 	char			**map_file;
@@ -541,6 +550,7 @@ typedef struct s_pd
 	int				enemy_count_r;
 	__uint32_t		floor_color;
 	__uint32_t		roof_color;
+	t_audio     audio;
 }	t_parsed_data;
 
 typedef struct s_cube
@@ -548,6 +558,17 @@ typedef struct s_cube
 	char			*map_path;
 	t_parsed_data	pd;
 }	t_cube;
+
+void    audio_init(t_parsed_data *pd);
+void    audio_init(t_parsed_data *pd);
+void    audio_cleanup(t_parsed_data *pd);
+void    play_bg_music(t_parsed_data *pd, const char *path);
+void    stop_bg_music(t_parsed_data *pd);
+void    play_sound_once(t_parsed_data *pd, const char *path);
+void    start_loop_sound(t_parsed_data *pd, ma_sound *snd, const char *path);
+void    play_enemy_sound_3d(t_parsed_data *pd, t_enemy *e,
+                            const char *path);
+void    stop_loop_sound(ma_sound *snd);
 
 // Validate input args.
 size_t					ft_strlen(char *str);

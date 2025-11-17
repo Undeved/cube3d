@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 22:43:21 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 11:38:55 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:51:06 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	game_loop(t_parsed_data *pd)
 {
 	init_precise_data(pd);
 	init_all_textures(pd);
-	set_pd(pd);
 	pd->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
 	if (!pd->mlx)
 		mind_free_all(EXIT_FAILURE);

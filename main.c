@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:30:53 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/16 04:03:22 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:51:24 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int argc, char **argv)
 
 	evaluate_input(argc, argv);
 	parse_map(argv[1], &cube);
+	set_pd(&cube.pd);
+	audio_init(&cube.pd);
 	game_loop(&cube.pd);
 	return (mind_free_all(EXIT_SUCCESS), EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 22:38:39 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 11:22:19 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:50:46 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	mind_free_all(int status)
 	head = get_head();
 	pd = get_pd();
 	get_next_line(-1);
+	if (*pd)
+		audio_cleanup(*pd);
 	if (*pd && (*pd)->mlx)
 	{
 		delete_all_textures(*pd);
