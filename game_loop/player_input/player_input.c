@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/16 04:02:41 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:06:32 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	update_player_data(t_parsed_data *pd)
 		if (cool_down(0))
 		{
 			pd->player.health = 0;
-			print_death_message(pd, pd->player.last_killer, false);
+			print_death_message(pd, pd->player.last_killer, true);
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}

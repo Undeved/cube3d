@@ -3,8 +3,8 @@ EA txt/wall_textures/wall4.png
 SO txt/wall_textures/wall2.png
 WE txt/wall_textures/wall3.png
 
-F 220,100,0
-C 225,30,0
+F 135,109,70
+C 181,171,107
 
 11111111111111111111111111111111111
 100000000000000000000000000000X0001

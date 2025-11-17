@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floor_roof.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 04:35:16 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/08 04:54:49 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 15:15:28 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	invalid_floor_roof(char type, int error_num)
 		else if (error_num == 2)
 			print_error("Error\nNo Double Ceiling Values\n");
 		else if (error_num == 3)
-			print_error("Error\nCeeiling Values Must Be Digits In Range 0-255\n");
+			print_error("Error\nCeeiling Values Must Be Digits (0-255)\n");
 	}
 	mind_free_all(EXIT_FAILURE);
 }

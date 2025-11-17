@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   get_enemy_data_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 05:10:18 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/08 05:14:44 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:22:48 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
+
+static void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*str;
+
+	i = 0;
+	str = b;
+	while (i < len)
+	{
+		str[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
+}
 
 int	ft_rand(void)
 {
@@ -69,6 +84,7 @@ void	scrap_enemy_data(int x, int y, char c, t_enemy *curr_enemy)
 	t_bpos	directions[4];
 	int		dir_index;
 
+	ft_memset(curr_enemy, 0, sizeof(t_enemy));
 	curr_enemy->b_pos.x = (double)x + 0.5;
 	curr_enemy->b_pos.y = (double)y + 0.5;
 	curr_enemy->patrol_origin = curr_enemy->b_pos;

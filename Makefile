@@ -1,9 +1,8 @@
 CC= cc
-SANITIZE= #-fsanitize=address -g3
 FLAGS= -Ofast -O3 -Wall -Werror -Wextra 
 
-INCLUDES= -Iinclude -I$(HOME)/local/include
-LIBS= MLX42/build/libmlx42.a -L$(HOME)/local/lib -lglfw -ldl -pthread -lm -Ofast -O3
+INCLUDES = -Iinclude -IMLX42/include -Iglfw/include
+LIBS= MLX42/build/libmlx42.a -Lglfw/build/src -lglfw -ldl -pthread -lm -Ofast -O3
 
 HEADER= cube.h
 
@@ -51,10 +50,10 @@ NAME= cub3D
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(SANITIZE) $(OBJ) $(LIBS) $(INCLUDES) -o $@
+	$(CC) $(FLAGS) $(OBJ) $(LIBS) $(INCLUDES) -o $@
 
 %.o: %.c $(HEADER)
-	$(CC) $(FLAGS) $(SANITIZE) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 fclean: clean
 	rm -f $(NAME)

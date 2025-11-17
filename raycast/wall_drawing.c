@@ -6,7 +6,7 @@
 /*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 04:09:26 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 05:05:35 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/16 15:25:21 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw_ceiling(t_parsed_data *pd, int x, int draw_start, int horizon)
 	y = 0;
 	while (y < draw_start)
 	{
-		color = shade_color(CEILING, horizon + y, ROOF_FALLOF);
+		color = shade_color(pd->roof_color, horizon + y, ROOF_FALLOF);
 		mlx_put_pixel(pd->screen, x, y, color);
 		y++;
 	}
@@ -83,7 +83,7 @@ void	draw_floor(t_parsed_data *pd, int x, int draw_end, int horizon)
 	y = draw_end + 1;
 	while (y < (horizon * 2))
 	{
-		color = shade_color(FLOOR, ((horizon * 2)
+		color = shade_color(pd->floor_color, ((horizon * 2)
 					+ SHIFT_FLOOR_SHADE) - y, FLOOR_FALLOF);
 		mlx_put_pixel(pd->screen, x, y, color);
 		y++;

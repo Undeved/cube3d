@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 03:12:50 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/16 04:26:01 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 15:22:19 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cube.h"
+
+static uint32_t	rgb_to_uint32(t_floor_roof color)
+{
+	return ((color.r << 24) | (color.g << 16) | (color.b << 8) | 0xFF);
+}
 
 static void	precise_direction(t_parsed_data *pd)
 {
@@ -48,6 +53,8 @@ static void	init_key_flags(t_parsed_data *pd)
 void	init_precise_data(t_parsed_data *pd)
 {
 	precise_direction(pd);
+	pd->floor_color = rgb_to_uint32(pd->floor);
+	pd->roof_color = rgb_to_uint32(pd->roof);
 	pd->player.bpos.x = pd->player.pos.x + NUDGE_FROM_WALL;
 	pd->player.bpos.y = pd->player.pos.y + NUDGE_FROM_WALL;
 	pd->player.camera_plane.pos.x = pd->player.bdir.x;

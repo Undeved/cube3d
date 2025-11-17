@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/16 04:00:26 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/16 15:27:55 by oukhanfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -539,6 +539,8 @@ typedef struct s_pd
 	double			*zbuffer;
 	t_sh			sh;
 	int				enemy_count_r;
+	__uint32_t		floor_color;
+	__uint32_t		roof_color;
 }	t_parsed_data;
 
 typedef struct s_cube
@@ -1019,7 +1021,6 @@ void					sort_medkits_by_distance(t_medkit_draw_data *draw_data,
 void					print_death_message(t_parsed_data *pd,
 							t_enemy *killer, bool deceptive);
 
-# define CEILING 0xB5AB6BFF
 # define FLOOR 0x876D46FF
 # define WALL_SIDE 0xCC9D44FF
 # define WALL 0xA37D36FF
