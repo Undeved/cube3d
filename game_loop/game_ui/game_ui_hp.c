@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 22:57:39 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 01:19:34 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:58:45 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,33 @@ static void	update_health_pixels(t_parsed_data *pd,
 	}
 }
 
+static void play_hurt_sound(t_parsed_data *pd)
+{
+    static int  last_health = 100;
+    static long last_hit_time = 0;
+    static int  sound_played_for_burst = 0;
+
+    long now = current_time_ms();
+
+    if (pd->player.health < last_health)
+    {
+        last_hit_time = now;
+
+        if (!sound_played_for_burst)
+        {
+            play_sound_once(pd, "sound/player_hurt.mp3");
+            sound_played_for_burst = 1;
+        }
+    }
+
+    // Reset burst after 300ms without further damage
+    if (now - last_hit_time > 300)
+        sound_played_for_burst = 0;
+
+    last_health = pd->player.health;
+}
+
+
 void	update_health_ui(t_parsed_data *pd)
 {
 	static int	displayed_health = 100;
@@ -82,6 +109,8 @@ void	update_health_ui(t_parsed_data *pd)
 
 	if (!pd->game_ui.health.img || !pd->game_ui.health.img->enabled)
 		return ;
+	// if health changed play once 
+	play_hurt_sound(pd);
 	displayed_health = smooth_step(displayed_health, pd->player.health, 5);
 	health_width = calculate_health_width(displayed_health,
 			pd->game_ui.health.img->width);

@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/17 15:43:45 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:32:29 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,7 @@ typedef struct s_player
 	bool		is_dead;
 	bool		has_won;
 	t_enemy		*last_killer;
+	double		move_speed;
 }	t_player;
 
 typedef struct s_minimap

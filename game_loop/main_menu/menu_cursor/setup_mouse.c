@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:24:30 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 05:28:01 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:16:06 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ static bool	trigger_shoot_anim(t_parsed_data *pd)
 	return (true);
 }
 
+static void play_shoot_sound(t_parsed_data *pd)
+{
+	if (pd->player.gun.type == JESSE_SLINGER)
+		play_sound_once(pd, "sound/jesse_shoot.mp3");
+	else if (pd->player.gun.type == CHORUS_MP42)
+		play_sound_once(pd, "sound/chorus_shoot.mp3");
+	else if (pd->player.gun.type == OUSSMAC_37MM)
+		play_sound_once(pd, "sound/oussmac_shoot.mp3");
+}
+
 void	game_mouse_input(mouse_key_t button,
 	action_t action, modifier_key_t mods, t_parsed_data *pd)
 {
@@ -59,7 +69,11 @@ void	game_mouse_input(mouse_key_t button,
 		{
 			pd->player.is_shooting = false;
 			if (trigger_shoot_anim(pd))
+			{
+				// play different sound based on gun type
+				play_shoot_sound(pd);
 				pd->player.is_shooting = true;
+			}
 			return ;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 01:20:16 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 01:21:59 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 12:08:00 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	init_game_won_ui(t_parsed_data *pd)
 
 void	toggle_game_ui(t_parsed_data *pd)
 {
+	stop_bg_music(pd);
+	play_bg_music(pd, "sound/bg_music.wav");
 	pd->minimap.img->enabled = true;
 	setup_character(pd);
 	setup_health_ui(pd);

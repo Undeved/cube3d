@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:37:12 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 08:00:52 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:32:14 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	forward_backward(t_parsed_data *pd)
 	double	move_speed;
 
 	move_speed = get_move_speed(pd, SPEED);
+	pd->player.move_speed = move_speed;
 	if (pd->keys.pressed[MLX_KEY_W])
 	{
 		pd->player.new_pos.x += pd->player.bdir.x * move_speed;

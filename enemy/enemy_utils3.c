@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:12:42 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 03:48:26 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:39:10 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ bool	perform_move_steps(t_enemy *enemy, t_parsed_data *pd,
 	return (ctx.moved);
 }
 
+// se
+
 bool	move_towards_target(t_enemy *enemy, t_parsed_data *pd,
 		t_bpos target, double speed)
 {
@@ -61,7 +63,7 @@ bool	move_towards_target(t_enemy *enemy, t_parsed_data *pd,
 
 	if (!enemy || !pd)
 		return (false);
-	dir.x = target.x - enemy->b_pos.x;
+	dir.x = target.x - enemy->b_pors.x;
 	dir.y = target.y - enemy->b_pos.y;
 	len = sqrt(dir.x * dir.x + dir.y * dir.y);
 	if (len <= 1e-9)
@@ -70,6 +72,9 @@ bool	move_towards_target(t_enemy *enemy, t_parsed_data *pd,
 	dir.y /= len;
 	if (perform_move_steps(enemy, pd, dir, speed))
 	{
+		// play movement sound for each enemy type and based on distance from player using 
+		//void    play_enemy_sound_3d(t_parsed_data *pd, t_enemy *e, const char *path)
+		// play_enemy_walk_sound(pd, enemy);
 		dir.x = target.x - enemy->b_pos.x;
 		dir.y = target.y - enemy->b_pos.y;
 		len = sqrt(dir.x * dir.x + dir.y * dir.y);

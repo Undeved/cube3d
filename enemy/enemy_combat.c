@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:15:07 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/10 08:34:38 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 14:07:12 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	handle_shooting_once(t_parsed_data *pd, t_enemy_draw_data *draw_data,
 	if (target_enemy && !target_enemy->enemy->is_dying
 		&& !target_enemy->enemy->dead)
 	{
+		play_sound_once(pd, "sound/hit.mp3");
 		apply_damage_to_enemy(pd, target_enemy->enemy);
 	}
 	pd->player.is_shooting = false;

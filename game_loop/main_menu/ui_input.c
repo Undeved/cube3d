@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 04:23:20 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 04:24:46 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 12:55:49 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	handle_character_ui_input(mlx_key_data_t keydata, t_parsed_data *pd)
 
 void	menu_trigger_click(t_parsed_data *pd)
 {
+	play_sound_once(pd, "sound/click.mp3");
 	if (pd->menu.button_index == 0)
 	{
 		pd->level.game_started = true;

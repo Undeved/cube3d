@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 04:11:37 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 04:13:52 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 12:55:12 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	main_menu(t_parsed_data *pd)
 
 void	characters_trigger_click(t_parsed_data *pd)
 {
+	play_sound_once(pd, "sound/click.mp3");
 	if (pd->chars_menu.button_index == JESSE)
 		pd->chars_menu.select_index = JESSE;
 	else if (pd->chars_menu.button_index == CHORUS)

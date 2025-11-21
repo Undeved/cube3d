@@ -6,11 +6,28 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:05:02 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/10 05:18:00 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 12:53:44 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../cube.h"
+
+// added after push
+static void	play_sound_if_index_changed(t_parsed_data *pd)
+{
+	static int	last_index[2] = {-1, -1};
+
+	if (pd->chars_menu.button_index != last_index[0])
+	{
+		play_sound_once(pd, "sound/button_hover.mp3");
+		last_index[0] = pd->chars_menu.button_index;
+	}
+	if (pd->menu.button_index != last_index[1])
+	{
+		play_sound_once(pd, "sound/button_hover.mp3");
+		last_index[1] = pd->menu.button_index;
+	}
+}
 
 static bool	within_bounds(t_pos m_pos, t_pos img_pos, int width, int height)
 {
@@ -50,6 +67,7 @@ static void	main_menu_buttons(double xpos, double ypos, t_parsed_data *pd)
 	{
 		pd->menu.button_index = 2;
 	}
+	play_sound_if_index_changed(pd);
 }
 
 static void	characters_buttons(double xpos, double ypos, t_parsed_data *pd)
@@ -78,6 +96,7 @@ static void	characters_buttons(double xpos, double ypos, t_parsed_data *pd)
 	{
 		pd->chars_menu.button_index = 2;
 	}
+	play_sound_if_index_changed(pd);
 }
 
 static void	button_events(double xpos, double ypos, t_parsed_data *pd)

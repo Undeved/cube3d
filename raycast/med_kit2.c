@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   med_kit2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 04:08:33 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 04:51:15 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:33:39 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	process_medkit_pickup(t_parsed_data *pd, int i)
 	distance = sqrt(dx * dx + dy * dy);
 	if (distance < 0.8)
 	{
+		play_sound_once(pd, "sound/health.mp3");
 		pd->player.health += pd->medkits[i].hp;
 		if (pd->player.health > PLAYER_HEALTH)
 			pd->player.health = PLAYER_HEALTH;

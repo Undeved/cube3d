@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   player_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/16 16:06:32 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:33:57 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cube.h"
+
+static void play_reload_sound(t_parsed_data *pd)
+{
+	if (pd->player.gun.type == JESSE_SLINGER)
+		play_sound_once(pd, "sound/jesse_reload.mp3");
+	else if (pd->player.gun.type == CHORUS_MP42
+		|| pd->player.gun.type == OUSSMAC_37MM)
+		play_sound_once(pd, "sound/gun_reload.mp3");
+}
 
 void	player_pitch(t_parsed_data *pd)
 {
@@ -35,10 +44,12 @@ void	reload_gun(t_parsed_data *pd)
 		&& pd->player.gun.ammo < pd->player.gun.max_ammo
 		&& !pd->player.gun.reload.active)
 	{
+		play_reload_sound(pd);
 		pd->player.gun.reload.active = true;
 		pd->player.gun.shoot.active = false;
 		pd->player.gun.aiming = false;
 		pd->player.gun.ammo = pd->player.gun.max_ammo;
+		// play reload sound based on gun type
 		trigger_reload_anim(pd);
 	}
 }
@@ -76,7 +87,7 @@ void	update_player_data(t_parsed_data *pd)
 		if (cool_down(0))
 		{
 			pd->player.health = 0;
-			print_death_message(pd, pd->player.last_killer, true);
+			print_death_message(pd, pd->player.last_killer, false);
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}

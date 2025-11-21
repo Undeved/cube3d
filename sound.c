@@ -2,6 +2,7 @@
 #include "miniaudio.h"
 #include "cube.h"
 
+// sound system added after push
 void    audio_init(t_parsed_data *pd)
 {
     if (ma_engine_init(NULL, &pd->audio.engine) != MA_SUCCESS)
@@ -74,18 +75,24 @@ static void auto_free_sound_callback(void *pUserData, ma_sound *pSound)
 {
     (void)pUserData;
     ma_sound_uninit(pSound);
+    free(pSound);
 }
 
 
-void    play_enemy_sound_3d(t_parsed_data *pd, t_enemy *e,
-                            const char *path)
+void play_enemy_sound_3d(t_parsed_data *pd, t_enemy *e, const char *path)
 {
-    ma_sound snd;
+    ma_sound* snd = malloc(sizeof(ma_sound));
+    if (!snd)
+        return;
 
-    if (ma_sound_init_from_file(&pd->audio.engine, path,
-            MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC,
-            NULL, NULL, &snd) != MA_SUCCESS)
-        mind_free_all(EXIT_FAILURE);
+    if (ma_sound_init_from_file(&pd->audio.engine,
+                                path,
+                                MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC,
+                                NULL, NULL, snd) != MA_SUCCESS)
+    {
+        free(snd);
+        return;
+    }
 
     // distance-based volume
     double dx = e->pos.x - pd->player.pos.x;
@@ -96,9 +103,10 @@ void    play_enemy_sound_3d(t_parsed_data *pd, t_enemy *e,
     if (vol < 0.05f)
         vol = 0.05f;
 
-    ma_sound_set_volume(&snd, vol);
-    ma_sound_start(&snd);
+    ma_sound_set_volume(snd, vol);
+    ma_sound_start(snd);
 
-    // auto free when done
-   ma_sound_set_end_callback(&snd, auto_free_sound_callback, NULL);
+    // free sound when done playing
+    ma_sound_set_end_callback(snd, auto_free_sound_callback, NULL);
 }
+
