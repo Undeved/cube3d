@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:12:42 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/21 16:39:10 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:44:38 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,26 @@ bool	perform_move_steps(t_enemy *enemy, t_parsed_data *pd,
 	return (ctx.moved);
 }
 
-// se
+// static void play_enemy_walk_sound(t_parsed_data *pd, t_enemy *enemy)
+// {
+// 	double	dx;
+// 	double	dy;
+// 	double	distance;
+// 	char	*sound_path;
+
+// 	dx = enemy->b_pos.x - pd->player.bpos.x;
+// 	dy = enemy->b_pos.y - pd->player.bpos.y;
+// 	distance = sqrt(dx * dx + dy * dy);
+// 	if (enemy->type == FT_SKIN_WALKER)
+// 		sound_path = "sound/garbage_walk.mp3";
+// 	else if (enemy->type == MEMORY_LEAK)
+// 		sound_path = "sound/leak_walk.mp3";
+// 	else if (enemy->type == SEGV)
+// 		sound_path = "sound/segv_walk.mp3";
+// 	else
+// 		sound_path = "sound/garbage_walk.mp3";
+// 	play_enemy_sound_3d(pd, enemy, sound_path);
+// }
 
 bool	move_towards_target(t_enemy *enemy, t_parsed_data *pd,
 		t_bpos target, double speed)
@@ -63,7 +82,7 @@ bool	move_towards_target(t_enemy *enemy, t_parsed_data *pd,
 
 	if (!enemy || !pd)
 		return (false);
-	dir.x = target.x - enemy->b_pors.x;
+	dir.x = target.x - enemy->b_pos.x;
 	dir.y = target.y - enemy->b_pos.y;
 	len = sqrt(dir.x * dir.x + dir.y * dir.y);
 	if (len <= 1e-9)
