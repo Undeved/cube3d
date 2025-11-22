@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_animation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:14:18 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/06 02:17:09 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:53:52 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ void	update_enemy_animations(t_enemy *enemy)
 	}
 }
 
+static void play_enemy_walk_sound(t_parsed_data *pd, t_enemy *enemy,
+		double distance, bool visible)
+{
+	static long	last_played = 0;
+	long			now;
+
+	if (!visible)
+		return ;
+	now = current_time_ms();
+	if (distance < 5.0 && now - last_played >= 1000)
+	{
+		if (enemy->type == FT_SKIN_WALKER)
+			play_sound_once(pd, "sound/garbage_walk.mp3");
+		else if (enemy->type == MEMORY_LEAK)
+			play_sound_once(pd, "sound/leak_walk.mp3");
+		else if (enemy->type == SEGV)
+			play_sound_once(pd, "sound/segv_walk.mp3");
+		last_played = now;
+	}
+}
+
 void	update_single_enemy(t_parsed_data *pd, int i)
 {
 	t_enemy		*enemy;
@@ -57,6 +78,7 @@ void	update_single_enemy(t_parsed_data *pd, int i)
 		return ;
 	distance = calculate_distance_to_player(enemy, pd);
 	visible = has_line_of_sight(pd, enemy->b_pos, pd->player.bpos);
+	play_enemy_walk_sound(pd, enemy, distance, visible);
 	ctx.pd = pd;
 	ctx.enemy = enemy;
 	ctx.distance = distance;

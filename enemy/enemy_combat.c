@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:15:07 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/21 14:07:12 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/22 14:51:36 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ t_enemy_draw_data	*find_shot_target(t_enemy_draw_data *draw_data,
 	return (target_enemy);
 }
 
+static void play_enemy_death_sound(t_parsed_data *pd, t_enemy *enemy)
+{
+	if (enemy->type == FT_SKIN_WALKER)
+		play_sound_once(pd, "sound/garbage_death.mp3");
+	else if (enemy->type == MEMORY_LEAK)
+		play_sound_once(pd, "sound/leak_death.mp3");
+	else if (enemy->type == SEGV)
+		play_sound_once(pd, "sound/segv_death.mp3");
+}
+
 void	apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
 {
 	enemy->health -= pd->player.gun.damage;
@@ -73,6 +83,7 @@ void	apply_damage_to_enemy(t_parsed_data *pd, t_enemy *enemy)
 	enemy->highlight_timer = HIGHLIGHT_FRAMES;
 	if (enemy->health <= 0)
 	{
+		play_enemy_death_sound(pd, enemy);
 		enemy->is_dying = true;
 		enemy->dead = false;
 		enemy->death_anim_frame = 0;

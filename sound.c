@@ -21,27 +21,29 @@ void    audio_cleanup(t_parsed_data *pd)
     ma_engine_uninit(&pd->audio.engine);
 }
 
-void    play_bg_music(t_parsed_data *pd, const char *path)
+void play_bg_music(t_parsed_data *pd, const char *path)
 {
-    if (pd->audio.bg_music_playing)
+    if (pd->audio.bg_music_playing) {
+        ma_sound_stop(&pd->audio.bg_music);
         ma_sound_uninit(&pd->audio.bg_music);
+    }
 
     if (ma_sound_init_from_file(&pd->audio.engine, path,
-            MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC, NULL,
-            NULL, &pd->audio.bg_music) != MA_SUCCESS)
+            MA_SOUND_FLAG_DECODE, NULL, NULL, &pd->audio.bg_music) != MA_SUCCESS)
     {
         fprintf(stderr, "Audio: failed to load background music.\n");
-        mind_free_all(EXIT_FAILURE);
+        return; // NEVER hard-exit the entire game inside audio
     }
+
     ma_sound_set_looping(&pd->audio.bg_music, MA_TRUE);
     ma_sound_start(&pd->audio.bg_music);
     pd->audio.bg_music_playing = true;
 }
 
-void    stop_bg_music(t_parsed_data *pd)
+void stop_bg_music(t_parsed_data *pd)
 {
     if (!pd->audio.bg_music_playing)
-        mind_free_all(EXIT_FAILURE);
+        return; // DO NOT EXIT THE GAME HERE
 
     ma_sound_stop(&pd->audio.bg_music);
     ma_sound_uninit(&pd->audio.bg_music);
@@ -70,43 +72,3 @@ void    stop_loop_sound(ma_sound *snd)
     ma_sound_stop(snd);
     ma_sound_uninit(snd);
 }
-
-static void auto_free_sound_callback(void *pUserData, ma_sound *pSound)
-{
-    (void)pUserData;
-    ma_sound_uninit(pSound);
-    free(pSound);
-}
-
-
-void play_enemy_sound_3d(t_parsed_data *pd, t_enemy *e, const char *path)
-{
-    ma_sound* snd = malloc(sizeof(ma_sound));
-    if (!snd)
-        return;
-
-    if (ma_sound_init_from_file(&pd->audio.engine,
-                                path,
-                                MA_SOUND_FLAG_DECODE | MA_SOUND_FLAG_ASYNC,
-                                NULL, NULL, snd) != MA_SUCCESS)
-    {
-        free(snd);
-        return;
-    }
-
-    // distance-based volume
-    double dx = e->pos.x - pd->player.pos.x;
-    double dy = e->pos.y - pd->player.pos.y;
-    double dist = sqrt(dx * dx + dy * dy);
-
-    float vol = 1.0f / (1.0f + (float)dist * 0.3f);
-    if (vol < 0.05f)
-        vol = 0.05f;
-
-    ma_sound_set_volume(snd, vol);
-    ma_sound_start(snd);
-
-    // free sound when done playing
-    ma_sound_set_end_callback(snd, auto_free_sound_callback, NULL);
-}
-

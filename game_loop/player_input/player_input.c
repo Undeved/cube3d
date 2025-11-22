@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 05:31:29 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/21 15:33:57 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:22:56 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	update_player_data(t_parsed_data *pd)
 	{
 		pd->game_ui.game_over.img->enabled = true;
 		pd->player.is_dead = true;
-		if (cool_down(0))
+		if (cool_down(2000000))
 		{
 			pd->player.health = 0;
 			print_death_message(pd, pd->player.last_killer, false);
@@ -94,7 +94,7 @@ void	update_player_data(t_parsed_data *pd)
 	if (pd->player.has_won)
 	{
 		pd->game_ui.game_won.img->enabled = true;
-		if (cool_down(0))
+		if (cool_down(2000000))
 		{
 			print_comm(GRN"Norminette: [OK], [OK], [OK], [OK], [OK], [OK]\n");
 			print_comm("File: You Won.exe"RST"\n");

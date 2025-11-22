@@ -1,6 +1,8 @@
 # MAKEFLAGS += -j$(shell nproc)
 CC= cc
-FLAGS= -Ofast -O3 -Wall -Werror -Wextra 
+FAST= -Ofast -O3
+FLAGS= -Wall -Werror -Wextra $(FAST)
+SOUND_FLAGS= -Wall -Werror -Wextra
 
 INCLUDES = -Iinclude -IMLX42/include -Iglfw/include
 LIBS= MLX42/build/libmlx42.a -Lglfw/build/src -lglfw -ldl -pthread -lm -Ofast -O3
@@ -42,25 +44,34 @@ SRC= main.c input_arguments/printers.c input_arguments/evaluate_input.c \
 	game_loop/initializer/init_shared_textures_utils.c game_loop/initializer/init_shared_textures_utils2.c \
 	game_loop/initializer/init_shared_textures_utils3.c game_loop/player_input/update_player.c \
 	mind_allocater/mind_utils.c parse_map/get_enemy_data_utils.c raycast/raycast_utils.c raycast/ray_casting2.c \
-	parse_map/parse_map_utils.c deceptive_output.c sound.c
+	parse_map/parse_map_utils.c deceptive_output.c
+
+SOUND = sound.c
 
 OBJ=$(SRC:.c=.o)
+
+SOUND_OBJ=$(SOUND:.c=.o)
+
 
 NAME= cub3D
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LIBS) $(INCLUDES) -o $@
+$(NAME): $(OBJ) $(SOUND_OBJ)
+	$(CC) $(FLAGS) $(OBJ) $(SOUND_OBJ) $(LIBS) $(INCLUDES) -o $@
+
+sound.o: sound.c
+	$(CC) $(SOUND_FLAGS) -c sound.c -o sound.o
 
 %.o: %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@
+
 
 fclean: clean
 	rm -f $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(SOUND_OBJ)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 22:29:41 by oimzilen          #+#    #+#             */
-/*   Updated: 2025/11/21 16:32:29 by oimzilen         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:38:36 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,6 +473,7 @@ typedef struct s_enemy
 	t_bpos			patrol_target;
 	int				patrol_target_timer;
 	int				patrol_change_interval;
+	long			last_walk_sound;
 }	t_enemy;
 
 typedef struct s_enemy_draw_data

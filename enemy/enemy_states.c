@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_states.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukhanfa <oukhanfa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oimzilen <oimzilen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 01:13:38 by oukhanfa          #+#    #+#             */
-/*   Updated: 2025/11/16 16:21:36 by oukhanfa         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:20:34 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,31 @@ void	handle_chase_state(t_parsed_data *pd, t_enemy *enemy, int i,
 		smart_chase_player(enemy, pd->player.bpos, enemy->chase_speed, pd);
 }
 
+static void play_enemy_attack_sound(t_parsed_data *pd, t_enemy *enemy)
+{
+	if (enemy->type == FT_SKIN_WALKER)
+	{
+		play_sound_once(pd, "sound/garbage_attack.mp3");
+	}
+	else if (enemy->type == MEMORY_LEAK)
+	{
+		play_sound_once(pd, "sound/leak_attack.mp3");
+		play_sound_once(pd, "sound/leak_water.mp3");
+
+	}
+	else if (enemy->type == SEGV)
+	{
+		play_sound_once(pd, "sound/segv_attack.mp3");
+		play_bg_music(pd, "sound/segv_fire.mp3");
+	}
+}
+
 static void	perform_enemy_attack(t_parsed_data *pd, t_enemy *enemy)
 {
 	if (enemy->attack_cooldown <= 0)
 	{
+		// play attack sound based on enemy type
+		play_enemy_attack_sound(pd, enemy);
 		enemy->is_attacking = true;
 		enemy->anim_frame = 0;
 		enemy->attack_anim_counter = 0;
