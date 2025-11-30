@@ -1,11 +1,12 @@
 # MAKEFLAGS += -j$(shell nproc)
 CC= cc
 FAST= -Ofast -O3
-FLAGS= -Wall -Werror -Wextra $(FAST)
-SOUND_FLAGS= -Wall -Werror -Wextra
+FLAGS= $(FAST) #-Wall -Werror -Wextra
+SOUND_FLAGS= #-Wall -Werror -Wextra
 
 INCLUDES = -Iinclude -IMLX42/include -Iglfw/include
-LIBS= MLX42/build/libmlx42.a -Lglfw/build/src -lglfw -ldl -pthread -lm -Ofast -O3
+LGLFW = glfw/build/src/libglfw3.a
+LIBS = MLX42/build/libmlx42.a $(LGLFW) -ldl -pthread -lm
 
 HEADER= cube.h
 
