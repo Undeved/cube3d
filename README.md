@@ -24,7 +24,7 @@ Game play footage :
 # 1337 Ways To Die (The Game) :
 
 1337 ways to die is the game we created for our [cub3d](https://harm-smits.github.io/42docs/projects/cub3d) project.\
-You can play the game here hosted --> [Play it online](itchio)
+You can play the game here hosted --> (Not implemented yet, clone the repo to play).
 
 of course as our game is an actual game it needs UI and a main menu.
 ## Main Menu :
