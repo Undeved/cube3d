@@ -14,23 +14,50 @@
 
 static bool	check_nearby_doors(t_parsed_data *pd, int px, int py)
 {
+	bool opened_one;
+
+	opened_one = false;
 	if (pd->map_grid[py][px + 1] == 'D')
-		return(pd->map_grid[py][px + 1] = 'O', true);
+	{
+		pd->map_grid[py][px + 1] = 'O';
+		opened_one = true;
+	}
 	else if (pd->map_grid[py][px + 1] == 'O')
-		return(pd->map_grid[py][px + 1] = 'D', true);
+	{
+		pd->map_grid[py][px + 1] = 'D';
+		opened_one = true;
+	}
 	if (pd->map_grid[py][px - 1] == 'D')
-		return(pd->map_grid[py][px - 1] = 'O', true);
+	{
+		pd->map_grid[py][px - 1] = 'O';
+		opened_one = true;
+	}
 	else if (pd->map_grid[py][px - 1] == 'O')
-		return(pd->map_grid[py][px - 1] = 'D', true);
+	{
+		pd->map_grid[py][px - 1] = 'D';
+		opened_one = true;
+	}
 	if (pd->map_grid[py + 1][px] == 'D')
-		return(pd->map_grid[py + 1][px] = 'O', true);
+	{
+		pd->map_grid[py + 1][px] = 'O';
+		opened_one = true;
+	}
 	else if (pd->map_grid[py + 1][px] == 'O')
-		return(pd->map_grid[py + 1][px] = 'D', true);
+	{
+		pd->map_grid[py + 1][px] = 'D';
+		opened_one = true;
+	}
 	if (pd->map_grid[py - 1][px] == 'D')
-		return(pd->map_grid[py - 1][px] = 'O', true);
+	{
+		pd->map_grid[py - 1][px] = 'O';
+		opened_one = true;
+	}
 	else if (pd->map_grid[py - 1][px] == 'O')
-		return(pd->map_grid[py - 1][px] = 'D', true);
-	return (false);
+	{
+		pd->map_grid[py - 1][px] = 'D';
+		opened_one = true;
+	}
+	return (opened_one);
 }
 
 void	interact_with_door(t_parsed_data *pd)
