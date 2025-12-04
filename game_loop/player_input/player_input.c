@@ -87,7 +87,7 @@ void	update_player_data(t_parsed_data *pd)
 		if (cool_down(2000000))
 		{
 			pd->player.health = 0;
-			print_death_message(pd, pd->player.last_killer, false);
+			print_death_message(pd, pd->player.last_killer, true);
 			mind_free_all(EXIT_SUCCESS);
 		}
 	}
