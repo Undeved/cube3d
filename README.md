@@ -2,7 +2,7 @@
 ----
 ## Notice !!!
 
-- This Game Does Not Segfault, Nor Leak, If you come across any errors, that's just a hardcoded game over message in the logic of the game.\
+- This Game Does Not Segfault, No Leak, If you come across any errors, that's just a hardcoded game over message in the logic of the game.\
 
 - And The Entire Art Of The Game is Completely Made By OussMac (NO AI).
 
