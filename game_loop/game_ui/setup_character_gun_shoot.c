@@ -1,5 +1,3 @@
-
-
 #include "../../cube.h"
 
 static void	load_gun_shoot_frame(t_parsed_data *pd, int i, char *path)

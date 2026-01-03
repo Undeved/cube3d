@@ -9,9 +9,7 @@
 /*   Updated: 2025/11/10 02:10:53 by oimzilen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../cube.h"
-
 static void	load_gun_idle_png_failure(t_parsed_data *pd, char *path)
 {
 	pd->game_ui.gun.txtr = mlx_load_png(path);
